@@ -93,14 +93,14 @@
     \item Distributional assumption 
 \end{itemize}
 \begin{center}
-    \includegraphics[width=0.45\textwidth]{L(theta).png}
+    \includegraphics[width=0.45\textwidth]{fig/L(theta).png}
 \end{center}
 \end{frame}
 
 \begin{frame}{Principles}
 
 \hfill
-\includegraphics[width=0.2\textwidth]{Youngronaldfisher.jpeg}
+\includegraphics[width=0.2\textwidth]{fig/Youngronaldfisher.jpeg}
 \vspace{-3cm} % Adjust vertical space
 
 \begin{itemize}
@@ -208,6 +208,11 @@ by the Jensen's inequality.
 \end{itemize}
 
 \end{frame}
+\begin{frame}{KLIC}
+    \begin{center}
+        \includegraphics[width=\textwidth]{fig/KLIC.png}
+    \end{center}
+\end{frame}
 
 
 \begin{frame}{Score and Hessian}
@@ -215,7 +220,7 @@ by the Jensen's inequality.
 \begin{itemize}
 \item Score: $s_{N}(\theta)=\sum_{i=1}^{N}\frac{\partial}{\partial\theta}\log f(Y_{i};\theta)$
 
-\item Efficient Score: $s_{0}=\frac{\partial}{\partial\theta}\log f\left(Y_{i};\theta_{0}\right)$\pause
+\item Efficient score: $s_{0}=\frac{\partial}{\partial\theta}\log f\left(Y_{i};\theta_{0}\right)$\pause
 
 \end{itemize}
 
@@ -360,8 +365,7 @@ is Cram\'{e}r-Rao efficient
 %
 \begin{frame}{MLE for the Variance}
 \begin{itemize}
-\item $E\left(S_{N}^{2}\right)=\sigma^{2}$ is unbiased
-\item By definition,
+\item $E\left(S_{N}^{2}\right)=\sigma^{2}$ is unbiased, where
 \[
 s_{N}^{2}=\frac{1}{N-1}\sum_{i=1}^{N}\left(Y_{i}-\bar{Y}\right)^{2}=\frac{1}{N-1}Y'\left(I-\frac{1}{N}1_{N}1_{N}'\right)Y
 \]
@@ -384,20 +388,11 @@ Is not Cram\'{e}r-Rao efficient
 
 \begin{itemize}
     \item The normal regression models is 
-$$
-Y_{i}=X_{i}'\beta+\varepsilon_{i}
-$$
-    \item 
-Under the assumption
-$\varepsilon_{i} \mid X_{i}\sim N \left(0,\sigma^{2}\right),$
-the conditional distribution is
-$Y_{i} \mid X_{i} \sim N \left( X_{i}'\beta,\sigma^{2}\right).$
-    \item   
-The conditional log-likelihood of the sample is
-$$
-\ell_N \left(\beta,\sigma^{2}\right)
-=-\frac{N}{2}\log\gamma-\frac{N}{2}\log\pi-\frac{1}{2\gamma}\sum_{i=1}^{N}\left(Y_{i}-X_{i}^{\prime}\beta_\right)^{2}
-$$
+$$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
+     \item Under the assumption $\varepsilon_{i} \mid X_{i}\sim N \left(0,\sigma^{2}\right),$ the conditional distribution is $Y_{i} \mid X_{i} \sim N \left( X_{i}'\beta,\sigma^{2}\right).$
+     \item  The \textbf{conditional log-likelihood} of the sample is $$\ell_N (\theta) 
+     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
+     $$ where the distribution of $X_i$ is unspecified.
 \end{itemize}
 \end{frame}
 
@@ -408,22 +403,27 @@ $$
 \[
 \sqrt{N}\left(\hat{\theta}-\theta_{0}\right)\stackrel{d}{\to}N\left(0,H_{0}^{-1}I_{0}H_{0}^{-1}\right)
 \]
-\pause
-\item When the information equality holds, $I_{0}^{-1}I_{0}I_{0}^{-1}=I_{0}^{-1}$,
+\item When the information equality holds, we have 
 \[
 \sqrt{N}\left(\hat{\theta}-\theta_{0}\right)\stackrel{d}{\to}N\left(0,I_{0}^{-1}\right)
 \]
-\pause$\Leftrightarrow$ the model is correctly specified.
 \end{itemize}
 \end{frame}
 %
 
 \begin{frame}{Misspecified Model}
 \begin{itemize}
-\item Nature: Data $z$ is drawn from a parameter model $f$\pause
+\item Nature: Data $z$ is drawn from a parameter model $f$
 \item Human: specify a family of models $g\left(z;\theta\right)$ and a parameter space $\Theta$, which span a \textbf{model space} $G\left(\Theta\right)=\left\{ g\left(z;\theta\right):\theta\in\Theta\right\} $.
-\pause
-\bigskip
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{fig/misspecified.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{KLIC, again}
+\begin{itemize}
 \item If $f\in G\left(\Theta\right)$, the model is \textbf{correctly specified};
 otherwise it is misspecified. 
 \begin{align*}
@@ -442,14 +442,14 @@ KLIC\left(f,g\left(z;\theta\right)\right) & =\int f\left(z\right)\log f\left(z\r
 \[
 \theta_{0}=\arg\max_{\theta\in\Theta} E [\ell\left(\theta\right)]
 \] under which 
- $KLIC\left(f,g\left(z;\theta_{0}\right)\right)=0$.\pause
-\item If the model is misspecified, $\min_{\theta\in\Theta}KLIC\left(f,g\left(z;\theta\right)\right)>0$\pause
+ $KLIC\left(f,g\left(z;\theta_{0}\right)\right)=0$. 
+\item Misspecified: $\min_{\theta\in\Theta}KLIC\left(f,g\left(z;\theta\right)\right)>0$\pause
 \item Pseudo-true parameter:
 \[
 \theta^{*}=\arg\max_{\theta\in\Theta} E [\ell\left(\theta\right)]
 \]
 the minimizer of $KLIC\left(f,g\left(z;\theta\right)\right)$ in the
-parameter space $\Theta$\pause
+parameter space $\Theta$
 \item Under standard assumption, the MLE estimator $\widehat{\theta}\stackrel{p}{\to}\theta^{*},$
 \[
 \sqrt{N}\left(\hat{\theta}-\theta^{*}\right)\stackrel{d}{\to}N\left(0,H_{*}^{-1}I_{*}H_{*}^{-1}\right)
@@ -460,11 +460,24 @@ parameter space $\Theta$\pause
 
 
 \begin{frame}{Three Tests}
+
+A linear hypothesis: $R \theta_0 = q$.
+    \bigskip
+    
     \begin{itemize}
-        \item Wald: unconstrained estimation, $\ell_n (\hat{\theta}) $ 
-        \item Lagrangian: constrained estimation under the null, $\ell_n (\tilde{\theta})$
-        \item Likelihood ratio $ \ell_n (\hat{\theta}) - \ell_n (\tilde{\theta})$
+        \item Wald test: unconstrained estimation, $\ell_N (\hat{\theta}) $ 
+        \item Lagrange multiplier test: constrained estimation under the null, $\ell_N (\tilde{\theta})$
+        \item Likelihood ratio test: $ \ell_N (\hat{\theta}) - \ell_N (\tilde{\theta})$
     \end{itemize}
+
+\bigskip
+
+Also works for nonlinear hypothesis.
+
+\bigskip
+
+Are specification tests important?
+
 \end{frame}
 
 \begin{frame}{Summary}
