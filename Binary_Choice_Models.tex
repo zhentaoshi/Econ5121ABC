@@ -1,0 +1,136 @@
+%% LyX 2.4.2.1 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt,english]{beamer}
+\usepackage{mathpazo}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage[active]{srcltx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+\usepackage{graphicx}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+% this default might be overridden by plain title style
+\newcommand\makebeamertitle{\frame{\maketitle}}%
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+\theoremstyle{definition}
+\newtheorem*{example*}{\protect\examplename}
+\theoremstyle{definition}
+\newtheorem*{defn*}{\protect\definitionname}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\AtBeginDocument{%
+   \let\origtableofcontents=\tableofcontents
+   \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+   \def\gobbletableofcontents#1{\origtableofcontents}
+ }\usepackage[english]{babel}
+\usepackage{babel}
+
+%\usetheme{Boadilla}
+\usetheme{Madrid}
+% \usecolortheme{orchid}
+\usecolortheme{spruce}
+% \usecolortheme{beaver}
+
+\setbeamercovered{transparent}
+
+\usepackage{colortbl}
+
+\usefonttheme[onlymath]{serif}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For tables
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+% For figures
+\usepackage{caption}
+\usepackage{subcaption}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\definitionname}{Definition}
+\providecommand{\examplename}{Example}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\title[BCM]{Binary Choice Models}
+\author[]{Zhentao Shi}
+\date[]{}
+\makebeamertitle
+\begin{frame}{Binary Choice Models}
+    \begin{itemize}
+        \item Classification
+        \item Discrete random variables
+    \end{itemize}
+\end{frame}
+\begin{frame}{Examples}
+    \[y_{i} = 1 \, \text{or}\,0\]
+    \begin{itemize}
+        \item College entrance
+        \item Marriage
+        \item Job hunting
+    \end{itemize}
+\end{frame}
+\begin{frame}{Linear Regression}
+    \[y_i = x_i^{'} \beta + \varepsilon_i\]
+    \[E\left[y_{i} = 1 \mid X_{i}\right] = X_{i}^{'} \beta\]
+    \[\Rightarrow \Pr\left(\varepsilon _{i} = 1 - X_{i}^{'} \beta \mid X_i \right) = \Pr \left( y _{i} = 1 \mid x_i \right) = X_i^{'} \beta\]
+    \[E\left(y_i = 0 \mid X_i \right) = 1 - X_i^{'} \beta\]
+    \[\Rightarrow \Pr \left(\varepsilon _i = 0 - X_i^{'} \beta \mid X_{i} \right) = \Pr \left( y_{i} = 0 \right) = 1 - X_{i} \beta\]
+    \[\operatorname{Var} \left( \varepsilon_{i} \mid X_{i} \right)= X_{i} ^{'} \beta \left( 1 - X_i^{'} \beta \right)\]    
+    varies with $X_i$, heteroskedastic
+    
+\end{frame}
+\begin{frame}{Predicted Range}
+    $E\left(y_{i} = 1 \mid X_{i} \right) = X_{i}^{'} \beta$ can go beyond $\left[0,1\right]$
+    \begin{itemize}
+        \item $X_{i}^{'} \beta$ is a "single index"
+    \end{itemize}
+    to ensure natural probability,
+    \[E\left( y _{i} = 1 \mid X_{i} \right) = G\left(X_i^{'} \beta\right)\]
+    for some $G(\cdot ) : \mathbb{R} \to \left( 0, 1\right]$
+    \begin{itemize}
+        \item popular choice
+        \begin{itemize}
+            \item $G \sim \text{normal cdf}$
+            \item $G\left(x\right) = \frac{1}{1 + \exp\left(-x\right)}$logistic cdf
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+\begin{frame}{Facts about Logistic CDF}
+    \[\Lambda = \Lambda \left(x\right) = \frac{1}{1 + \exp \left(-x\right)}\]
+    \[- \Lambda ^{2} = -2 \Lambda -\Lambda \left(1 - \Lambda \right)\]
+    \[\frac{\mathrm{d} \Lambda }{\mathrm{d} X} = \Lambda \left(1-\Lambda \right)\]
+    
+\end{frame}
+\begin{frame}{Latent aliling Model}
+    \[y^{*} = X_{i}^{'} \beta + \varepsilon _{i}\]
+    \[y = \mathbb{I}\left\{ y_{i} ^{*} \ge 0 \right\}\]
+    Assume $\varepsilon _{i} \mid X_i \sim \text{logistic distribution}$
+    \begin{aline}
+        \Pr\left(y_i = 1 \mid X_i \right) &= \Pr \left(X_i^{'} \beta + \varepsilon _{i} \ge 0 \mid X_i\right)\\
+        & = \Pr \left( - \varepsilon _{i} \le X_{i}^{'} \beta \mid X_{i}\right)\\
+        & = \Lambda \left(X_i^{'} \beta\right)
+    \end{aline}
+\end{frame}
+
+\end{document}

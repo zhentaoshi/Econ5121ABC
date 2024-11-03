@@ -1,0 +1,232 @@
+%% LyX 2.4.2.1 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt,english]{beamer}
+\usepackage{mathpazo}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage[active]{srcltx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+% this default might be overridden by plain title style
+\newcommand\makebeamertitle{\frame{\maketitle}}%
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+\theoremstyle{definition}
+\newtheorem*{example*}{\protect\examplename}
+\theoremstyle{definition}
+\newtheorem*{defn*}{\protect\definitionname}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+\newtheorem*{assumption*}{\protect\assumptionname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\AtBeginDocument{%
+   \let\origtableofcontents=\tableofcontents
+   \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+   \def\gobbletableofcontents#1{\origtableofcontents}
+ }\usepackage[english]{babel}
+\usepackage{babel}
+
+%\usetheme{Boadilla}
+\usetheme{Madrid}
+% \usecolortheme{orchid}
+\usecolortheme{spruce}
+% \usecolortheme{beaver}
+
+\providecommand{\assumptionname}{Assumption}
+
+\setbeamercovered{transparent}
+
+\usepackage{colortbl}
+
+\usefonttheme[onlymath]{serif}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For tables
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+% For figures
+\usepackage{caption}
+\usepackage{subcaption}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\definitionname}{Definition}
+\providecommand{\examplename}{Example}
+\providecommand{\theoremname}{Theorem}
+
+\title{Pooled Cross Sections and Panel Data}
+\author{Zhentao Shi}
+\date{}
+
+\begin{document}
+
+\frame{\titlepage}
+
+% Uncomment if you want a table of contents slide
+% \begin{frame}
+%     \tableofcontents
+% \end{frame}
+
+\section{Pooled Cross Sections}
+\frame{\sectionpage}
+
+\begin{frame}{Pooled Cross Sections}
+    \begin{itemize}
+        \item Cross-sectional datasets collected at different time points \pause
+        \item Group-specific intercept \pause
+        \item Analysis of time trends \pause
+        \item Example: Time trend of migrant workers' wages in Shenzhen
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Difference-in-Difference (DID) Method}
+    \begin{itemize}
+        \item Isolate the treatment effect \pause
+        \item \emph{difference-in-difference} (DID) \pause
+        \item Example: Effect of the HKU Station opening on rental prices in the nearby area, with HKU as the treatment group and CUHK as the control group.
+    \end{itemize}
+\end{frame}
+
+\section{Panel Data}
+\frame{\sectionpage}
+
+\begin{frame}{Panel Data Structure}
+    \begin{itemize}
+        \item The same individuals over time $t=1,\ldots,T$ \pause
+        \item The potential endogeneity of regressors \pause
+        \item i.i.d. across $i=1,\ldots,n$ \pause
+        \item dependence allowed within a group over $t=1,\ldots,T$ for the same $i$. \pause
+            \begin{equation}
+                y_{it}=\beta_{1}+x_{it}\beta_{2}+u_{it},\ i=1,\ldots,n; t=1,\ldots,T \label{eq:basic_eq}
+            \end{equation} \pause
+            $u_{it}=\alpha_{i}+\epsilon_{it}$ : \emph{composite error}.
+    \end{itemize}
+\end{frame}
+
+\subsection{Fixed Effect}
+\frame{\subsectionpage}
+
+\begin{frame}{Fixed Effect Model}
+    \begin{itemize}
+        \item If $\mathrm{cov}(\alpha_{i},x_{it})=0$, OLS is consistent. Otherwise, consistency breaks down \pause
+        \item Arbitrary correlation between $\alpha_{i}$ and $x_{it}$ \pause
+        \item Eliminate $\alpha_{i}$
+            \begin{equation}
+            \overline{y}_{i}=\beta_{1}+\overline{x}_{i}\beta_{2}+\bar{u}_{it}=\beta_{1}+\overline{x}_{i}\beta_{2}+\alpha_{i}+\bar{\epsilon}_{it}\label{eq:group_mean}
+            \end{equation} \pause
+            where $\overline{y}_{i}=\frac{1}{T}\sum_{t=1}^{T}y_{it}$ \\ \pause
+            Subtracting (\ref{eq:group_mean}) from (\ref{eq:basic_eq}) \pause
+            \begin{equation}
+            \tilde{y}_{it}=\tilde{x}_{it}\beta_{2}+\tilde{\epsilon}_{it}\label{eq:FE_demean}
+            \end{equation} \pause
+            where $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Within Estimator}
+    \begin{itemize}
+        \item Within estimator:
+        \[
+            \widehat{\beta}_{2}^{FE}=\left(\tilde{X}'\tilde{X}\right)^{-1}\tilde{X}'\tilde{y} \pause
+        \]
+        \item Consistency is achieved if strict exogeneity holds.
+    \end{itemize}\pause
+    \begin{assumption*}[FE.1]
+        $\E\left[\epsilon_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ where $\mathbf{x}_{i}=\left(x_{i1},\ldots,x_{iT}\right)$. 
+    \end{assumption*}\pause
+    \begin{assumption*}[FE.2]
+     $\mathrm{var}\left(\epsilon_{i}|\alpha_{i},\mathbf{x}_{i}\right)=\sigma_{\epsilon}^{2}I_{T}$. 
+    \end{assumption*}
+\end{frame}
+
+\begin{frame}{Variance Estimation for FE}
+    \begin{itemize}
+        \item Under homoskedasticity:
+        \[
+            \widehat{\sigma}_{\epsilon}^{2}=\frac{1}{n\left(T-1\right)}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\tilde{\epsilon}}_{it}^{2}.
+        \]
+        where $\widehat{\tilde{\epsilon}}=\tilde{y}_{it}-\tilde{x}_{it}\widehat{\beta}_{2}^{FE}$ \pause
+    \end{itemize}
+    \begin{theorem}[FE Asymptotic Normality]
+        If FE.1 and FE.2 hold, then
+        \[
+            \left(\widehat{\sigma}_{\epsilon}^{2}\left(\tilde{X}'\tilde{X}\right)^{-1}\right)^{-1/2}\left(\widehat{\beta}_{2}^{FE}-\beta_{2}^{0}\right)\Rightarrow N\left(0,I_{K}\right).
+        \]
+    \end{theorem}
+\end{frame}
+
+\subsection{Random Effect}
+\frame{\subsectionpage}
+
+\begin{frame}{Random Effect}
+    \begin{itemize}
+        \item $\mathrm{cov}(\alpha_{i},x_{it})=0$. \pause
+    \end{itemize}
+    \begin{assumption*}[RE.1]
+        $\E\left[\epsilon_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ and $\E\left[\alpha_{i}|\mathbf{x}_{i}\right]=0$. \pause
+    \end{assumption*}
+    \[S=\mathrm{var}\left(u_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}\mathbf{1}_{T}\mathbf{1}_{T}'+\sigma_{\epsilon}^{2}I_{T},\ \mbox{for all }i=1,\ldots,n. \pause
+    \]
+    \begin{itemize}
+        \item rewrite (\ref{eq:basic_eq}) 
+            \[
+            y_{it}=w_{it}\boldsymbol{\beta}+u_{it},
+            \]
+            where $\boldsymbol{\beta}=\left(\beta_{1},\beta_{2}'\right)'$ and
+            $w_{it}=\left(1,x_{it}\right)$ are $K+1$ vectors \pause
+        \item the GLS estimator is:
+            \[
+            \widehat{\boldsymbol{\beta}}^{RE}=\left(\sum_{i=1}^{n}\mathbf{w}_{i}'S^{-1}\mathbf{w}_{i}\right)^{-1}\sum_{i=1}^{n}\mathbf{w}_{i}'S^{-1}\mathbf{y}_{i}=\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1}y
+            \]
+            where $\mathbf{S}=I_{T}\otimes S$
+    \end{itemize} 
+\end{frame}
+
+\begin{frame}{Random Effect}
+    \begin{assumption*}[RE.2]
+        $\mathrm{var}\left(\epsilon_{i}|\mathbf{x}_{i},\alpha_{i}\right)=\sigma_{\epsilon}^{2}I_{T}$
+    and $\mathrm{var}\left(\alpha_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}.$
+    \end{assumption*} \pause
+    \begin{itemize}
+        \item $\widehat{u}_{it}=y_{it}-x_{it}\widehat{\boldsymbol{\beta}}^{RE}$ \pause
+        \item \begin{eqnarray*}
+            \widehat{\sigma}_{u}^{2} &=& \frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{u}_{it}^{2}, \pause \\
+            \widehat{\sigma}_{\epsilon}^{2} &=& \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T(T-1)}\sum_{t=1}^{T}\sum_{r=1}^{T}\sum_{r\neq t}\widehat{u}_{it}\widehat{u}_{ir}.
+        \end{eqnarray*}
+    \end{itemize}
+\end{frame}
+
+\subsection{Hausman Test}
+\frame{\subsectionpage}
+
+\begin{frame}{Hausman Test}
+    \begin{itemize}
+        \item Tests for correlation between $\alpha_{i}$ and $x_{it}$. \pause
+        \item Null hypothesis: $\mathrm{cov}(\alpha_{i},x_{it})=0$. \pause
+        \item Test statistic:
+        \[
+            \left(\widehat{\beta}_{2}^{FE}-\widehat{\beta}_{2}^{RE}\right)^{'}\left(\widehat{Avar}\left(\widehat{\beta}_{2}^{FE}\right)-\widehat{Avar}\left(\widehat{\beta}_{2}^{RE}\right)\right)^{-1}\left(\widehat{\beta}_{2}^{FE}-\widehat{\beta}_{2}^{RE}\right)\\\Rightarrow \chi^{2}(K)
+        \]
+    \end{itemize}
+\end{frame}
+
+\end{document}

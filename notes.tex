@@ -1,0 +1,726 @@
+%% LyX 2.4.2.1 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,oneside,english]{book}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\pagestyle{plain}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\synctex=-1
+\usepackage{xcolor}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\usepackage[authoryear]{natbib}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage[pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\providecolor{lyxadded}{rgb}{0,0,1}
+\providecolor{lyxdeleted}{rgb}{1,0,0}
+%% Change tracking with ulem and xcolor: base macros
+\DeclareRobustCommand{\mklyxadded}[1]{\textcolor{lyxadded}\bgroup#1\egroup}
+\DeclareRobustCommand{\mklyxdeleted}[1]{\textcolor{lyxdeleted}\bgroup\mklyxsout{#1}\egroup}
+\DeclareRobustCommand{\mklyxsout}[1]{\ifx\\#1\else\sout{#1}\fi}
+%% Change tracking with ulem, xcolor, and hyperref: ct markup
+\DeclareRobustCommand{\lyxadded}[4][]{\texorpdfstring{\mklyxadded{#4}}{#4}}
+\DeclareRobustCommand{\lyxdeleted}[4][]{\texorpdfstring{\mklyxdeleted{#4}}{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{plain}
+\newtheorem*{assumption*}{\protect\assumptionname}
+\theoremstyle{plain}
+\newtheorem*{lem*}{\protect\lemmaname}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+\theoremstyle{remark}
+\newtheorem*{rem*}{\protect\remarkname}
+\theoremstyle{definition}
+\newtheorem*{xca*}{\protect\exercisename}
+\theoremstyle{remark}
+\newtheorem*{claim*}{\protect\claimname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\date{}
+
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+
+\makeatother
+
+\providecommand{\assumptionname}{Assumption}
+\providecommand{\claimname}{Claim}
+\providecommand{\exercisename}{Exercise}
+\providecommand{\lemmaname}{Lemma}
+\providecommand{\remarkname}{Remark}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+\global\long\def\top{\stackrel{\mathrm{p}}{\to}}%
+ 
+\global\long\def\Op{O_{\mathrm{p}}}%
+\global\long\def\op{o_{\mathrm{p}}}%
+\global\long\def\E{\mathbb{E}}%
+\global\long\def\d{\mathrm{d}}%
+
+\title{A Companion to \\
+Econometric Theory and Applications}
+\author{Zhentao Shi\bigskip\bigskip\\
+Department of Economics, \\
+the Chinese University of Hong Kong\\
+\\
+\\
+This Version: November 15, 2018}
+\maketitle
+
+\chapter*{Preface}
+
+These notes are written for the Master of Science students attending
+Econ5121B or C at the Chinese University of Hong Kong. Designed as
+a first graduate-level econometric course, the lectures emphasize
+intuition, rather than theoretical completeness. I develop these notes
+to recap the theories for easy review and reference and to extend
+important points omitted in the lectures. The word \emph{companion}
+in the title suggests that they are complements, not substitutes,
+of the lectures. They are not self-contained.
+
+Caveat: Because these notes are newly written and not peer-reviewed,
+typos and errors are inevitable. Please notify me if you find any
+remaining ones.
+
+\chapter{Pooled Cross Sections and Panel Data}
+
+\section{Pooled Cross Sections}
+
+Pooled cross sections are cross-sectional datasets collected at different
+time points. With a group-specific intercept, we can use the pooled
+cross sections to analyze time trends when slope coefficients are
+believed to be stable across time. We discussed an example of the
+time trend of migrant workers' wage in Shenzhen.
+
+Pooled cross sections collected at different time and locations help
+isolate the treatment effect. This is a popular method called \emph{difference-in-difference},
+and often abbreviated as DID. We discussed an example of evaluating
+the effect of the HKU Station opening to the rental prices of the
+nearby area. We use HKU as the treatment group, and CUHK as the control
+group. 
+
+\section{Panel Data}
+
+A panel dataset tracks the same individuals across time $t=1,\ldots,T$.
+The potential endogeneity of the regressors motivates the panel data
+models. We assume the observations are i.i.d. across $i=1,\ldots,n$,
+while we allow some form of dependence within a group across $t=1,\ldots,T$
+for the same $i$. We maintain the linear equation 
+\begin{equation}
+y_{it}=\beta_{1}+x_{it}\beta_{2}+u_{it},\ i=1,\ldots,n;t=1,\ldots,T\label{eq:basic_eq}
+\end{equation}
+where $u_{it}=\alpha_{i}+\epsilon_{it}$ is called the \emph{composite
+error}. Note that $\alpha_{i}$ is the time-invariant unobserved heterogeneity,
+while $\epsilon_{it}$ varies across individuals and time periods. 
+
+\subsection{Fixed Effect}
+
+If $\mathrm{cov}\left(\alpha_{i},x_{it}\right)=0$, OLS is consistent
+for (\ref{eq:basic_eq}); otherwise the consistency breaks down. The
+fixed effect model allows $\alpha_{i}$ and $x_{it}$ to be arbitrarily
+correlated. The trick to regain consistency is to eliminate $\alpha_{i},i=1,\ldots,n$
+. The rest of this section develops the consistency and asymptotic
+distribution of the \emph{within estimator}, the default fixed-effect
+(FE) estimator. The within estimator transforms the data by subtracting
+all the observable variables by the corresponding group means. Averaging
+the $T$ equations in (\ref{eq:basic_eq}) for the same $i$, we have
+\begin{equation}
+\overline{y}_{i}=\beta_{1}+\overline{x}_{i}\beta_{2}+\bar{u}_{it}=\beta_{1}+\overline{x}_{i}\beta_{2}+\alpha_{i}+\bar{\epsilon}_{it}.\label{eq:group_mean}
+\end{equation}
+where $\overline{y}_{i}=\frac{1}{T}\sum_{t=1}^{T}y_{it}$. Subtracting
+(\ref{eq:group_mean}) from (\ref{eq:basic_eq}) gives
+\begin{equation}
+\tilde{y}_{it}=\tilde{x}_{it}\beta_{2}+\tilde{\epsilon}_{it}\label{eq:FE_demean}
+\end{equation}
+where $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$. We then run OLS with
+the demeaned data, and obtain the within estimator 
+\[
+\widehat{\beta}_{2}^{FE}=\left(\tilde{X}'\tilde{X}\right)^{-1}\tilde{X}'\tilde{y},
+\]
+where $\tilde{y}=\left(y_{it}\right)_{i,t}$ stacks all the $nT$
+observations into a vector, and similarly defined is $\tilde{X}$
+as an $nT\times K$ matrix, where $K$ is the dimension of $\beta_{2}$.
+
+We know that OLS in (\ref{eq:FE_demean}) would be consistent if $\E\left[\tilde{\epsilon}_{it}|\tilde{x}_{it}\right]=0$.
+Below we provide a sufficient condition, which is often called \emph{strict
+exogeneity}. 
+\begin{assumption*}[FE.1]
+$\E\left[\epsilon_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ where
+$\mathbf{x}_{i}=\left(x_{i1},\ldots,x_{iT}\right)$.
+\end{assumption*}
+Its strictness is relative to the contemporary exogeneity $\E\left[\epsilon_{it}|\alpha_{i},x_{it}\right]=0$.
+FE.1 is more restrictive as it assumes that the error $\epsilon_{it}$
+is mean independent of the past, present and future explanatory variables.
+
+When we talk about the consistency in panel data, typically we are
+considering $n\to\infty$ while $T$ stays fixed. This asymptotic
+framework is appropriate for panel datasets with many individuals
+but only a few time periods.
+\begin{lem*}[FE consistency]
+ If FE.1 is satisfied, then $\widehat{\beta}_{2}^{FE}$ is consistent.
+\end{lem*}
+The variance estimation for the FE estimator is a little bit tricky.
+We assume a homoskedasitcity condition to simplify the calculation.
+Violation of this assumption changes the form of the asymptotic variance,
+but does not jeopardize the asymptotic normality. 
+\begin{assumption*}[FE.2]
+ $\mathrm{var}\left(\epsilon_{i}|\alpha_{i},\mathbf{x}_{i}\right)=\sigma_{\epsilon}^{2}I_{T}$.
+\end{assumption*}
+Under FE.1 and FE.2, $\widehat{\sigma}_{\epsilon}^{2}=\frac{1}{n\left(T-1\right)}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\tilde{\epsilon}}_{it}^{2}$
+is a consistent estimator of $\sigma_{\epsilon}^{2}$, where $\widehat{\tilde{\epsilon}}=\tilde{y}_{it}-\tilde{x}_{it}\widehat{\beta}_{2}^{FE}$.
+Note that the denominator is $n\left(T-1\right)$, not $nT$. 
+\begin{thm*}[FE asymptotic normality]
+ If FE.1 and FE.2 are satisfied, then 
+\[
+\left(\widehat{\sigma}_{\epsilon}^{2}\left(\tilde{X}'\tilde{X}\right)^{-1}\right)^{-1/2}\left(\widehat{\beta}_{2}^{FE}-\beta_{2}^{0}\right)\Rightarrow N\left(0,I_{K}\right).
+\]
+\end{thm*}
+\begin{rem*}
+We implicitly assume some regularity conditions that allow us to invoke
+a law of large numbers and a central limit theorem. We ignore those
+technical details here. 
+\end{rem*}
+It is important to notice that the within-group demean in FE eliminates
+all time-invariant explanatory variables, including the intercept.
+Therefore from FE we cannot obtain the coefficient estimates of these
+time-invariant variables.
+
+\subsection{Random Effect}
+
+The random effect estimator pursues efficiency at a knife-edge special
+case $\mathrm{cov}\left(\alpha_{i},x_{it}\right)=0$. As mentioned
+above, FE is consistent when $\alpha_{i}$ and $x_{it}$ are uncorrelated.
+However, an inspection of the covariance matrix reveals that OLS is
+inefficient. 
+
+The model is again (\ref{eq:basic_eq}), while we assume
+\begin{assumption*}[RE.1]
+ $\E\left[\epsilon_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ and
+$\E\left[\alpha_{i}|\mathbf{x}_{i}\right]=0$. 
+\end{assumption*}
+RE.1 obviously implies $\mathrm{cov}\left(\alpha_{i},x_{it}\right)=0$,
+so 
+\[
+S=\mathrm{var}\left(u_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}\mathbf{1}_{T}\mathbf{1}_{T}'+\sigma_{\epsilon}^{2}I_{T},\ \mbox{for all }i=1,\ldots,n.
+\]
+Because the covariance matrix is not a scalar multiplication of the
+identity matrix, OLS is inefficient. 
+
+As mentioned before, FE estimation kills all time-invariant regressors.
+In contrast, RE allows time-invariant explanatory variables. Let us
+rewrite (\ref{eq:basic_eq}) as 
+\[
+y_{it}=w_{it}\boldsymbol{\beta}+u_{it},
+\]
+where $\boldsymbol{\beta}=\left(\beta_{1},\beta_{2}'\right)'$ and
+$w_{it}=\left(1,x_{it}\right)$ are $K+1$ vectors, i.e., $\boldsymbol{\beta}$
+is the parameter including the intercept, and $w_{it}$ is the explanatory
+variables including the constant. Had we known $S$, the GLS estimator
+would be 
+\[
+\widehat{\boldsymbol{\beta}}^{RE}=\left(\sum_{i=1}^{n}\mathbf{w}_{i}'S^{-1}\mathbf{w}_{i}\right)^{-1}\sum_{i=1}^{n}\mathbf{w}_{i}'S^{-1}\mathbf{y}_{i}=\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1}y
+\]
+where $\mathbf{S}=I_{T}\otimes S$. (``$\otimes$'' denotes the Kronecker
+product.) In practice, $\sigma_{\alpha}^{2}$ and $\sigma_{\epsilon}^{2}$
+in $S$ are unknown, so we seek consistent estimators. Again, we impose
+a simplifying assumption parallel to FE.2. 
+\begin{assumption*}[RE.2]
+ $\mathrm{var}\left(\epsilon_{i}|\mathbf{x}_{i},\alpha_{i}\right)=\sigma_{\epsilon}^{2}I_{T}$
+and $\mathrm{var}\left(\alpha_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}.$
+\end{assumption*}
+Under this assumption, we can consistently estimate the variances
+from the residuals $\widehat{u}_{it}=y_{it}-x_{it}\widehat{\boldsymbol{\beta}}^{RE}$.
+That is 
+\begin{eqnarray*}
+\widehat{\sigma}_{u}^{2} & = & \frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{u}_{it}^{2}\\
+\widehat{\sigma}_{\epsilon}^{2} & = & \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T\left(T-1\right)}\sum_{t=1}^{T}\sum_{r=1}^{T}\sum_{r\neq t}\widehat{u}_{it}\widehat{u}_{ir}.
+\end{eqnarray*}
+
+Again, we claim the asymptotic normality.
+\begin{thm*}[RE asymptotic normality]
+ If RE.1 and RE.2 are satisfied, then 
+\[
+\left(\widehat{\sigma}_{u}^{2}\left(W'\widehat{\mathbf{S}}^{-1}W\right)^{-1}\right)^{-1/2}\left(\widehat{\boldsymbol{\beta}}^{RE}-\boldsymbol{\beta}_{0}\right)\Rightarrow N\left(0,I_{K+1}\right)
+\]
+where $\widehat{\mathbf{S}}$ is a consistent estimator of $\mathbf{S}$.
+\end{thm*}
+
+\subsection{Hausman Test}
+
+As we have discussed, the consistency of FE can be obtained under
+arbitrary correlation between $\alpha_{i}$ and $x_{it}$, while RE
+is consistent only if they are uncorrelated. In this section we talk
+about the Hausman test in a heuristic manner.
+
+The null hypothesis of the Hausman test is that $\mathrm{cov}\left(\alpha_{i},x_{it}\right)=0$
+so that RE is asymptotically efficient. Under the null FE is consistent
+but inefficient. However, when the null is violated RE is inconsistent
+whereas FE remains consistent. Suppose there is no time-invariant
+variable in $x_{it}$, then under the null hypothesis
+\[
+\left(\widehat{\beta}_{2}^{FE}-\widehat{\beta}_{2}^{RE}\right)^{'}\left(\widehat{Avar}\left(\widehat{\beta}_{2}^{FE}\right)-\widehat{Avar}\left(\widehat{\beta}_{2}^{RE}\right)\right)^{-1}\left(\widehat{\beta}_{2}^{FE}-\widehat{\beta}_{2}^{RE}\right)\Rightarrow\chi^{2}\left(K\right).
+\]
+Hausman test rejects the null hypothesis if the test statistic is
+larger than the desirable quantile of the chi-square distribution
+with degree of freedom $K$.
+
+\chapter{Generalized Method of Moments}
+
+\emph{Generalized method of moments} (GMM) is an estimation principle
+that extends \emph{method of moments}. It seeks the parameter that
+minimizes a quadratic form of the moments. It is particularly useful
+in estimating structural models in which moment conditions can be
+derived from economic theory. GMM emerges as one of the most popular
+estimators in modern econometrics, and it includes conventional methods
+like the two-stage least squares (2SLS) and the three-stage least
+square as special cases. 
+
+\section{Examples of Endogeneity}
+
+As econometricians mostly work with non-experimental data, we cannot
+overstate the importance of the endogeneity problem. We go over a
+few examples.
+
+\subsection{Dynamic Panel Data Model}
+
+We know that the first-difference (FD) estimator is consistent for
+(static) panel data model. Nevertheless, the FD estimator encounters
+difficulty in a dynamic panel model 
+
+\[
+y_{it}=\beta_{1}+\beta_{2}y_{it-1}+\beta_{3}x_{it}+\alpha_{i}+\epsilon_{it},
+\]
+even if we assume 
+\begin{equation}
+\E\left[\epsilon_{it}|\alpha_{i},x_{i1},\ldots,x_{iT},y_{it-1},y_{it-2},\ldots,y_{i0}\right]=0.\label{eq:dyn_mean_0}
+\end{equation}
+ When taking difference of the above equation for periods $t$ and
+$t-1$, we have 
+\[
+\left(y_{it}-y_{it-1}\right)=\beta_{2}\left(y_{it-1}-y_{it-2}\right)+\beta_{3}\left(x_{it}-x_{it-1}\right)+\left(\epsilon_{it}-\epsilon_{it-1}\right).
+\]
+Under (\ref{eq:dyn_mean_0}), $\E\left[\left(x_{it}-x_{it-1}\right)\left(\epsilon_{it}-\epsilon_{it-1}\right)\right]=0$,
+but 
+\[
+\E\left[\left(y_{it-1}-y_{it-2}\right)\left(\epsilon_{it}-\epsilon_{it-1}\right)\right]=-\beta_{2}\E\left[y_{it-1}\epsilon_{it-1}\right]=-\beta_{2}\E\left[\epsilon_{it-1}^{2}\right]\neq0.
+\]
+
+
+\subsection{Keynesian-Type Macro Equations}
+
+This is a model borrowed from Hayashi (2000, p.193) but originated
+from Haavelmo (1943). An econometrician is interested in learning
+$\beta_{2}$, the marginal propensity of consumption, in the Keynesian-type
+equation 
+\begin{equation}
+C_{i}=\beta_{1}+\beta_{2}Y_{i}+u_{i}\label{eq:keynes}
+\end{equation}
+where $C_{i}$ is household consumption, $Y_{i}$ is the GNP contribution,
+and $u_{i}$ is the unobservable error. However, $Y_{i}$ and $C_{i}$
+are connected by an accounting equality (with no error) 
+\[
+Y_{i}=C_{i}+I_{i},
+\]
+where $I_{i}$ is investment. We assume $\E\left[u_{i}|I_{i}\right]=0$
+as investment is determined in advance. OLS (\ref{eq:keynes}) will
+be inconsistent because in the reduced-form $Y_{i}=\frac{1}{1-\beta_{2}}\left(\beta_{1}+u_{i}+I_{i}\right)$
+implies $\E\left[Y_{i}u_{i}\right]=\E\left[u_{i}^{2}\right]/\left(1-\beta_{2}\right)\neq0$. 
+
+\subsection{Classical Measurement Error}
+
+Endogeneity also emerges when an explanatory variables is not directly
+observable but is replaced by a measurement with error. Suppose the
+true linear model is 
+\begin{equation}
+y_{i}=\beta_{1}+\beta_{2}x_{i}^{*}+u_{i},\label{eq:measurement_error}
+\end{equation}
+ with $\E\left[u_{i}|x_{i}^{*}\right]=0$. We cannot observe $x_{i}^{*}$
+but we observe $x_{i}$, a measurement of $x_{i}^{*}$, and they are
+linked by 
+\[
+x_{i}=x_{i}^{*}+v_{i}
+\]
+ with $\E\left[v_{i}|x_{i}^{*},u_{i}\right]=0$. Such a formulation
+of the measurement error is called the \emph{classical measurement
+error}. When we substitute out the unobservable $x_{i}^{*}$ in (\ref{eq:measurement_error}),
+we have 
+\begin{equation}
+y_{i}=\beta_{1}+\beta_{2}\left(x_{i}-v_{i}\right)+u_{i}=\beta_{1}+\beta_{2}x_{i}+e_{i}\label{eq:measurement_error2}
+\end{equation}
+where $e_{i}=u_{i}-\beta_{2}v_{i}$. The correlation
+\[
+\E\left[x_{i}e_{i}\right]=\E\left[\left(x_{i}^{*}+v_{i}\right)\left(u_{i}-\beta_{2}v_{i}\right)\right]=-\beta_{2}\E\left[v_{i}^{2}\right]\neq0.
+\]
+ OLS (\ref{eq:measurement_error2}) would not deliver a consistent
+estimator.
+
+\section{GMM }
+
+\subsection{GMM in Linear Model}
+
+In this section we discuss GMM in a linear single structural equation.
+A structural equation is a model of economic interest. For example,
+(\ref{eq:keynes}) is a structural equation in which $\beta_{2}$
+can be interpreted as the marginal propensity of consumption. Consider
+the following linear structural model 
+\begin{equation}
+y_{i}=x_{1i}\beta_{1}+z_{1i}\beta_{2}+\epsilon_{i},\label{eq:basic_1}
+\end{equation}
+where $x_{1i}$ is a $k_{1}$-dimensional endogenous explanatory variables,
+$z_{1i}$ is a $k_{2}$-dimensional exogenous explanatory variables
+with the intercept included. In addition, we have $z_{2i}$, a $k_{3}$-dimensional
+excluded exogenous variables. Let $K=k_{1}+k_{2}$ and $L=k_{2}+k_{3}$.
+Denote $x_{i}=\left(x_{1i},z_{1i}\right)$ as a $K$-dimensional explanatory
+variable, and $z_{i}=\left(z_{1i},z_{2i}\right)$ as an $L$-dimensional
+exogenous vector. In the context of endogeneity, we can call the exogenous
+variable instrument variables, or simply instruments. Let $\beta=\left(\beta_{1}',\beta_{2}'\right)'$
+be a $K$-dimensional parameter of interest. From now on, we rewrite
+(\ref{eq:basic_1}) as 
+\begin{equation}
+y_{i}=x_{i}\beta+\epsilon_{i},\label{eq:basic_2}
+\end{equation}
+and we have a vector of instruments $z_{i}$.
+
+Before estimating any structural econometric model, we must check
+identification. A model is \emph{identified} if there is a one-to-one
+mapping between the distribution of the observed variables and the
+parameters. In other words, in an identified model any two parameter
+values $\beta$ and $\tilde{\beta}$, $\beta\neq\tilde{\beta}$, cannot
+generate exactly the same distribution for the observable data. In
+the context of (\ref{eq:basic_2}), identification requires that the
+true value $\beta_{0}$ is the only value on the parameters space
+that satisfies the moment condition
+\begin{equation}
+\E\left[z_{i}'\left(y_{i}-x_{i}\beta\right)\right]=0_{L}.\label{eq:moment}
+\end{equation}
+The rank condition is sufficient and necessary for identification. 
+\begin{assumption*}[Rank condition]
+$\mathrm{rank}\left(\E\left[x_{i}'z_{i}\right]\right)=K$. 
+\end{assumption*}
+Note that $\E\left[x_{i}'z_{i}\right]$ is a $K\times L$ matrix.
+The rank condition implies the \emph{order condition} $L\geq K$,
+which says that the number of excluded instruments must be no fewer
+than the number of  endogenous variables.
+\begin{thm*}
+The parameter in (\ref{eq:moment}) is identified if and only if the
+rank condition holds. 
+\end{thm*}
+\begin{proof}
+(The ``if'' direction). For any $\tilde{\beta}$ such that $\tilde{\beta}\neq\beta_{0}$,
+\[
+\E\left[z_{i}'\left(y_{i}-x_{i}\tilde{\beta}\right)\right]=\E\left[z_{i}'\left(y_{i}-x_{i}\beta_{0}\right)\right]+\E\left[z_{i}'x_{i}\right]\left(\beta_{0}-\tilde{\beta}\right)=0_{K}+\E\left[z_{i}'x_{i}\right]\left(\beta_{0}-\tilde{\beta}\right).
+\]
+Because $\mathrm{rank}\left(\E\left[x_{i}'z_{i}\right]\right)=K$,
+we would have $\E\left[z_{i}'x_{i}\right]\left(\beta_{0}-\tilde{\beta}\right)=0_{L}$
+if and only if $\beta_{0}-\tilde{\beta}=0_{K}$, which violates $\tilde{\beta}\neq\beta_{0}$.
+Therefore $\beta_{0}$ is the unique value that satisfies (\ref{eq:moment}). 
+
+(The ``only if'' direction is left as an exercise. Hint: By contrapositiveness,
+if the rank condition fails, then the model is not identified. We
+can easily prove the claim by making an example.)
+\end{proof}
+Because identification is a prerequisite for structural estimation,
+from now on we always assume that the model is identified. When it
+is just-identified ($L=K$), by (\ref{eq:moment}) we can express
+the parameter as 
+\begin{equation}
+\beta=\left(\E\left[z_{i}'x_{i}\right]\right)^{-1}\E\left[z_{i}'y_{i}\right].\label{eq:just}
+\end{equation}
+It follows by the principle of method of moments that 
+
+\[
+\hat{\beta}=\left(\frac{Z'X}{n}\right)^{-1}\frac{Z'y}{n}=\left(Z'X\right)^{-1}Z'y,
+\]
+which is exactly the 2SLS when $L=K$. In the rest of this section,
+we focus on the over-identified case ($L>K$). When $L>K$, (\ref{eq:moment})
+involves more equations than the number of parameters, directly taking
+the inverse as in (\ref{eq:just}) is inapplicable.
+
+In order to express $\beta$ explicitly, we define a criterion function
+\[
+Q\left(\beta\right)=\E\left[z_{i}'\left(y_{i}-x_{i}\beta\right)\right]'W\E\left[z_{i}'\left(y_{i}-x_{i}\beta\right)\right],
+\]
+where $W$ is an arbitrary $L\times L$ positive-definite symmetric
+matrix. Because of the quadratic form, $Q\left(\beta\right)\geq0$
+for all $\beta$. Identification indicates that $Q\left(\beta\right)=0$
+if and only if $\beta=\beta_{0}$. Therefore we conclude 
+\[
+\beta_{0}=\arg\min_{\beta}Q\left(\beta\right).
+\]
+Since $Q\left(\beta\right)$ is a smooth function of $\beta$, the
+minimizer $\beta_{0}$ can be characterized by the first-order condition
+\[
+0_{K}=\frac{\partial}{\partial\beta}Q\left(\beta_{0}\right)=-\E\left[z_{i}'x_{i}\right]'W\E\left[z_{i}'\left(y_{i}-x_{i}\beta_{0}\right)\right]=-\E\left[x_{i}'z_{i}\right]W\E\left[z_{i}'\left(y_{i}-x_{i}\beta_{0}\right)\right]
+\]
+Rearranging the above equation, we have 
+\[
+\E\left[x_{i}'z_{i}\right]W\E\left[z_{i}'x_{i}\right]\beta_{0}=\E\left[x_{i}'z_{i}\right]W\E\left[z_{i}'y_{i}\right].
+\]
+Denote $\Sigma=\E\left[z_{i}'x_{i}\right]$. Under the rank condition,
+$\Sigma'W\Sigma$ is invertible so that we can solve 
+\[
+\beta_{0}=\left(\Sigma'W\Sigma\right)^{-1}\Sigma'W\E\left[z_{i}'y_{i}\right].
+\]
+In practice, we use the sample moments to replace the corresponding
+population moments. The GMM estimator mimics its population formula.
+\begin{eqnarray*}
+\widehat{\beta} & = & \left(\frac{1}{n}\sum x_{i}'z_{i}W\frac{1}{n}\sum z_{i}'x_{i}\right)^{-1}\frac{1}{n}\sum x_{i}'z_{i}W\frac{1}{n}\sum z_{i}'y_{i}\\
+ & = & \left(\frac{X'Z}{n}W\frac{Z'X}{n}\right)^{-1}\frac{X'Z}{n}W\frac{Z'y}{n}\\
+ & = & \left(X'ZWZ'X\right)^{-1}X'ZWZ'y.
+\end{eqnarray*}
+
+\begin{xca*}
+The same GMM estimator $\hat{\beta}$ can be obtained by minimizing
+\[
+\left[\frac{1}{n}\sum_{i=1}^{n}z_{i}'\left(y_{i}-x_{i}\beta\right)\right]'W\left[\frac{1}{n}\sum_{i=1}^{n}z_{i}'\left(y_{i}-x_{i}\beta\right)\right]=\frac{\left(y-X\beta\right)'Z}{n}W\frac{Z'\left(y-X\beta\right)}{n},
+\]
+or more concisely, 
+\[
+\hat{\beta}=\arg\min_{\beta}\left(y-X\beta\right)'ZWZ'\left(y-X\beta\right).
+\]
+\end{xca*}
+Now we check the asymptotic properties of $\widehat{\beta}$. A few
+assumptions are in order.
+\begin{assumption*}[A.1]
+ $Z'X/n\top\Sigma$ and $Z'\epsilon/n\top0_{L}$.
+\end{assumption*}
+A.1 assumes that we can apply a law of large numbers, so that that
+the sample moments $Z'X/n$ and $Z'\epsilon/n$ converge in probability
+to their population counterparts. 
+\begin{thm*}
+Under A.1, $\widehat{\beta}$ is consistent.
+\end{thm*}
+\begin{proof}
+The step is similar to the consistency proof of OLS. 
+\[
+\widehat{\beta}=\left(X'ZWZ'X\right)^{-1}X'ZWZ'\left(X'\beta_{0}+\epsilon\right)=\beta_{0}+\left(\frac{X'Z}{n}W\frac{Z'X}{n}\right)^{-1}\frac{X'Z}{n}W\frac{Z'\epsilon}{n}\top\beta_{0}\qedhere
+\]
+\end{proof}
+To check asymptotic normality, we assume that a central limit theorem
+can be applied.
+\begin{assumption*}[A.2]
+ $\frac{1}{\sqrt{n}}\sum_{i=1}^{n}z_{i}'\epsilon_{i}\Rightarrow N\left(0_{L},\Omega\right)$,
+where $\Omega=\E\left[z_{i}'z_{i}\epsilon_{i}^{2}\right].$
+\end{assumption*}
+\begin{thm*}[Asymptotic Normality]
+Under A.1 and A.2, 
+\begin{equation}
+\sqrt{n}\left(\widehat{\beta}-\beta_{0}\right)\Rightarrow N\left(0_{K},\left(\Sigma'W\Sigma\right)^{-1}\Sigma'W\Omega W\Sigma\left(\Sigma'W\Sigma\right)^{-1}\right).\label{eq:normality}
+\end{equation}
+\end{thm*}
+\begin{proof}
+Multiply $\widehat{\beta}-\beta_{0}$ by the scaling factor $\sqrt{n}$,
+\[
+\sqrt{n}\left(\widehat{\beta}-\beta_{0}\right)=\left(\frac{X'Z}{n}W\frac{Z'X}{n}\right)^{-1}\frac{X'Z}{n}W\frac{Z'\epsilon}{\sqrt{n}}=\left(\frac{X'Z}{n}W\frac{Z'X}{n}\right)^{-1}\frac{X'Z}{n}W\frac{1}{\sqrt{n}}\sum_{i=1}^{n}z_{i}'\epsilon_{i}.
+\]
+The conclusion follows as $\frac{X'Z}{n}W\frac{Z'X}{n}\top\Sigma'W\Sigma$
+and $\frac{X'Z}{n}W\frac{1}{\sqrt{n}}\sum z_{i}'\epsilon_{i}\Rightarrow\Sigma'W\times N\left(0,\Omega\right)$.
+\end{proof}
+It is clear from (\ref{eq:normality}) that the GMM estimator's asymptotic
+variance depends on the choice of $W$. A natural question follows:
+can we optimally choose a $W$ to make the asymptotic variance as
+small as possible? Here we claim the result without a proof. 
+\begin{claim*}
+The choice $W=\Omega^{-1}$ makes $\widehat{\beta}$ an asymptotically
+efficient estimator, under which the asymptotic variance is $\left(\Sigma'\Omega^{-1}\Sigma\right)^{-1}\Sigma'\Omega^{-1}\Omega\Omega^{-1}\Sigma\left(\Sigma'\Omega^{-1}\Sigma\right)^{-1}=\left(\Sigma'\Omega^{-1}\Sigma\right)^{-1}.$
+\end{claim*}
+In practice, $\Omega$ is unknown but can be estimated. Hansen (1982)
+suggests the following procedure, which is known as the\emph{ two-step
+GMM}.
+\begin{enumerate}
+\item Choose any valid $W$, say $W=I_{L}$, to get a consistent (but inefficient
+in general) estimator $\hat{\beta}$. Save the residual $\widehat{\epsilon}_{i}=y_{i}-x_{i}\widehat{\beta}$
+and estimate the variance matrix $\widehat{\Omega}=\frac{1}{n}\sum z_{i}'z_{i}\widehat{\epsilon}_{i}^{2}.$
+\item Set $W=\widehat{\Omega}^{-1}$ and obtain a second estimator 
+\[
+\widehat{\beta}=\left(X'Z\widehat{\Omega}^{-1}Z'X\right)^{-1}X'Z\widehat{\Omega}^{-1}Z'y.
+\]
+This second estimator is asymptotic efficient.
+\end{enumerate}
+If we further assume conditional homoskedasticity, then $\Omega=\E\left[z_{i}'z_{i}\epsilon_{i}^{2}\right]=\E\left[z_{i}'z_{i}\E\left[\epsilon_{i}^{2}|z_{i}\right]\right]=\sigma^{2}\E\left[z'_{i}z_{i}\right]$.
+Therefore in the first-step of the two-step GMM we can estimate the
+variance of the error term by $\widehat{\sigma}^{2}=\frac{1}{n}\sum_{i=1}^{n}\widehat{\epsilon}_{i}^{2}$
+and the variance matrix by $\widehat{\Omega}=\widehat{\sigma}^{2}\frac{1}{n}\sum_{i=1}^{n}z_{i}'z_{i}=\widehat{\sigma}^{2}Z'Z/n$.
+When we plug this $W=\widehat{\Omega}^{-1}$ into the GMM estimator,
+\begin{eqnarray*}
+\widehat{\beta} & = & \left(X'Z\left(\widehat{\sigma}^{2}\frac{Z'Z}{n}\right)^{-1}Z'X\right)^{-1}X'Z\left(\widehat{\sigma}^{2}\frac{Z'Z}{n}\right)^{-1}Z'y\\
+ & = & \left(X'Z\left(Z'Z\right)^{-1}Z'X\right)^{-1}X'Z\left(Z'Z\right)^{-1}Z'y.
+\end{eqnarray*}
+This is exactly the same expression of 2SLS for $L>K$. Therefore,
+2SLS can be viewed as a special case of GMM with $W=\left(Z'Z/n\right)^{-1}$.
+Under conditional homoskedasticity, 2SLS is the efficient estimator;
+otherwise 2SLS is inefficient.
+
+
+\chapter{Unit Root and Cointegration}
+
+\section{ Unit Root Process }
+
+A \emph{covariance stationary} time series satisfies (i) $E[y_{t}]$
+is a constant; (ii) $var[y_{t}]$ is a constant; and (iii) $cov[y_{t},y_{s}]$
+is a function of $|t-s|$ but not of $t$ or $s$. The time series
+is \emph{non-stationary }if one of these conditions are violated.
+Let $\left(y_{t}\right)$ be an AR(1)
+\begin{equation}
+y_{t}=\beta+\gamma y_{t-1}+u_{t},\label{AR1}
+\end{equation}
+ where $(u_{t})$ is a white noise with mean 0 and variance $\sigma^{2}$.
+If $|\gamma|<1$, $E[y_{0}]=\beta/(1-\gamma)$ and $var[y_{0}]=\sigma^{2}/(1-\gamma^{2})$,
+then this AR(1) is stationary.\footnote{AR(1) with $\left|\gamma\right|<1$ is not stationary without the
+mean and the variance assumptions on $y_{0}$. This point is often
+ignored in heuristics as the role of $y_{0}$ becomes negligible in
+a long time series.} To verify this, we rewrite $y_{t}$ by repeatedly substituting out
+the lag terms until $y_{0}$. 
+\[
+y_{t}=\beta+\gamma(\beta+\gamma y_{t-2}+u_{t-1})+u_{t}=\cdots=\gamma^{t}y_{0}+\beta\sum_{r=0}^{t-1}\gamma^{r}+\sum_{r=0}^{t-1}\gamma^{r}u_{t-r}
+\]
+By the formula for geometric sums, 
+\[
+E[y_{t}]=\gamma^{t}\beta/(1-\gamma)+\beta(1-\gamma^{t})/(1-\gamma)=\beta/(1-\gamma)
+\]
+\[
+var[y_{t}]=\sigma^{2}\gamma^{2t}/(1-\gamma^{2})+\sigma^{2}(1-\gamma^{2t})/(1-\gamma^{2})=\sigma^{2}/(1-\gamma^{2}).
+\]
+Without loss of generality, for the covariance we can assume $t>s$.
+\begin{eqnarray*}
+cov[y_{t},y_{s}] & = & cov\left[(u_{t}+\cdots+\gamma^{t-s}u_{s}+\cdots+\gamma^{t-1}u_{1}),(u_{s}+\cdots+\gamma^{s-1}u_{1})\right]+cov(\gamma^{t}y_{0},\gamma^{s}y_{0})\\
+ & = & \gamma^{t-s}var[(u_{s}+\cdots+\gamma^{s-1}u_{1})]+\gamma^{t+s}var(y_{0})\\
+ & = & \gamma^{t-s}\sigma^{2}\frac{1-\gamma^{2s}}{1-\gamma^{2}}+\gamma^{t+s}\sigma^{2}/\left(1-\gamma^{2}\right)\\
+ & = & \gamma^{t-s}\sigma^{2}/(1-\gamma^{2})
+\end{eqnarray*}
+For general $t$ and $s$, $cov[y_{t},y_{s}]=\gamma^{|t-s|}\sigma^{2}/(1-\gamma^{2})$
+.
+
+AR(1) with $\gamma=1$ is a \emph{unit root process}. The above formulae
+no longer apply when $\gamma=1$. Again, we substitute out the lag
+terms to obtain 
+\[
+y_{t}=\beta+\gamma y_{t-1}+u_{t}=\cdots=y_{0}+t\beta+\sum_{r=1}^{t}u_{t},
+\]
+so that 
+\begin{eqnarray*}
+E[y_{t}] & = & E[y_{0}]+t\beta;\\
+var[y_{t}] & = & var[y_{0}]+t\sigma^{2};\\
+cov[y_{t},y_{s}] & = & var(y_{0})+\min(t,s)\sigma^{2}.
+\end{eqnarray*}
+The mean, the variance and the covariance vary with $t$ and $s$.
+Even if $\beta=0$, the variance increases with $t$. In our R demonstration,
+we witness very different behavior of a stationary AR and a non-stationary
+AR. 
+
+Stationary and non-stationary time series have distinctive implications
+in forecast. For simplicity, we set $\beta=0$. The $\tau$-period-ahead
+conditional forecast mean for the stationary AR(1) is 
+\[
+E[y_{t+\tau}|y_{t}]=\gamma^{\tau}y_{t}.
+\]
+It exhibits \emph{mean-reverting}\textemdash the forecast mean conditional
+on $y_{t}$ converges to the unconditional mean. Here $E[y_{t+\tau}|y_{t}]\to0=E\left[y_{t}\right]$
+as $\tau\to\infty$. In contrast, in the non-stationary AR(1) 
+\begin{equation}
+E[y_{t+\tau}|y_{t}]=y_{t},\mbox{ for all }\tau\in\mathbb{N}.\label{eq:martingale}
+\end{equation}
+The conditional forecast means of all future $y_{t+\tau}$ are today's
+realization $y_{t}$. In the context of the financial market, the
+\emph{efficient market theory} claims that the present price reflects
+all the information concerning a stock; therefore the future move
+cannot be systematically forecast. This theory implies that the stock
+prices satisfy (\ref{eq:martingale}).
+
+To check whether the real-world time series follow the implication
+of the efficient market theory, a statistical test was developed under
+the null hypothesis $H_{0}:\gamma=1.$ Notice that the standard theory
+for OLS requires that the data are stationary. Under non-stationarity,
+the OLS estimator is still consistent for the AR coefficient, but
+the standard inference breaks down.
+
+Instead of working with $\gamma$, it is common practice that we subtract
+$y_{t-1}$ on both sides of (\ref{AR1}) so that 
+\[
+\Delta y_{t}=\beta+\rho y_{t-1}+u_{t},
+\]
+where $\Delta y_{t}=y_{t}-y_{t-1}$ and $\rho=\gamma-1$. The null
+hypothesis becomes $H_{0}:\rho=0$ under this reformulation, for which
+we can directly read the $t$-ratio reported in statistical software.
+
+The test statistic we use is the familiar $t$-ratio 
+\[
+t=\frac{\widehat{\rho}}{\mathrm{s.e.}(\widehat{\rho})}.
+\]
+In standard OLS theory, this $t$-ratio converges in distribution
+to a standard normal random variable. In contrast, under the null
+the $t$-ratio asymptotically follows a \emph{Dicky-Fuller distribution}
+if $u_{t}$ is a white noise.
+
+Given the asymptotic distribution, we can compare the test statistic
+and the desirable critical value for hypothesis testing. \emph{Dicky-Fuller
+test} considers 
+\[
+H_{0}:\rho=0;\ \ \ \ \ H_{1}:\rho<0.
+\]
+The critical value is -2.88 for the 5\% significance-level test with
+a drift\footnote{ \emph{Drift} means that we include the constant in OLS}.
+This value is much smaller than -1.64, the 5\% quantile of a standard
+normal distribution.
+
+In order to use the Dicky-Fuller distribution as the $t$-ratio's
+asymptotic distribution, the dynamics of $\left(y_{t}\right)$ must
+be modeled such that $\left(u_{t}\right)$ is a white noise. When
+the specification of AR(1) is insufficient for this purpose, we can
+add a few lag terms into the regression 
+\[
+\Delta y_{t}=\beta+\rho y_{t-1}+\theta_{1}\Delta y_{t-1}+\cdots+\theta_{p}\Delta y_{t-p}+u_{t}
+\]
+to make $u_{t}$ closer to a white noise. The \emph{augmented Dicky-Fuller
+test} takes the same testing procedure as the simple version.
+
+\section{Spurious Regression and Cointegration}
+
+\emph{This section is incomplete}.\footnote{Readers are referred to Wooldridge's textbook (2012, Chapter 18.3
+and 18.4) for a detailed account of the spurious regression and cointegration.
+There is no point for me to fully develop this section.}
+
+Economists in the 60's and 70's were surprised that, when they ran
+OLS for two seemingly unrelated time series, they often witnessed
+a high $t$-ratio and a large $R^{2}$. This phenomenon, known as
+the \emph{spurious regression}, had been puzzling economists until
+it was demystified by Phillips (1986). Phillips proved that when $y_{t}$
+and $x_{t}$ are independent unit root processes, neither the $t$-ratio
+nor $R^{2}$ converges in probability to a point. They become non-degenerate
+random variables no matter how large the sample is. 
+
+If two unit root processes are independent, then $y_{t}-\gamma x_{t}$
+is a unit root time series for all $\gamma$. However, real-world
+non-stationary time series can be linked. Such time series are said
+to be \emph{cointegrated}. For example, on the financial market the
+spot price of gold and the future price of gold must be tightly connected.
+If the future price is too low relative to the spot price, this arbitrage
+opportunity will drive traders to buy future gold and sell spot gold.
+These transactions will push down the spot price and pull up the future
+price until they strike a balance again. Therefore it is of practical
+importance to quantify the coefficient in a cointegration system.
+
+The \emph{Engle-Granger test} is a simple procedure to check cointegration. 
+\begin{enumerate}
+\item Run an OLS between $y_{t}$ and $x_{t}$, and save the residual $\widehat{u}_{t}$. 
+\item Run an (augmented) Dicky-Fuller test for the time series $(\widehat{u}_{t})$
+to check stationarity. The critical values can be found in Wooldridge(2012)'s
+Table 18.4.
+\end{enumerate}
+
+\end{document}
