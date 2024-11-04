@@ -82,16 +82,36 @@
 
 
 \begin{frame}{Fundamental Task}
-    \begin{minipage}{0.6\textwidth} % Left side for text
+
         \begin{itemize}
             \item Use $X$ to predict $y$
-            \item $y$ is not continuously distributed 
-            \begin{itemize}
-                \item Applied microeconomics
-                \item Biostatistics
-            \end{itemize}
+        \item Beyond continuous random variables
+        \begin{itemize}
+            \item Binary
+            \item Multi-responses 
+            \item Integer
+            \item Mixed type: censoring, truncation
+            \item Self-selection
+        \end{itemize}
+
+\bigskip
             
-            \bigskip
+        \item Applied microeconomics
+        \item Biostatistics
+            
+        \end{itemize}
+\end{frame}
+
+
+\section{Binary Choices}
+\frame{\sectionpage}
+
+
+
+
+\begin{frame}{Binary Outcome}
+    \begin{minipage}{0.6\textwidth} % Left side for text
+        \begin{itemize}
             \item Classification
             \item Binary choice:    $y_{i} \in \{ 0, 1\}$
             \begin{itemize}
@@ -107,6 +127,10 @@
         \includegraphics[width=0.8\textwidth]{fig/yin_yang.png}
     \end{minipage}
 \end{frame}
+
+
+
+
 
 
 \begin{frame}{Linear Probability Models}
@@ -226,31 +250,89 @@ Log-likelihood
 
 
 
-\begin{frame}{Counting Model}
 
-\begin{itemize}
-    \item Outcomes take non-negative integers
+\section{Multiple Choices}
+\frame{\sectionpage}
+
+
+\begin{frame}{Ordered Response}
     \begin{itemize}
-        \item Number of children
-        \item Number of hospital visits
-        \item Number of patents
+        \item More than two categories
+        \item Categories are naturally ordered
+        \begin{itemize}
+            \item e.g.~Top 2, C9, 985, 211, others
+        \end{itemize}
+        \item Latent utility: $$y_{i}^{*} = X_{i}' \beta + \varepsilon_{i}$$ while the observed outcome  $$y_{i} = j, \, \text{if}\, r_{j} < y_{i}^{*} \le r_{j+1}$$
+        
     \end{itemize}
-    \item Poisson model: 
-$y \sim \text{Poisson}(\lambda)$:
-$$
-\Pr(y = k) = \frac{\mathrm{e}^{-\lambda} \lambda^k}{k!}, \mathrm{ for }\, \, k=0,1,2,\ldots
-$$
-    \item Poisson regression: single index $\lambda_i = X_i'\beta$ gives log-likelihood
-$$
-\log \Pr(y_i | X_i) =  -\exp(X_i'\beta) + y_i\cdot X_i'\beta - \log k!
-$$
-
-\end{itemize}
-
-
 \end{frame}
 
+\begin{frame}{Thresholds}
+    \begin{itemize}
+        \item Normalization is needed for identification
+        \item $M$ categories
+        \item $\gamma_{1} = - \infty,\, \gamma_{M+1} = + \infty, \, \gamma_{2} = 0$
+        \bigskip
+        \item Unknown parameters: $\left( \beta, \gamma_{3}, \dots, \gamma_{M} \right)$
+    \end{itemize}
+    \begin{align*}
+        P_{ij} & = \Pr\left( \gamma_{j} < y_{i}^{*} \le \gamma_{j+1} \mid X_{i}\right)\\
+        & = \Pr \left( y_{i}^{*} \le \gamma_{j+1} \mid X_{i} \right) - \Pr \left( \gamma_{j} \le y_{i}^{*} \mid X_{i} \right)\\
+        & = \Pr \left( \varepsilon_{i} \le \gamma_{j+1} - X_{i}^{'} \beta \right) - \Pr \left( - \varepsilon_{i} \le X_{i}^{'} \beta - \gamma_{j} \mid X_{i} \right)
+    \end{align*}
+\end{frame}
 
+\begin{frame}{Likelihood}
+    \begin{itemize}
+        \item $\varepsilon_{i} \mid X_{i}$ can be either logistic or normal
+    \end{itemize}
+    \[ \Pr \left( y_i = j \right) = \sum_{j=1}^{M} P_{ij} \mathbb{I}\left\{ y_j = j \right\}\]
+    \[ L\left( \theta \right) = \prod_{i =1} ^{N} \Pr \left( y_j = j \right)\]
+\end{frame}
+
+\begin{frame}{Multinomial Choice}
+    \begin{itemize}
+        \item Hong Kong to Guangzhou\\
+        bus, train, or plane?
+        \item Choice specific regressors $X_{ij}$
+        \begin{itemize}
+            \item distance to stations
+        \end{itemize}
+        \item Choice in variant regressors $x_{i}$
+        \begin{itemize}
+            \item motion sickness
+        \end{itemize}
+        \item individual-choice utility\\
+        $u_{ij} = X_{ij}^{'} \beta + x_{i}^{'} \beta_{j}$
+    \end{itemize}    
+\end{frame}
+
+\begin{frame}{Latent Utility}
+    \begin{itemize}
+        \item $y_{ij}^{*} = \mu_{ij} + \varepsilon _{ij}$, for $\left(\varepsilon_{ij}\right)_{j=1}^{M}$
+        \item $y_{j} = \mathbb{I}\left\{ j: y_{ij}^{*} \ge y_{ik},\,\text{for}\, k = 1, \dots, M \right\}$
+        \item $\Pr \left( y_{j} = j \mid X_{i} \right) = \Pr \left( y_{ij}^{*} \ge y_{i1}^{*}, \dots, y_{ij}^{*} \ge y_{iM}^{*} \right)$\\
+        depends on the joint distribution of $\left( \varepsilon_{ij} \right)_{j=1}^{M}$
+        \item if $\varepsilon _{ij} \sim $Type $\text{I}$ extreme value distribution and $\varepsilon_{ij}$ i.i.d. across choices, then
+        \[\Pr\left( y_{ij} = j \mid \mu_{i1}, \dots, \mu_{iM} \right)= \frac{\exp\left( \mu_{ij}\right)}{\sum_{k=1}^{M}\exp \left( \mu_{ik}\right)}\]
+    \end{itemize}
+\end{frame}
+\begin{frame}{Normalization}
+    \begin{itemize}
+        \item $\mu_{i1} = 0$ for all $i$
+        \item Equivalent to $\beta_{1} = 0$ (including intercept)
+        \item parameters: $\left( \beta_1, \beta_2, \beta_3, \dots, \beta_M\right)$
+    \end{itemize}
+    \[L\left( \theta \right) = \prod_{i=1}^{n} \left\{ \sum_{j=1}^{M} \mathbb{I} \left( y_{ij} = j \right)\left( \frac{\exp \left( \mu_{ij} \right)}{H \sum_{k=2}^{M} \exp \left( \mu_{ik} \right)} \right) \right\}\]
+\end{frame}
+
+\begin{frame}{Independence of Irrelevant Alternative}
+    \begin{itemize}
+        \item Assume $\varepsilon_{ij}$ i.i.d. across choices
+        \item Red bus and blue bus have no essential difference
+        \item Must pay attention to the specification of choice set
+    \end{itemize}
+\end{frame}
 \begin{frame}{Poisson MLE}
 \begin{itemize}
     \item Log-likelihood function of an $N$-observation sample:
@@ -272,6 +354,33 @@ $$
 
 \end{itemize}
 \end{frame}
+
+
+\section{Integer Outcomes}
+\frame{\sectionpage}
+
+
+\begin{frame}{Counting Model}
+\begin{itemize}
+    \item Outcomes take non-negative integers
+    \begin{itemize}
+        \item Number of children
+        \item Number of hospital visits
+        \item Number of patents
+    \end{itemize}
+    \item Poisson model: 
+$y \sim \text{Poisson}(\lambda)$:
+$$
+\Pr(y = k) = \frac{\mathrm{e}^{-\lambda} \lambda^k}{k!}, \mathrm{ for }\, \, k=0,1,2,\ldots
+$$
+    \item Poisson regression: single index $\lambda_i = X_i'\beta$ gives log-likelihood
+$$
+\log \Pr(y_i | X_i) =  -\exp(X_i'\beta) + y_i\cdot X_i'\beta - \log k!
+$$
+\end{itemize}
+\end{frame}
+
+
 
 \begin{frame}{Pseudo Poisson MLE}
 

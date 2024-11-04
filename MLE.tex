@@ -40,6 +40,7 @@
 
 %\usetheme{Boadilla}
 \usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
 % \usecolortheme{orchid}
 \usecolortheme{spruce}
 % \usecolortheme{beaver}
@@ -82,22 +83,22 @@
 
 
 
-\begin{frame}{Scientific Reasoning}
+\begin{frame}[plain]{Scientific Reasoning}
 \begin{center}
-    \includegraphics[width=0.9\textwidth]{fig/The_School_of_Athens.jpg}
+    \includegraphics[width=\textwidth]{fig/The_School_of_Athens.jpg}
 \end{center}
 \end{frame}
 
 
 
-\begin{frame}{Deductive Reasoning}
+\begin{frame}[plain]{Deductive Reasoning}
     \begin{center}
     \includegraphics[width=\textwidth]{fig/black-hole.jpg}
 \end{center}
 \end{frame}
 
 
-\begin{frame}{Inductive Reasoning}
+\begin{frame}[plain]{Inductive Reasoning}
     \begin{center}
     \includegraphics[width=\textwidth]{fig/AI.jpg}
 \end{center}
@@ -125,17 +126,28 @@
 
 
 
-
-\begin{frame}{Introduction of ML}
-
-
+\begin{frame}{Task}
 \begin{itemize}
 
 \item Purpose: predict $y$ with $X$
 \item Beyond continuous random variables
     \begin{itemize}
-        \item Binary,  Integer,  Mixed type
+        \item Binary
+        \item Multi-responses 
+        \item Integer
+        \item Mixed type: censoring, truncation
+        \item Self-selection
     \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Likelihood}
+
+
+\begin{itemize}
+
     \item Philosophy: The most likely outcome (Abductive reasoning).
     \item Distributional assumption 
 \end{itemize}
@@ -171,21 +183,29 @@
 \end{frame}
 
 
+
+\begin{frame}{Model Specification}
+\begin{itemize}
+\item Nature: Data $z$ is drawn from a parameter model $f$
+\item Human: specify a family of models $g\left(z;\theta\right)$ and a parameter space $\Theta$, which span a \textbf{model space} $G\left(\Theta\right)=\left\{ g\left(z;\theta\right):\theta\in\Theta\right\} $.
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{fig/misspecified.png}
+\end{center}
+\end{frame}
+
+
+
+
 \begin{frame}{Model and Specification}
 
 
-
-\begin{defn*}
 \textbf{Parametric model}. The distribution of the data $\mathbf{Y}=\left(Y_{1},...,Y_{N}\right)$
 is known up to a finite dimensional parameter.
-\end{defn*}
+
 
 \bigskip
 
-\begin{defn*}
-A model is \textbf{correctly specified}, if the true DGP is $f\left(\mathbf{Y}\mid\theta_{0}\right)$
-for some $\theta_{0}\in\Theta$. Otherwise, the model is \textbf{misspecified}.
-\end{defn*}
 
 \begin{itemize}
 \item  \textbf{Semiparametric model}: If we know $Y\sim i.i.d.\left(\mu,\sigma^{2}\right)$,
@@ -202,19 +222,27 @@ the model has only two parameters $\mu$ and $\sigma^{2}$.
 \item The \textbf{likelihood} of the sample under a hypothesized value of
 $\theta\in\Theta$ is
 \[
-L\left(\theta;\mathbf{Y}\right)=f\left(\mathbf{Y};\theta\right)=\prod_{i=1}^{N}f\left(Y_{i};\theta_{0}\right)
+L\left(\theta;\mathbf{Y}\right)=f\left(\mathbf{Y};\theta\right)=\prod_{i=1}^{N}f\left(Y_{i};\theta \right)
 \]
 
 \item Two perspectives:
 \begin{itemize}
-    \item (probabilist) $f(\mathbf{Y};\theta)$ is a function of $\mathbf{Y}$ given parameter
-    \item (statistician) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given data $\mathbf{Y}$
+    \item (Probabilist) $f(\mathbf{Y};\theta)$ is a function of $\mathbf{Y}$ given the parameter $\theta$
+    \item (Statistician) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given the observed data $\mathbf{Y}$
 
-$\theta$
+
 \end{itemize}
 
 \end{itemize}
 \end{frame}
+
+
+
+\section{Correct Specification}
+\frame{\sectionpage}
+
+
+
 
 \begin{frame}{Log-likelihood}
 \begin{itemize}
@@ -225,6 +253,9 @@ $\theta$
 = \sum_{i=1}^{N}\log f\left(Y_{i};\theta\right)
 \]
 is easier to compute.
+
+\item $\log(\cdot)$ is a monotonically increasing function
+
 \item The MLE estimator
 \[
 \hat{\theta}=\arg\max_{\theta\in\varTheta}\ell_{N}\left(\theta\right)
@@ -265,9 +296,11 @@ by the Jensen's inequality.
 \begin{frame}{Score and Hessian}
 
 \begin{itemize}
-\item Score: $s_{N}(\theta)=\sum_{i=1}^{N}\frac{\partial}{\partial\theta}\log f(Y_{i};\theta)$
+\item Score $s_{N}(\theta)=\sum_{i=1}^{N}\frac{\partial}{\partial\theta}\log f(Y_{i};\theta)$ is a function of $\theta$
 
-\item Efficient score: $s_{0}=\frac{\partial}{\partial\theta}\log f\left(Y_{i};\theta_{0}\right)$\pause
+\item Efficient score $s_{i0}=\frac{\partial}{\partial\theta}\log f\left(Y_{i};\theta_{0}\right)$ is evaluated at the true value $\theta_0$
+
+\pause
 
 \end{itemize}
 
@@ -294,12 +327,20 @@ $
 \end{itemize}
 \end{frame}
 
-% there are some notation disrepancies between the slides and 
-% the textbook
+
+
+\begin{frame}{Score and Hessian: Illustration}
+    \begin{center}
+        \includegraphics[width=\textwidth]{fig/KLIC.png}
+    \end{center}
+\end{frame}
+
+
+
 
 \begin{frame}{Information Equality}
 \begin{itemize}
-\item \textbf{Fisher Information Matrix}: $I_{0}=E[s_{0}s_{0}']$ 
+\item \textbf{Fisher Information Matrix}: $I_{0}=E[s_{i0}s_{i0}']$ 
 \end{itemize}
 %
 \begin{thm*}
@@ -318,9 +359,13 @@ Suppose the model is correctly specified, the support of $Y$ does
 not depend on $\theta$, and $\theta_{0}$ is in the interior of $\Theta$.
 If $\widetilde{\theta}$ is unbiased estimator, then $var(\widetilde{\theta})\geq\left(NI_{0}\right)^{-1}$.
 \end{thm*}
+
+\bigskip
+
 \begin{itemize}
+\item More general than ``BLUE''
 \item A lower bound for variance of unbiased estimator
-\item When reached, an estimator is \textbf{Cram\'{e}r-Rao efficient}.
+\item When reached, an estimator is called \textbf{Cram\'{e}r-Rao efficient}.
 \end{itemize}
 \end{frame}
 %
@@ -357,10 +402,11 @@ s_{N}\left(\mu,\sigma^{2}\right)=\left[\begin{array}{c}
 \]
 produces the MEL estimator
 \[
-\hat{\mu} = \frac{1}{N}\sum^{N}_{i=1}Y_{i}
+\hat{\mu} = \frac{1}{N}\sum^{N}_{i=1}Y_{i} = \bar{Y}
 \]
 \[
 \hat{\gamma} = \frac{1}{N}\sum^{N}_{i=1}\left(Y_i-\hat \mu\right)^{2}
+=  \frac{1}{N}\sum^{N}_{i=1}\left(Y_i- \bar{Y} \right)^{2}
 \]
 
 \end{frame}
@@ -372,8 +418,8 @@ produces the MEL estimator
 \item The Hessian
 \[
 H_{N}\left(\mu,\sigma^{2}\right)=\left[\begin{array}{cc}
-\frac{N}{\gamma} & \frac{1}{2\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)\\
-\frac{1}{2\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right) & -\frac{N}{2\gamma^{2}}+\frac{1}{\gamma^{3}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
+\frac{N}{\gamma} & \frac{1}{\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)\\
+\star & -\frac{N}{2\gamma^{2}}+\frac{1}{\gamma^{3}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
 \end{array}\right]
 \]
 
@@ -406,7 +452,7 @@ $
 \[
 var\left(\frac{1}{N}\sum_{i=1}^{N}Y_{i}\right)=\frac{\sigma^{2}}{N}
 \]
-is Cram\'{e}r-Rao efficient
+reaches the  Cram\'{e}r-Rao lower bound
 \end{itemize}
 \end{frame}
 %
@@ -417,14 +463,14 @@ is Cram\'{e}r-Rao efficient
 s_{N}^{2}=\frac{1}{N-1}\sum_{i=1}^{N}\left(Y_{i}-\bar{Y}\right)^{2}=\frac{1}{N-1}Y'\left(I-\frac{1}{N}1_{N}1_{N}'\right)Y
 \]
 \item It follows
-$s_{N}^{2}=\frac{\chi^{2}\left(N-1\right)}{N-1}\sigma^{2}$ because
+$s_{N}^{2}=\frac{\sigma^{2} }{N-1} \cdot \chi^{2}\left(N-1\right)$ because
 
 \[
 \left(N-1\right)\frac{s_{N}^{2}}{\sigma^{2}}=\left(\frac{Y}{\sigma}\right)'\left(I-\frac{1}{N}1_{N}1_{N}'\right)\left(\frac{Y}{\sigma}\right)\sim\chi^{2}\left(N-1\right).
 \]
 \item As a result, 
 \[
-var\left(s_{N}^{2}\right)=\frac{\sigma^{4}}{\left(N-1\right)^{2}}2\left(N-1\right)=\frac{2\sigma^{4}}{N-1}>\frac{2\sigma^{4}}{N}
+var\left(s_{N}^{2}\right)=\frac{\sigma^{4}}{\left(N-1\right)^{2}} \cdot 2\left(N-1\right)=\frac{2\sigma^{4}}{N-1}>\frac{2\sigma^{4}}{N}
 \]
 Is not Cram\'{e}r-Rao efficient
 \end{itemize}
@@ -446,7 +492,7 @@ $$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
 \begin{frame}{Asymptotic Normality}
 \begin{itemize}
 
-\item Under regularity conditions, $\hat{\theta}\stackrel{p}{\to}\theta_{0}$,
+\item Under regularity conditions, $\hat{\theta}\stackrel{p}{\to}\theta_{0}$, and
 \[
 \sqrt{N}\left(\hat{\theta}-\theta_{0}\right)\stackrel{d}{\to}N\left(0,H_{0}^{-1}I_{0}H_{0}^{-1}\right)
 \]
@@ -454,50 +500,53 @@ $$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
 \[
 \sqrt{N}\left(\hat{\theta}-\theta_{0}\right)\stackrel{d}{\to}N\left(0,I_{0}^{-1}\right)
 \]
-\end{itemize}
-\end{frame}
-%
+\item MLE is efficient
 
-\begin{frame}{Misspecified Model}
-\begin{itemize}
-\item Nature: Data $z$ is drawn from a parameter model $f$
-\item Human: specify a family of models $g\left(z;\theta\right)$ and a parameter space $\Theta$, which span a \textbf{model space} $G\left(\Theta\right)=\left\{ g\left(z;\theta\right):\theta\in\Theta\right\} $.
 \end{itemize}
+
+
+\end{frame}
+
+
+
+
+\section{Mispecification}
+\frame{\sectionpage}
+
+
+
+\begin{frame}[plain]{KLIC for Misspecified Models}
+
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{fig/misspecified.png}
+    \includegraphics[width=0.7\textwidth]{fig/misspecified.png}
 \end{center}
-\end{frame}
-
-
-\begin{frame}{KLIC, again}
 \begin{itemize}
-\item If $f\in G\left(\Theta\right)$, the model is \textbf{correctly specified};
-otherwise it is misspecified. 
+\item If $f\notin G\left(\Theta\right)$, the model is  misspecified. 
 \begin{align*}
 KLIC\left(f,g\left(z;\theta\right)\right) & =\int f\left(z\right)\log f\left(z\right)dz-\int f\left(z\right)\log g\left(z;\theta\right)dz\\
  & =E\left[\log f\left(z\right)\right]-E\left[\log g\left(z;\theta\right)\right]\\
- & =E\left[\log f\left(z\right)\right]-\ell\left(\theta\right)
+ & =E\left[\log f\left(z\right)\right]-\ell\left(\theta\right) > 0
 \end{align*}
 
-\item Misspecification is the norm rather than the exception
 \end{itemize}
 \end{frame}
-%
+
+
+
+
 \begin{frame}{Misspecified Model}
 \begin{itemize}
-\item Correctly specified:
-\[
-\theta_{0}=\arg\max_{\theta\in\Theta} E [\ell\left(\theta\right)]
-\] under which 
- $KLIC\left(f,g\left(z;\theta_{0}\right)\right)=0$. 
-\item Misspecified: $\min_{\theta\in\Theta}KLIC\left(f,g\left(z;\theta\right)\right)>0$\pause
+
+\item Misspecified: $\min_{\theta\in\Theta}KLIC\left(f,g\left(z;\theta\right)\right)>0$
+\item MLE is still meaningful
+
 \item Pseudo-true parameter:
 \[
 \theta^{*}=\arg\max_{\theta\in\Theta} E [\ell\left(\theta\right)]
 \]
 the minimizer of $KLIC\left(f,g\left(z;\theta\right)\right)$ in the
 parameter space $\Theta$
-\item Under standard assumption, the MLE estimator $\widehat{\theta}\stackrel{p}{\to}\theta^{*},$
+\item Under standard assumption, the MLE estimator $\widehat{\theta}\stackrel{p}{\to}\theta^{*}$ and 
 \[
 \sqrt{N}\left(\hat{\theta}-\theta^{*}\right)\stackrel{d}{\to}N\left(0,H_{*}^{-1}I_{*}H_{*}^{-1}\right)
 \]
