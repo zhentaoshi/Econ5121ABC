@@ -228,7 +228,7 @@ L\left(\theta;\mathbf{Y}\right)=f\left(\mathbf{Y};\theta\right)=\prod_{i=1}^{N}f
 \item Two perspectives:
 \begin{itemize}
     \item (Probabilist) $f(\mathbf{Y};\theta)$ is a function of $\mathbf{Y}$ given the parameter $\theta$
-    \item (Statistician) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given the observed data $\mathbf{Y}$
+    \item (Statistician) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given the data $\mathbf{Y}$
 
 
 \end{itemize}
@@ -307,7 +307,7 @@ by the Jensen's inequality.
 \begin{thm*}
 If the model is correctly specified, the support of $Y$ does not
 depend on $\theta$, and $\theta_{0}$ is in the interior of $\Theta$,
-then $E\left[s_{0}\right]=0$.
+then $E\left[s_{i0}\right]=0$.
 \end{thm*}
 
 
@@ -344,7 +344,9 @@ $
 \end{itemize}
 %
 \begin{thm*}
-Under some regularity conditions, if the model is correctly specified, then $$I_{0}=H_{0}.$$
+If the model is correctly specified, the support of $Y$ does not
+depend on $\theta$, and $\theta_{0}$ is in the interior of $\Theta$,
+then $$I_{0}=H_{0}.$$
 \end{thm*}
 \begin{itemize}
 
@@ -357,7 +359,7 @@ Under some regularity conditions, if the model is correctly specified, then $$I_
 \begin{thm*}
 Suppose the model is correctly specified, the support of $Y$ does
 not depend on $\theta$, and $\theta_{0}$ is in the interior of $\Theta$.
-If $\widetilde{\theta}$ is unbiased estimator, then $var(\widetilde{\theta})\geq\left(NI_{0}\right)^{-1}$.
+If $\widetilde{\theta}$ is unbiased estimator, then $$var(\widetilde{\theta})\geq\left(NI_{0}\right)^{-1}.$$
 \end{thm*}
 
 \bigskip
@@ -371,36 +373,32 @@ If $\widetilde{\theta}$ is unbiased estimator, then $var(\widetilde{\theta})\geq
 %
 \begin{frame}{Example: Normal MLE}
 \begin{itemize}
-\item Normal distribution $Y_i \sim N(\mu, \sigma^2)$ gives log-likelihood
-\[
-\log\ell_{N}\left(Y;\mu,\sigma^{2}\right)=-\frac{N}{2}\log\gamma-\frac{N}{2}\log\pi-\frac{1}{2\gamma}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
-\]
+\item Normal distribution $Y_i \sim N(\mu, \sigma^2)$ gives density
+$$
+f(Y_i | \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \gamma}}
+\exp\left(- \frac{(Y_i - \mu)^2 }{2\gamma} \right)
+$$
 where $\gamma=\sigma^{2}$ to simplify notations and derivatives.
 
-% to Ji: need to fix typos
-
-\item Score  
+\item The log-likelihood is
 \[
-s_{N}\left(\mu,\sigma^{2}\right)=\left[\begin{array}{c}
-\frac{1}{\gamma}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)\\
--\frac{N}{2\gamma}+\frac{1}{2\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
-\end{array}\right]
+\ell_{N}\left(Y;\theta\right)=-\frac{N}{2}\log\gamma-\frac{N}{2}\log2\pi-\frac{1}{2\gamma}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
 \]
- 
+where $\theta = (\mu, \gamma)$. 
 \end{itemize}
 \end{frame}
 
 % need to compute Fisher info from as the var of score
 \begin{frame}{MLE Estimator}
 
-Solve the first-order condition
+Set the score equal to zero
 \[
-s_{N}\left(\mu,\sigma^{2}\right)=\left[\begin{array}{c}
+s_{N}\left(\theta\right)=\left[\begin{array}{c}
 \frac{1}{\gamma}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)\\
 -\frac{N}{2\gamma}+\frac{1}{2\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
 \end{array}\right]= 0
 \]
-produces the MEL estimator
+and we solve the MLE estimator
 \[
 \hat{\mu} = \frac{1}{N}\sum^{N}_{i=1}Y_{i} = \bar{Y}
 \]
@@ -417,18 +415,18 @@ produces the MEL estimator
 
 \item The Hessian
 \[
-H_{N}\left(\mu,\sigma^{2}\right)=\left[\begin{array}{cc}
+H_{N}\left( \theta \right)=\left[\begin{array}{cc}
 \frac{N}{\gamma} & \frac{1}{\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)\\
 \star & -\frac{N}{2\gamma^{2}}+\frac{1}{\gamma^{3}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
 \end{array}\right]
 \]
 
-\item Expected Hessian:
+\item Expectation:
 $
-E\left[H_{N}\left(\mu,\sigma^{2}\right)\right]=\left[\begin{array}{cc}
+E\left[H_{N}\left(\theta_0 \right)\right]=\left[\begin{array}{cc}
 \frac{N}{\gamma} & 0\\
 0 & \frac{N}{2\gamma^{2}}
-\end{array}\right]
+\end{array}\right] = N \times H_0
 $
 
 
@@ -436,7 +434,7 @@ $
 $
 \left[\begin{array}{cc}
 \frac{\gamma}{N} & 0\\
-0 & 2\frac{\gamma^{2}}{N}
+0 & \frac{ 2\gamma^{2}}{N}
 \end{array}\right]
 $
 
@@ -482,10 +480,25 @@ Is not Cram\'{e}r-Rao efficient
 \begin{itemize}
     \item The normal regression models is 
 $$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
-     \item Under the assumption $\varepsilon_{i} \mid X_{i}\sim N \left(0,\sigma^{2}\right),$ the conditional distribution is $Y_{i} \mid X_{i} \sim N \left( X_{i}'\beta,\sigma^{2}\right).$
+     \item Under the assumption $\varepsilon_{i} \mid X_{i}\sim N \left(0,\gamma \right),$ the conditional distribution is 
+     $$Y_{i} \mid X_{i} \sim N \left( X_{i}'\beta,\gamma\right).$$
+
+    \item Parameter $\theta = (\beta, \gamma)$
+    \item The joint likelihood $$f(Y_i , X_i) = f(Y_i | X_i) f(X_i),$$ where the specification of $f(X_i)$ is irrelevant to $\theta$.
+\end{itemize}
+\end{frame}
+
+
+     
+\begin{frame}{Conditional Log-Likelihood}
+\begin{itemize}
      \item  The \textbf{conditional log-likelihood} of the sample is $$\ell_N (\theta) 
-     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
+     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log 2\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
      $$ where the distribution of $X_i$ is unspecified.
+
+     \item The MLE estimator $$\hat{\beta} = (X'X)^{-1} X'Y$$
+     $$\hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^N \hat{\varepsilon}_i^2 $$
+     where $\hat{\varepsilon}_i = Y_i - X_i' \hat{\beta}$.
 \end{itemize}
 \end{frame}
 
@@ -498,9 +511,13 @@ $$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
 \]
 \item When the information equality holds, we have 
 \[
-\sqrt{N}\left(\hat{\theta}-\theta_{0}\right)\stackrel{d}{\to}N\left(0,I_{0}^{-1}\right)
+\sqrt{N}\left(\hat{\theta}-\theta_{0}\right)\stackrel{d}{\to}N\left(0,I_{0}^{-1}\right),
 \]
-\item MLE is efficient
+or equivalently
+\[
+\hat{\theta}-\theta_{0} \stackrel{a}{\sim}N\left(0,\frac{I_{0}^{-1}}{N}\right),
+\]
+\item The variance $(N I_0)^{-1}$ is efficient!
 
 \end{itemize}
 
@@ -524,8 +541,7 @@ $$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
 \item If $f\notin G\left(\Theta\right)$, the model is  misspecified. 
 \begin{align*}
 KLIC\left(f,g\left(z;\theta\right)\right) & =\int f\left(z\right)\log f\left(z\right)dz-\int f\left(z\right)\log g\left(z;\theta\right)dz\\
- & =E\left[\log f\left(z\right)\right]-E\left[\log g\left(z;\theta\right)\right]\\
- & =E\left[\log f\left(z\right)\right]-\ell\left(\theta\right) > 0
+ & =E\left[\log f\left(z\right)\right]-E\left[\log g\left(z;\theta\right)\right] > 0
 \end{align*}
 
 \end{itemize}

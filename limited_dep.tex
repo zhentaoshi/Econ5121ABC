@@ -41,6 +41,7 @@
 
 %\usetheme{Boadilla}
 \usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
 % \usecolortheme{orchid}
 \usecolortheme{spruce}
 % \usecolortheme{beaver}
@@ -71,6 +72,10 @@
 \providecommand{\definitionname}{Definition}
 \providecommand{\examplename}{Example}
 \providecommand{\theoremname}{Theorem}
+
+% 定义命令 \RomanNum 和 \romanNum
+\newcommand{\RomanNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}} % 大写罗马数字
+\newcommand{\romanNum}[1]{\romannumeral #1\relax} % 小写罗马数字
 
 \begin{document}
 \title[Limited]{Models of Limited Dependent Variables}
@@ -194,7 +199,7 @@ A sample of $N$ observations of $(y_i, X_i)$
     \end{align*}
 
 Log-likelihood
-    \[\log L\left( \beta \right) = \sum_{i =1}^{N} \left\{ y_i \log \left( \Lambda \left( X_{i}^{'}\beta \right) \right) + \left( 1 - y_{n} \right)  \log \left( 1 - \Lambda \left( X_i \beta \right) \right)\right\}\]
+    \[\ell_n \left( \beta \right) = \sum_{i =1}^{N} \left\{ y_i \log \left( \Lambda \left( X_{i}^{'}\beta \right) \right) + \left( 1 - y_{i} \right)  \log \left( 1 - \Lambda \left( X_i' \beta \right) \right)\right\}\]
     
     
 \end{frame}
@@ -284,75 +289,60 @@ Log-likelihood
 
 \begin{frame}{Likelihood}
     \begin{itemize}
-        \item $\varepsilon_{i} \mid X_{i}$ can be either logistic or normal
-    \end{itemize}
-    \[ \Pr \left( y_i = j \right) = \sum_{j=1}^{M} P_{ij} \mathbb{I}\left\{ y_j = j \right\}\]
+        \item Unobservable error $\varepsilon_{i} \mid X_{i}$ is assumed to be either logistic or normal
+        \item Likelihood of individual observation \[ \Pr \left( y_i = j \right) = \sum_{j=1}^{M} P_{ij} \mathbb{I}\left\{ y_j = j \right\}\]
+        \item Likelihood of the $N$-observation sample 
     \[ L\left( \theta \right) = \prod_{i =1} ^{N} \Pr \left( y_j = j \right)\]
+    \end{itemize}
+    
 \end{frame}
 
 \begin{frame}{Multinomial Choice}
     \begin{itemize}
-        \item Hong Kong to Guangzhou\\
-        bus, train, or plane?
-        \item Choice specific regressors $X_{ij}$
+        \item How do you travel from Hong Kong to Guangzhou? By bus, train, or plane?
+        \item Level Individual-choice utility
+        $$\mu_{ij} = W_{ij}^{'} \beta + Z_{i}^{'} \beta_{j}$$
+        \item Choice-specific regressors $W_{ij}$
         \begin{itemize}
-            \item distance to stations
+            \item e.g.~Distance to stations ($\beta$ is value of time)
         \end{itemize}
-        \item Choice in variant regressors $x_{i}$
+        \item Choice-invariant regressors $Z_{i}$
         \begin{itemize}
-            \item motion sickness
+            \item e.g.~Motion sickness ($\beta_j$ is the effect; bus is bad)
         \end{itemize}
-        \item individual-choice utility\\
-        $u_{ij} = X_{ij}^{'} \beta + x_{i}^{'} \beta_{j}$
+        
     \end{itemize}    
 \end{frame}
 
 \begin{frame}{Latent Utility}
     \begin{itemize}
         \item $y_{ij}^{*} = \mu_{ij} + \varepsilon _{ij}$, for $\left(\varepsilon_{ij}\right)_{j=1}^{M}$
-        \item $y_{j} = \mathbb{I}\left\{ j: y_{ij}^{*} \ge y_{ik},\,\text{for}\, k = 1, \dots, M \right\}$
-        \item $\Pr \left( y_{j} = j \mid X_{i} \right) = \Pr \left( y_{ij}^{*} \ge y_{i1}^{*}, \dots, y_{ij}^{*} \ge y_{iM}^{*} \right)$\\
-        depends on the joint distribution of $\left( \varepsilon_{ij} \right)_{j=1}^{M}$
-        \item if $\varepsilon _{ij} \sim $Type $\text{I}$ extreme value distribution and $\varepsilon_{ij}$ i.i.d. across choices, then
+        \item $y_{j} = \mathbb{I}\left\{ j: y_{ij}^{*} \ge y_{ik},\,\text{for }\, k = 1, \dots, M \right\}$
+        \item $\Pr \left( y_{j} = j \mid \mu_{i1}, \dots, \mu_{iM} \right) = \Pr \left( y_{ij}^{*} \ge y_{i1}^{*}, \dots, y_{ij}^{*} \ge y_{iM}^{*} \right)$
+        \item The probability depends on the joint distribution of $\left( \varepsilon_{ij} \right)_{j=1}^{M}$
+        \item If $\varepsilon _{ij} \sim $ Type \RomanNum{1} extreme value distribution and $\varepsilon_{ij}$ i.i.d.~across choices, then
         \[\Pr\left( y_{ij} = j \mid \mu_{i1}, \dots, \mu_{iM} \right)= \frac{\exp\left( \mu_{ij}\right)}{\sum_{k=1}^{M}\exp \left( \mu_{ik}\right)}\]
     \end{itemize}
 \end{frame}
+
+
+
 \begin{frame}{Normalization}
     \begin{itemize}
         \item $\mu_{i1} = 0$ for all $i$
-        \item Equivalent to $\beta_{1} = 0$ (including intercept)
-        \item parameters: $\left( \beta_1, \beta_2, \beta_3, \dots, \beta_M\right)$
+        \item Equivalent to $\beta_{j=1} = 0$ (including intercept)
+        \item Parameters: $\left( \beta;   \beta_2, \beta_3, \dots, \beta_M\right)$
     \end{itemize}
-    \[L\left( \theta \right) = \prod_{i=1}^{n} \left\{ \sum_{j=1}^{M} \mathbb{I} \left( y_{ij} = j \right)\left( \frac{\exp \left( \mu_{ij} \right)}{H \sum_{k=2}^{M} \exp \left( \mu_{ik} \right)} \right) \right\}\]
+    \[L\left( \theta \right) = \prod_{i=1}^{n} \left\{ \sum_{j=1}^{M} \mathbb{I} \left( y_{ij} = j \right)\left( \frac{\exp \left( \mu_{ij} \right)}{1 +  \sum_{k=2}^{M} \exp \left( \mu_{ik} \right)} \right) \right\}\]
 \end{frame}
 
 \begin{frame}{Independence of Irrelevant Alternative}
     \begin{itemize}
-        \item Assume $\varepsilon_{ij}$ i.i.d. across choices
-        \item Red bus and blue bus have no essential difference
+        \item The concise from leverages that $\varepsilon_{ij}$ is i.i.d. across choices
+        \item Dilemma of ``red bus'' versus ``blue bus''
         \item Must pay attention to the specification of choice set
+        \item There are methods to fix it; still depending on choices.
     \end{itemize}
-\end{frame}
-\begin{frame}{Poisson MLE}
-\begin{itemize}
-    \item Log-likelihood function of an $N$-observation sample:
-    \[
-    \ell_N(\beta) = \log \Pr( \mathbf{y} | \mathbf{X}; \beta ) = -\sum_{i=1}^n \exp(X_i'\beta) + \sum_{i=1}^n y_i X_i'\beta.
-    \]
-    
-    \item Score:
-    \[
-    s_N(\beta) = \frac{\partial \ell(\beta)}{\partial \beta} = -\sum_{i=1}^n \exp(X_i'\beta)X_i + \sum_{i=1}^n y_i x_i.
-    \]
-
-    \item Second derivative is negative definite:
-    \[
-    \frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta'} = -\sum_{i=1}^n \exp(X_i'\beta) X_i X_i'
-    \]
-
-    \item \( \ell_N(\beta) \) is strictly concave in \( \beta \).
-
-\end{itemize}
 \end{frame}
 
 
@@ -382,6 +372,30 @@ $$
 
 
 
+\begin{frame}{Poisson MLE}
+\begin{itemize}
+    \item Log-likelihood function of an $N$-observation sample:
+    \[
+    \ell_N(\beta) = \log \Pr( \mathbf{y} | \mathbf{X}; \beta ) = -\sum_{i=1}^n \exp(X_i'\beta) + \sum_{i=1}^n y_i X_i'\beta.
+    \]
+    
+    \item Score:
+    \[
+    s_N(\beta) = \frac{\partial \ell(\beta)}{\partial \beta} = -\sum_{i=1}^n \exp(X_i'\beta)X_i + \sum_{i=1}^n y_i x_i.
+    \]
+
+    \item Second derivative is negative definite:
+    \[
+    \frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta'} = -\sum_{i=1}^n \exp(X_i'\beta) X_i X_i'
+    \]
+
+    \item \( \ell_N(\beta) \) is strictly concave in \( \beta \).
+
+\end{itemize}
+\end{frame}
+
+
+
 \begin{frame}{Pseudo Poisson MLE}
 
 \begin{itemize}
@@ -389,6 +403,112 @@ $$
     \item If $y$ is continuously distributed, the Poisson model must be misspecified
     \item e.g., Bilateral international trade between pairs of countries.
 \end{itemize}
+\end{frame}
+
+
+\section{Incomplete Data}
+\frame{\sectionpage}
+
+
+
+\begin{frame}{Censored Data}
+    \begin{itemize}
+        \item Latent utility: $y_{i}^{*} = X_{i}^{'} \beta + \varepsilon_{i}$
+        \item Observed outcome: 
+        $\left\{\begin{matrix}
+          y_{i} = y_{i}^{*},& \text{if} \, y_{i} >c\\
+          y_{i} = c,&\text{if} \, y_{i} \le c
+        \end{matrix}\right.$
+        \item Tobit I model
+
+        \item e.g.~Minimal wage
+            \begin{itemize}
+                \item Pull up the wage
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Probabilities}
+    \begin{itemize}
+        \item Assume $\varepsilon _{i} \mid X_{i} \sim N\left( 0, \sigma ^{2} \right)$
+        \item The probability mass \begin{align*}
+            \Pr \left( y_{i} = c \right)& = \Pr \left( y_{i}^{*} \le c \right) = \Pr \left( X_{i}^{'} \beta + \varepsilon _{i} \le c \right)\\
+            & = \Pr \left( \frac{\varepsilon_{i}}{\sigma} \le \frac{c-X_{i}^{'} \beta}{\sigma} \right)  = \Phi \left( \frac{c - X_{i}^{'} \beta}{\sigma}\right)
+        \end{align*}
+        where $\Phi(\cdot)$ is the CDF of $N(0,1)$.
+        \item The density of the continuous region remains the same.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Likelihood}
+
+The likelihood consists of two components:
+    \begin{align*}
+        f\left( y_{i} \mid X_{i} \right) &= \Phi \left( \frac{c- X_{i}^{'} \beta}{\sigma} \right) \times \mathbb{I} \left( y_{i} = c \right) \\
+        &+ \frac{1}{\sqrt{2 \pi}\sigma} \exp \left( -\frac{1}{2\sigma^{2} } \left( y_{i} - X_{i}^{'} \beta \right)^{2}\right) \times \mathbb{I} \left(y_{i} > c \right)
+    \end{align*}
+    \begin{itemize}
+        \item Mixed type of discrete and continuous random variable
+        \item Mixed of probability mass function and density
+        \[ \int_{-\infty}^{\infty} f\left( y \mid X \right)\mathrm{d} y =1\]
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Truncation}
+    \begin{itemize}
+        \item If data of those with $y_i = c$ are completely unobservable
+        \item We have data $\left( Y_{i}, X_{i} \right)$ for those $y_{i} > c$ only.
+        \item The likelihood with a condition on the outcome:
+        \[f\left( y_{i} \mid y_{i} \ge c, X_{i} \right) = \frac{\frac{1}{\sqrt{2 \pi}\sigma} \exp \left( -\frac{1}{2\sigma^{2} } \left( y_{i} - X_{i}^{'} \beta \right)^{2}\right)}{1- \Phi \left( \frac{c-X_{i}^{'} \beta }{\sigma} \right)}\]
+        \item Due to truncation, OLS cannot consistently estimate $\beta$
+        \item Must use MLE
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Tobit \RomanNum{2} Models}
+    \begin{itemize}
+        \item Wage (continuous): $y_{i}^{*} = x_{1i}^{'} \beta_{1} + \varepsilon  _{1i}$
+        \item Choice (binary) : $h_{i}^{*} = x_{2i}^{'} \beta_{2} + \varepsilon _{2i}$ and the observed outcome 
+        \[
+         h_i = \left\{\begin{matrix}
+          1,& \text{if } \, h_{i}^{*} \ge 0\\
+          0,&\text{otherwise} 
+        \end{matrix}\right.
+        \]
+        \item Observe $y_i = y_i^*$ if $h_i = 1$
+        \item The two equations have different regressors, coefficients and and errors terms.
+        \item More flexible than the Tobit I model
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Conditional Expectation}
+    \begin{itemize}
+        \item Assume $\begin{pmatrix}
+            \varepsilon_{1i}\\
+            \varepsilon_{2i}
+        \end{pmatrix} \sim N\left( \begin{pmatrix}
+            0\\
+            0
+        \end{pmatrix}, \begin{pmatrix}
+            \sigma_{11}^{2} & \sigma_{12} \\
+            \sigma_{12} & 1
+        \end{pmatrix} \right)$ \\
+        where $\sigma_{22} = 1$ is a normalization
+        \item Parameter $\theta = (\beta_1, \beta_2, \sigma_{11}^2, \sigma_{12})$, can be estimated by MLE \pause
+        \item The conditional mean
+        \begin{align*}
+            E\left( y_{i}^{*} \mid h_{i} =1 \right) & = x_{1i}^{'} \beta + E \left( \varepsilon_{1i} \mid h_{i} =1 \right) = x_{1i}^{'} \beta + \sigma_{12} \lambda \left( x_{2i}' \beta_{2} \right)
+        \end{align*}
+        due to the joint normality, where $\lambda\left( x \right) = \phi \left( x \right) / \Phi \left( x \right)$ is called the \emph{inverse Mill's ratio}. $\phi(\cdot)$ is the pdf of $N(0,1)$
+        \item The regression model can be estimated by ``Heckt''.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{to be continued...}
+    
 \end{frame}
 
 

@@ -1,0 +1,195 @@
+%% LyX 2.4.2.1 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt,english]{beamer}
+\usepackage{mathpazo}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage[active]{srcltx}
+\usepackage{amsthm}
+\usepackage{amsmath} 
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+\usepackage{graphicx}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+% this default might be overridden by plain title style
+\newcommand\makebeamertitle{\frame{\maketitle}}%
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+\theoremstyle{definition}
+\newtheorem*{example*}{\protect\examplename}
+\theoremstyle{definition}
+\newtheorem*{defn*}{\protect\definitionname}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\AtBeginDocument{%
+   \let\origtableofcontents=\tableofcontents
+   \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+   \def\gobbletableofcontents#1{\origtableofcontents}
+ }\usepackage[english]{babel}
+\usepackage{babel}
+
+%\usetheme{Boadilla}
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
+% \usecolortheme{orchid}
+\usecolortheme{spruce}
+% \usecolortheme{beaver}
+
+\setbeamercovered{transparent}
+
+\usepackage{colortbl}
+
+\usefonttheme[onlymath]{serif}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For tables
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+% For figures
+\usepackage{caption}
+\usepackage{subcaption}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\definitionname}{Definition}
+\providecommand{\examplename}{Example}
+\providecommand{\theoremname}{Theorem}
+
+% 定义命令 \RomanNum 和 \romanNum
+\newcommand{\RomanNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}} % 大写罗马数字
+\newcommand{\romanNum}[1]{\romannumeral #1\relax} % 小写罗马数字
+
+\begin{document}
+\title[Limited]{Models of Limited Dependent Variables}
+\author[]{Zhentao Shi}
+\date[]{The Chinese University of Hong Kong}
+
+\makebeamertitle
+
+\begin{frame}{Potential Outcome Framework}
+    \begin{itemize}
+        \item A triple $\left( y_{1i}, y_{0i}, D_{i} \right)$
+        \item $D_{i}$ is a treatment (from biomedical)
+        \item observation
+        \[
+        \left\{\begin{matrix}
+         y_{1i}, & \text{if}\, D_{i} = 1 & \text{treatment group}\\
+         y_{0i}, & \text{if}\, D_{i} = 0 & \text{control group}
+        \end{matrix}\right.
+        \]
+        equivalently, $y_{i} = y_{1i}D_{i} + y_{0i} \left(  1- D_{i} \right)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Treatment Effect}
+    \begin{itemize}
+        \item $\Delta _{i} = y_{1i} - y_{0i}$ can vary with individuals\\
+        e.g. severity of side effects after different people receiving the same vaccine.
+        \item $\Delta _{i}$ is unobservable because researcher only observe one of $y_{1i} - y_{0i}$
+        \item Average treatment effect
+        \[\text{ATE} = E\left( \Delta_{i}\right)\]
+        \item Average treatment effect on the treated
+        \[\text{ATET} = E\left( \Delta_{i} \mid D_{i} =1 \right)\]
+        \item Control variables $X_{1i}$ can be introduced into ATE and ATET
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Unconfoundedness}
+    \begin{itemize}
+        \item also called "conditional independence"
+        \[ \left( y_{1i}, y_{2i} \right) \bot D_{i} \mid X_{i} \]
+        \item Interpretation: given some properly selected $X_{i}$, the potential outcome is independent of the treatment
+        \item As if the assignment of $D_{i}$ is random, since all confounding factors are controlled
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Estimation}
+    \begin{itemize}
+        \item 
+        \begin{align*}
+            E\left( \Delta _{i} \mid X_{i} =x_{i} \right) & = E\left( y_{1i} - y_{0i} \mid X_{i} \right)\\
+            & \overset{\text{unconf.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} \right)\\
+            &=E \left( y_{1i} \mid D_{i}, X_{i} \right) - E\left( y_{0i} \mid D_{i}, X_{i} \right)\\
+            &= E\left( y_{1i} \mid D_{i} =1, X_{i}\right) - E\left( y_{0i} \mid D_{i} =0 , X_{i} \right)\\
+            &= E\left( y_{i} \mid D_{i}, X_{i} \right) - E\left( y_{i} \mid D_{i} = 0, X_{i} \right)
+        \end{align*}
+        can be estimated from data.
+        \item ATET = ATE under unconfoundedness.
+        \[E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = E\left( \Delta_{i} \mid X_{i} \right)\]
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Overlapping Assumption}
+    \begin{itemize}
+        \item $0 < \Pr \left( D_{i} = 1\mid x_{i} = x) <1 \right)$\\
+        Otherwise, either the control group or the treatment group is missing.
+        \item Unconfoundedness holds in Randomized Controlled Trials (RCT). But is rare in social science.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Regression-based Model}
+    \begin{itemize}
+        \item $y_{0i} = \alpha_{0} + X_{i}^{'}\beta_{0} + \varepsilon_{0i}$\\
+        $y_{0i}=\alpha_{1} + X_{i}^{'}\beta_{1} + \varepsilon_{1i}$\\
+        with $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, unconfoundedness
+        \item Treatment effect
+        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
+        \[\text{ATE} E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right)\]
+        \[\text{ATET} E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = \text{ATE} + E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \right)\]
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Selection Bias}
+    \begin{itemize}
+        \item Selection bias $E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \ne 0 \right)$\\
+        The individual knows $\varepsilon_{1i} - \varepsilon_{0i}$, and he elects to the control group because of that.
+        \item The fact that he joins the control group is a calculated rational decision, not an indifferent random assignment.
+        \item e.g. Children of professors are more likely to get a PhD degree. (but if we fail to control family background)
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuous $X$}
+    \begin{itemize}
+        \item Assume unconfoundedness and overlapping
+        \item $ X \sim \text{discrete random variable}$, easy to compute $\text{ATE}\left(x\right) = \text{ATET}\left(x\right)$ at each point $x$
+        \item if $X$ is continuous, we can use nonparametric method to estimate
+        \[ m_{j} \left( x \right) = E\left( y_{ij}  \mid X_{i} = x\right),\, \text{for}\, j \in \left\{ 0,1 \right\}\]
+    \end{itemize}    
+\end{frame}
+
+\begin{frame}{Propensity Score}
+    \begin{itemize}
+        \item $P\left(x \right) = \Pr \left( D_{i} = 1 \mid X_{i} = x \right)$
+        \item $E\left( \frac{D_{i} y_{i}}{P\left( X_{i} \right)} \right) = E \left( \frac{D_{i} y_{1i}}{P\left( X_{i} \right)} \right)  \overset{\text{LIE}}{=} E\left( \frac{1}{P\left( X_{i} \right)} E\left( D_{i} y_{1i} \mid X_{i}\right) \right) \overset{\text{unconf.}}{=} E \left( \frac{1}{P\left( X_{i} \right)} E \left( D_{i} \mid X_{i} \right) E\left(y_{1i} \mid X_{i} \right)\right) \overset{\text{LIE}}{ = } E\left( y_{1i} \right)$
+        \item Similarly, $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
+        \item $\text{ATE} = E\left( \frac{D_{i}y_{i}}{P \left( X_{i} \right)} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left( X_{i} \right)} \right) = E\left( \frac{y_{i} \mathbb{I} \left( D_{i} = 1 \right)}{P\left( X_{i} \right)} - \frac{y_{i} \mathbb{I} \left( D_{i} = 0 \right)}{1 - P\left( X_{i} \right)} \right)$
+        \item This is the unconditional ATE:
+        \[\text{ATE} = E\left( \text{ATE}\left(X\right) \right) = \int \text{ATE} \left(x\right) \, \mathrm{d}F\left( x \right)\]
+        \item Intuition: $E\left( y_{i} \mathbb{I} \left( D_{i} = 1 \right) \right) = E\left( y_{1i} \right) P \left( D_{i} = 1 \right)$ \\need to adjust for the factor $P\left( D_{i} = 1 \right)$.
+    \end{itemize}
+\end{frame}
+
+
+\end{document}
