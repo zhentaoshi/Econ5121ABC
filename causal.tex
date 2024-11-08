@@ -78,7 +78,7 @@
 \newcommand{\romanNum}[1]{\romannumeral #1\relax} % 小写罗马数字
 
 \begin{document}
-\title[Limited]{Models of Limited Dependent Variables}
+\title[Limited]{Causal Inference}
 \author[]{Zhentao Shi}
 \date[]{The Chinese University of Hong Kong}
 
@@ -87,109 +87,222 @@
 \begin{frame}{Potential Outcome Framework}
     \begin{itemize}
         \item A triple $\left( y_{1i}, y_{0i}, D_{i} \right)$
-        \item $D_{i}$ is a treatment (from biomedical)
-        \item observation
-        \[
+        \begin{itemize}
+            \item $D_{i} \in {0,1}$ is a treatment (from biomedical)
+            \item Two potential outcomes $(y_{1i}, y_{0i})$
+        \end{itemize}
+        
+        \item Observed outcome
+        \[ y_i = 
         \left\{\begin{matrix}
-         y_{1i}, & \text{if}\, D_{i} = 1 & \text{treatment group}\\
-         y_{0i}, & \text{if}\, D_{i} = 0 & \text{control group}
+         y_{1i}, & \text{if}\,\, D_{i} = 1 & \text{treatment group}\\
+         y_{0i}, & \text{if}\,\, D_{i} = 0 & \text{control group}
         \end{matrix}\right.
         \]
-        equivalently, $y_{i} = y_{1i}D_{i} + y_{0i} \left(  1- D_{i} \right)$
+        Equivalently, $$y_{i} = y_{1i}D_{i} + y_{0i} \left(  1- D_{i} \right)$$
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Treatment Effect}
     \begin{itemize}
-        \item $\Delta _{i} = y_{1i} - y_{0i}$ can vary with individuals\\
-        e.g. severity of side effects after different people receiving the same vaccine.
-        \item $\Delta _{i}$ is unobservable because researcher only observe one of $y_{1i} - y_{0i}$
+        \item $\Delta _{i} = y_{1i} - y_{0i}$ is a random variable that varies with individuals\\
+        e.g. severity of side effects after people receiving the same vaccine.
+        \item $\Delta _{i}$ is unobservable because researcher only observe either $y_{1i}$ or $y_{0i}$, but not both
+        \item Heraclitus: ``A man cannot step into the same river twice, because it is not the same river, and he is not same man.''
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{ATE and ATET}
+    \begin{itemize}
         \item Average treatment effect
         \[\text{ATE} = E\left( \Delta_{i}\right)\]
         \item Average treatment effect on the treated
         \[\text{ATET} = E\left( \Delta_{i} \mid D_{i} =1 \right)\]
-        \item Control variables $X_{1i}$ can be introduced into ATE and ATET
+        \item Control variables $X_{i}$ can be introduced into ATE and ATET
     \end{itemize}
 \end{frame}
+
+
+\begin{frame}{Randomized Controlled Trials (RCT)}
+    \begin{itemize}
+        \item The golden standard for scientific discovery
+        \item Given a sample independently drawn from the same population, randomly assign the treatment to a subsample.
+        \item Random assignment implies $$(y_{1i}, y_{0i} ) \bot D_i.$$ The potential outcome is independent of the assignment.
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{ATE Under RCT}
+    \begin{itemize}
+        \item \textbf{Treatment group} ``$\mathcal{T}$'' ($N_1$ observations) 
+        \item \textbf{control group} ``$\mathcal{C}$'' ($N_0 = N - N_1$ observations)
+        \begin{align*}
+         ATE & = \frac{1}{N_1} \sum_{i \in \mathcal{T}} y_i  - \frac{1}{N_0} \sum_{i \in \mathcal{C}}  y_i \\
+             & = \frac{1}{N} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_1 / N}  -  \frac{(1-D_i) y_i}{N_0 / N} \right]
+        \end{align*}
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Conditional ATE and ATET}
+    \begin{itemize}
+        \item With control variables $X_i = x$, \textbf{conditional ATE}
+        $$ATE(x) = E[ \Delta_i | X_i = x ]$$
+        \item Similar, \textbf{conditional ATET} is defined as 
+        $$ATE(x) = E[ \Delta_i | D_i = 1 X_i = x ]$$
+        \item Straightforward if $X_i$ is a discrete random variable
+    \end{itemize}
+\end{frame}
+
+
 
 \begin{frame}{Unconfoundedness}
     \begin{itemize}
-        \item also called "conditional independence"
+        
+        \item To mimic (unconditional) RCT, it requires \textbf{Conditional Independence}
         \[ \left( y_{1i}, y_{2i} \right) \bot D_{i} \mid X_{i} \]
-        \item Interpretation: given some properly selected $X_{i}$, the potential outcome is independent of the treatment
-        \item As if the assignment of $D_{i}$ is random, since all confounding factors are controlled
+        \item The above condition is also called \textbf{Unconfoundedness}
+        \item $ATET(x) = ATE(x)$ under unconfoundedness.
+        \[
+        E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = E\left( \Delta_{i} \mid X_{i} \right)
+        \] \pause
+
+
+        \item In an \textbf{observational study}, it means ``Once $X_i$ is controlled, the potential outcome is independent of the treatment''
+        \item In principle, we should include all \textbf{confounding variables} into $X_i$
+        
     \end{itemize}
-    
 \end{frame}
 
-\begin{frame}{Estimation}
+\begin{frame}{Overlapping Condition}
     \begin{itemize}
-        \item 
+       \item A necessary condition $$0 < \Pr \left( D_{i} = 1\mid X_{i} = x) <1 \right)$$ 
+
+        \item In the subsample $\{X_i = x\}$, define $\mathcal{T}_x$, $\mathcal{C}_x$, $N_x$, $N_{x,1}$, and $N_{x,0}$ are accordingly 
         \begin{align*}
-            E\left( \Delta _{i} \mid X_{i} =x_{i} \right) & = E\left( y_{1i} - y_{0i} \mid X_{i} \right)\\
-            & \overset{\text{unconf.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} \right)\\
-            &=E \left( y_{1i} \mid D_{i}, X_{i} \right) - E\left( y_{0i} \mid D_{i}, X_{i} \right)\\
-            &= E\left( y_{1i} \mid D_{i} =1, X_{i}\right) - E\left( y_{0i} \mid D_{i} =0 , X_{i} \right)\\
-            &= E\left( y_{i} \mid D_{i}, X_{i} \right) - E\left( y_{i} \mid D_{i} = 0, X_{i} \right)
+            ATE(x) & = E\left( y_{1i} - y_{0i} \mid X_{i} = x \right)  \\
+             &  \overset{\text{C.I.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} \right)\\
+            & = \frac{1}{N_{x,1}} \sum_{i \in \mathcal{T}_x} y_i  - \frac{1}{N_{x,0}} \sum_{i \in \mathcal{C}_x}  y_i  \\
+             & = \frac{1}{N_x} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_{x,1} / N_x}  -  \frac{(1-D_i) y_i}{N_{x,0} / N_x} \right]
         \end{align*}
-        can be estimated from data.
-        \item ATET = ATE under unconfoundedness.
-        \[E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = E\left( \Delta_{i} \mid X_{i} \right)\]
-    \end{itemize}
-    
-\end{frame}
-
-\begin{frame}{Overlapping Assumption}
-    \begin{itemize}
-        \item $0 < \Pr \left( D_{i} = 1\mid x_{i} = x) <1 \right)$\\
-        Otherwise, either the control group or the treatment group is missing.
-        \item Unconfoundedness holds in Randomized Controlled Trials (RCT). But is rare in social science.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Regression-based Model}
-    \begin{itemize}
-        \item $y_{0i} = \alpha_{0} + X_{i}^{'}\beta_{0} + \varepsilon_{0i}$\\
-        $y_{0i}=\alpha_{1} + X_{i}^{'}\beta_{1} + \varepsilon_{1i}$\\
-        with $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, unconfoundedness
-        \item Treatment effect
-        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
-        \[\text{ATE} E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right)\]
-        \[\text{ATET} E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = \text{ATE} + E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \right)\]
         
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Selection Bias}
-    \begin{itemize}
-        \item Selection bias $E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \ne 0 \right)$\\
-        The individual knows $\varepsilon_{1i} - \varepsilon_{0i}$, and he elects to the control group because of that.
-        \item The fact that he joins the control group is a calculated rational decision, not an indifferent random assignment.
-        \item e.g. Children of professors are more likely to get a PhD degree. (but if we fail to control family background)
-        
-    \end{itemize}
-\end{frame}
 
 \begin{frame}{Continuous $X$}
     \begin{itemize}
-        \item Assume unconfoundedness and overlapping
-        \item $ X \sim \text{discrete random variable}$, easy to compute $\text{ATE}\left(x\right) = \text{ATET}\left(x\right)$ at each point $x$
-        \item if $X$ is continuous, we can use nonparametric method to estimate
-        \[ m_{j} \left( x \right) = E\left( y_{ij}  \mid X_{i} = x\right),\, \text{for}\, j \in \left\{ 0,1 \right\}\]
+        
+        \item The above analysis is based on $ X \sim \text{discrete random variable}$. 
+        \item Assume unconfoundedness and overlapping, and then $$ATE\left(x\right) = ATET \left(x\right)$$ at each point $x$
+        \item If $X$ is continuous, one way is to nonparametrically estimate 
+        \[ m_{j} \left( x \right) = E\left( y_{ji}  \mid X_{i} = x\right),\, \text{for}\, j \in \left\{ 0,1 \right\}\]
     \end{itemize}    
 \end{frame}
 
 \begin{frame}{Propensity Score}
     \begin{itemize}
-        \item $P\left(x \right) = \Pr \left( D_{i} = 1 \mid X_{i} = x \right)$
-        \item $E\left( \frac{D_{i} y_{i}}{P\left( X_{i} \right)} \right) = E \left( \frac{D_{i} y_{1i}}{P\left( X_{i} \right)} \right)  \overset{\text{LIE}}{=} E\left( \frac{1}{P\left( X_{i} \right)} E\left( D_{i} y_{1i} \mid X_{i}\right) \right) \overset{\text{unconf.}}{=} E \left( \frac{1}{P\left( X_{i} \right)} E \left( D_{i} \mid X_{i} \right) E\left(y_{1i} \mid X_{i} \right)\right) \overset{\text{LIE}}{ = } E\left( y_{1i} \right)$
-        \item Similarly, $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
-        \item $\text{ATE} = E\left( \frac{D_{i}y_{i}}{P \left( X_{i} \right)} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left( X_{i} \right)} \right) = E\left( \frac{y_{i} \mathbb{I} \left( D_{i} = 1 \right)}{P\left( X_{i} \right)} - \frac{y_{i} \mathbb{I} \left( D_{i} = 0 \right)}{1 - P\left( X_{i} \right)} \right)$
-        \item This is the unconditional ATE:
-        \[\text{ATE} = E\left( \text{ATE}\left(X\right) \right) = \int \text{ATE} \left(x\right) \, \mathrm{d}F\left( x \right)\]
-        \item Intuition: $E\left( y_{i} \mathbb{I} \left( D_{i} = 1 \right) \right) = E\left( y_{1i} \right) P \left( D_{i} = 1 \right)$ \\need to adjust for the factor $P\left( D_{i} = 1 \right)$.
+        
+        \item \textbf{Propensity score}: $$P\left(x \right) = \Pr \left( D_{i} = 1 \mid X_{i} = x \right) = E \left( D_{i}  \mid X_{i} = x \right) $$
+        \item In the treatment group
+        \begin{align*}
+        E\left( \frac{D_{i} y_{i}}{P\left( X_{i} \right)} \right) 
+         & \overset{\text{LIE}}{=}  E\left( \frac{1}{P\left( X_{i} \right)} E\left( D_{i} y_{1i} \mid X_{i}\right) \right) \\
+         & \overset{\text{C.I.}}{=} E \left( \frac{1}{P\left( X_{i} \right)} E \left( D_{i} \mid X_{i} \right) E\left(y_{1i} \mid X_{i} \right)\right) \\
+         & \overset{\text{LIE}}{ = } E\left( y_{1i} \right)    
+        \end{align*}
+        
+        \item Similarly,  in the control group $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
+        
     \end{itemize}
 \end{frame}
+
+
+
+\begin{frame}{ATE Under Continuous $X$}
+    \begin{itemize}
+        \item The (unconditional) ATE is 
+        $$ ATE = E\left( \frac{D_{i}y_{i}}{P \left( X_{i} \right)} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left( X_{i} \right)} \right) $$
+        \item Average $ATE(X_i)$ over the support of $X_i$:
+        \[ATE = E\left[ ATE\left(X_i\right) \right] = \int ATE \left(X_i\right) \, \mathrm{d}F\left( X_i \right)\]
+        % \item Intuition: $E\left( y_{i} \mathbb{I} \left( D_{i} = 1 \right) \right) = E\left( y_{1i} \right) P \left( D_{i} = 1 \right)$ \\need to adjust for the factor $P\left( D_{i} = 1 \right)$.
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Regression-based Model}
+    \begin{itemize}
+        \item Liner potential outcome
+        \begin{align*}
+        y_{0i} & = \alpha_{0} + X_{i}^{'}\beta_{0} + \varepsilon_{0i}\\
+        y_{1i} & = \alpha_{1} + X_{i}^{'}\beta_{1} + \varepsilon_{1i}
+        \end{align*}
+        The linear assumption makes life easier under continuous $X_i$.
+        
+        \item The above model implies treatment effect 
+        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
+        \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
+        
+        \[ATE(X_i) =  E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right)\]
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Selection Bias}
+\begin{align*}
+   ATET(X_i) & = E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) \\
+    & = ATE(X_i) + E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \right) 
+\end{align*}
+
+    \begin{itemize}
+         
+        \item Under unconfoundedness, $ATE(X_i) = ATET(X_i)$
+        \item Otherwise, \textbf{selection bias} if $$E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i}  \right) \ne 0$$
+        The individual knows $\varepsilon_{1i} - \varepsilon_{0i}$, and he elects to the treatment group because of that.
+        \item The fact that he joins the treatment group is a calculated rational decision, not an indifferent random assignment.
+        \item e.g.~Children of professors are more likely to get a PhD degree. (but if we fail to control family background)
+        
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Event Study}
+\begin{itemize}
+    \item A time series topic, but very similar to treatment
+    \item The same individual observed over time $t = 1,2,\ldots,T$
+    \item An event happens at time $t = T_1$
+    \begin{itemize}
+        \item Before event (control group)
+        \item After event (treatment group)
+        \item $D_t = \mathbb{I}(t \geq T_1) $
+    \end{itemize}
+    \item Regression
+    $$y_t = \alpha + \beta D_t + X_t' \gamma + \varepsilon_t$$
+    \item Key assumption
+    $$E[\varepsilon_t | X_t, D_t ] = 0 \mbox{ for all } t = 1,2\ldots,T $$
+    
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Difference in Difference}
+    \begin{itemize}
+        \item Before and after
+        \item Treatment and control
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{panel data}
+    panel
+\end{frame}
+
 
 
 \end{document}
