@@ -4,7 +4,7 @@
 \usepackage{mathpazo}
 \renewcommand{\familydefault}{\rmdefault}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+% \usepackage[latin9]{inputenc}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 \usepackage[active]{srcltx}
@@ -147,9 +147,20 @@
 \end{frame}
 
 
+\begin{frame}{RCT in Reality}
+    \begin{itemize}
+        \item Duflo, India, development
+        \item AB test, IT
+        \item Both are costly
+        \item Not everyone can do it
+    \end{itemize}
+\end{frame}
+
+
+
 \begin{frame}{Conditional ATE and ATET}
     \begin{itemize}
-        \item With control variables $X_i = x$, \textbf{conditional ATE}
+        \item With control variables $X_i = x$, \textbf{conditional ATE} (CATE)
         $$ATE(x) = E[ \Delta_i | X_i = x ]$$
         \item Similar, \textbf{conditional ATET} is defined as 
         $$ATE(x) = E[ \Delta_i | D_i = 1 X_i = x ]$$
@@ -267,10 +278,40 @@
         \item Otherwise, \textbf{selection bias} if $$E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i}  \right) \ne 0$$
         The individual knows $\varepsilon_{1i} - \varepsilon_{0i}$, and he elects to the treatment group because of that.
         \item The fact that he joins the treatment group is a calculated rational decision, not an indifferent random assignment.
-        \item e.g.~Children of professors are more likely to get a PhD degree. (but if we fail to control family background)
+        \item e.g.~Children of a civil servant are more likely to become a civil servant (but if we fail to control family background)
         
     \end{itemize}
 \end{frame}
+
+% I would like to talk about LATE.
+% However, LATE is not covered by the textbook
+
+\begin{frame}{Regression Discontinuity Design}
+    \begin{itemize}
+        \item Quasi experiment: A jump point due to some ad hoc policy cutoff
+        \item Unconfoundedness is naturally satisfied
+        \item e.g.~The value-added of college
+        \item Caveat: valid only for the subpopulation around the cutoff
+        \item Suppose the cutoff is $c$
+        \item $y_{0i} = \mu_0 + \beta_0 (x_i - c) + \varepsilon_{0i}$
+        \item $y_{1i} = \mu_1 + \beta_1 (x_i - c) + \varepsilon_{1i}$        
+    \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Example: Air Pollution in Huai River}
+\begin{itemize}
+    \item \textcolor{red}{insert a graph}
+    \item Example: Chen, Ebenstein, Greenstone, Li (2013, PNAS) 
+\end{itemize}
+
+    
+\end{frame}
+
+    
+
 
 
 \begin{frame}{Event Study}
@@ -299,8 +340,23 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{panel data}
-    panel
+
+
+\begin{frame}{Pooled Cross Sections}
+    \begin{itemize}
+        \item Cross-sectional datasets collected at different time points  
+        \item Group-specific intercept  
+        \item Analysis of time trends  
+        \item Example: Time trend of migrant workers' wages in Shenzhen
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Difference-in-Difference (DID) Method}
+    \begin{itemize}
+        \item Isolate the treatment effect  
+        \item \emph{difference-in-difference} (DID)  
+        \item Example: Effect of the HKU Station opening on rental prices in the nearby area, with HKU as the treatment group and CUHK as the control group.
+    \end{itemize}
 \end{frame}
 
 

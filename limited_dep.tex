@@ -4,7 +4,7 @@
 \usepackage{mathpazo}
 \renewcommand{\familydefault}{\rmdefault}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+% \usepackage[latin9]{inputenc}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 \usepackage[active]{srcltx}
@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage[authoryear]{natbib}
 \usepackage{graphicx}
+\usepackage{emoji}
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
@@ -107,6 +108,8 @@
         \end{itemize}
 \end{frame}
 
+
+
 \begin{frame}[plain]{Unification}
     \begin{center}
         \includegraphics[width = \textwidth]{fig/terracotta_warriors.jpg}
@@ -119,8 +122,8 @@
     \begin{itemize}
         \item MLE is the unifying framework
         \item Regressors $X_i$ enter the model in a single index $X_i'\beta$
-        \item Functional forms are convenient choices
-        \item Economic interpretation as utilities
+        \item Distributional assumptions are chosen for convenience
+        \item Economics interprets the single index as utility 
     \end{itemize}
 \end{frame}
 
@@ -142,7 +145,6 @@
             \item Binary regression (Supervised learning)
             \begin{itemize}
                 \item College entrance
-                \item Marriage
                 \item Loan decision
                 \item Spam filter
             \end{itemize}
@@ -170,8 +172,10 @@
     \item Conditional heteroskedastic.
     \item Predicted range: $E\left [y_{i} = 1 \mid X_{i} \right] = X_{i}' \beta$ can go beyond $\left[0,1\right]$.
     \begin{itemize}
-        \item $X_{i}^{'} \beta$ is a ``single index''.
+        \item $X_{i}^{'} \beta$ is a single index.
     \end{itemize}
+    \bigskip 
+    \item Ironically, the linear model is popular! \emoji{grinning-face-with-sweat}
 \end{itemize}
 \end{frame}
 
@@ -185,8 +189,8 @@
         \]
         \item Popular choices
         \begin{itemize}
-           \item Probit: \( G(x) \sim \text{Normal cdf} \)
-           \item Logit: \( G\left(x\right) \sim \text{Logistic cdf} \)
+           \item Probit: \( G(x) \sim \text{Normal CDF} \)
+           \item Logit: \( G\left(x\right) \sim \text{Logistic CDF} \)
         \end{itemize}
         \item Facts about Logistic CDF
         \begin{itemize}
@@ -199,10 +203,10 @@
         \put(185,-5){\includegraphics[width=0.45\textwidth]{fig/logistic_normal.png}}
     \end{picture}  
 \end{frame}
-\begin{frame}{Latent Utility Model}
+\begin{frame}{Latent Utility Model \emoji{smiling-face-with-halo}}
 
 \begin{itemize}
-    \item Latent utility $y^{*} = X_{i}^{'} \beta + \varepsilon _{i}$
+    \item Latent utility $y^{*} = X_{i}^{'} \beta + \varepsilon _{i}$ 
     \item Observed outcome $y = \mathbb{I}\left\{ y_{i} ^{*} \ge 0 \right\}$
     \item If $\varepsilon _{i} \mid X_i \sim \text{Logistic}$, then
     \begin{align*}
@@ -224,7 +228,7 @@ A sample of $N$ observations of $(y_i, X_i)$
     \end{align*}
 
 Log-likelihood
-    \[\ell_n \left( \beta \right) = \sum_{i =1}^{N} \left\{ y_i \log \left( \Lambda \left( X_{i}^{'}\beta \right) \right) + \left( 1 - y_{i} \right)  \log \left( 1 - \Lambda \left( X_i' \beta \right) \right)\right\}\]
+    \[\ell_N \left( \beta \right) = \sum_{i =1}^{N} \left\{ y_i \log \left( \Lambda \left( X_{i}^{'}\beta \right) \right) + \left( 1 - y_{i} \right)  \log \left( 1 - \Lambda \left( X_i' \beta \right) \right)\right\}\]
     
     
 \end{frame}
@@ -248,7 +252,7 @@ Log-likelihood
 
 
 \begin{frame}{Goodness of Fit for Binary Classification}
-     $$\text{McFadden} R^{2} = 1- \log L_{1} / \log L_{0}$$
+     $$\mbox{McFadden } R^{2} = 1- \log L_{1} / \log L_{0}$$
     \begin{itemize}
         \item $\log L_{1}$: maximum of likelihood
         \item $\log L_{0}$: the null model (no $X$, intercept only)
@@ -261,11 +265,32 @@ Log-likelihood
 \begin{frame}{Maximum Likelihood}
 \begin{itemize}
     \item All familiar properties of ML hold
+    \begin{itemize}
+        \item Consistency
+        \item Asymptotic normality
+    \end{itemize}
     \item Misspecification?
     \item Choices of loss functions
+    \begin{itemize}
+        \item $\min_{\theta \in \Theta} Loss(\theta; data)$
+    \end{itemize}
 \end{itemize}
     
 \end{frame}
+
+
+
+
+\begin{frame}[plain]{Loss Functions 
+\emoji{exploding-head}}
+    Hastie, Tibshirani, Friedman (2008): The Elements of Statistical Learning
+    \begin{center}
+        \includegraphics[width = 0.7 \textwidth]{fig/loss_fun.PNG}
+    \end{center}
+
+    
+\end{frame}
+
 
 
 \begin{frame}{Prediction and Evaluation}
@@ -301,11 +326,9 @@ Log-likelihood
         \item More than two categories
         \item Categories are naturally ordered
 
-\textcolor{red}{add the picture "caste.webp" into this slide. I attempted to change it to "png" and use the following code, but it didn't work.}
-
-%\begin{center}
-%    \includegraphics[width=0.7\textwidth]{fig/caste.png}
-%\end{center}
+\begin{center}
+   \includegraphics[width=0.7\textwidth]{fig/caste.png}
+\end{center}
 
     \end{itemize}
 \end{frame}
@@ -314,7 +337,7 @@ Log-likelihood
 \begin{frame}{Utility}
     \begin{itemize}
 
-        \item Latent utility: $$y_{i}^{*} = X_{i}' \beta + \varepsilon_{i}$$ while the observed outcome  $$y_{i} = j, \, \text{if}\, r_{j} < y_{i}^{*} \le r_{j+1}$$
+        \item Latent utility: $$y_{i}^{*} = X_{i}' \beta + \varepsilon_{i}$$ while the observed outcome  $$y_{i} = j, \quad \mbox{ if }\, \gamma_{j} < y_{i}^{*} \le \gamma_{j+1}$$
 
     \begin{itemize}
         \item Normalization is needed for identification
@@ -366,7 +389,7 @@ Log-likelihood
     \begin{itemize}
         \item How do you travel from Hong Kong to Guangzhou? By bus, train, or plane?
         \item Machine learning: handwritten numbers
-        \item Level Individual-choice utility
+        \item Level of individual-choice utility
         $$\mu_{ij} = W_{ij}^{'} \beta + Z_{i}^{'} \beta_{j}$$
         \item Choice-specific regressors $W_{ij}$
         \begin{itemize}
@@ -410,7 +433,7 @@ Log-likelihood
         \item The concise from leverages that $\varepsilon_{ij}$ is i.i.d. across choices
         \item Dilemma of ``red bus'' versus ``blue bus''
         \item Must pay attention to the specification of choice set
-        \item There are methods to fix it; still depending on choices.
+        \item There are methods to fix it; still depending on specification.
     \end{itemize}
 \end{frame}
 
@@ -445,17 +468,17 @@ $$
 \begin{itemize}
     \item Log-likelihood function of an $N$-observation sample:
     \[
-    \ell_N(\beta) = \log \Pr( \mathbf{y} | \mathbf{X}; \beta ) = -\sum_{i=1}^n \exp(X_i'\beta) + \sum_{i=1}^n y_i X_i'\beta.
+    \ell_N(\beta) = \log \Pr( \mathbf{y} | \mathbf{X}; \beta ) = -\sum_{i=1}^N \exp(X_i'\beta) + \sum_{i=1}^N y_i X_i'\beta.
     \]
     
     \item Score:
     \[
-    s_N(\beta) = \frac{\partial \ell(\beta)}{\partial \beta} = -\sum_{i=1}^n \exp(X_i'\beta)X_i + \sum_{i=1}^n y_i x_i.
+    s_N(\beta) = \frac{\partial \ell(\beta)}{\partial \beta} = -\sum_{i=1}^N \exp(X_i'\beta)X_i + \sum_{i=1}^N y_i x_i.
     \]
 
     \item Second derivative is negative definite:
     \[
-    \frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta'} = -\sum_{i=1}^n \exp(X_i'\beta) X_i X_i'
+    \frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta'} = -\sum_{i=1}^N \exp(X_i'\beta) X_i X_i'
     \]
 
     \item \( \ell_N(\beta) \) is strictly concave in \( \beta \).
@@ -495,6 +518,9 @@ $$
                 \item Pull up the wage
             \end{itemize}
     \end{itemize}
+    \begin{center}
+   \includegraphics[width=0.45\textwidth]{fig/censor_vs_truncate.png}
+\end{center}
 \end{frame}
 
 \begin{frame}{Probabilities}
@@ -566,7 +592,7 @@ The likelihood consists of two components:
             \sigma_{12} & 1
         \end{pmatrix} \right)$ \\
         where $\sigma_{22} = 1$ is a normalization
-        \item Parameter $\theta = (\beta_1, \beta_2, \sigma_{11}^2, \sigma_{12})$, can be estimated by MLE \pause
+        \item Parameter $\theta = (\beta_1, \beta_2, \sigma_{11}^2, \sigma_{12})$ can be estimated by MLE \pause
         \item The conditional mean
         \begin{align*}
             E\left( y_{i}^{*} \mid h_{i} =1 \right) & = x_{1i}' \beta + E \left( \varepsilon_{1i} \mid h_{i} =1 \right) = x_{1i}' \beta + \sigma_{12} \lambda \left( x_{2i}' \beta_{2} \right)
