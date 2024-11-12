@@ -75,7 +75,7 @@
 
 \title[panel]{Panel Data}
 \author[]{Zhentao Shi}
-\date{The Chinese University of Hong Kong}
+\date[]{The Chinese University of Hong Kong}
 
 \begin{document}
 
@@ -87,41 +87,95 @@
 % \end{frame}
 
 
-\section{Panel Data}
-\frame{\sectionpage}
+
 
 \begin{frame}{Panel Data Structure}
     \begin{itemize}
-        \item The same individuals over time $t=1,\ldots,T$  
-        \item The potential endogeneity of regressors  
-        \item i.i.d. across $i=1,\ldots,n$  
-        \item dependence allowed within a group over $t=1,\ldots,T$ for the same $i$.  
+        \item The same individuals are observed over time $t=1,\ldots,T$  
+        \item Independent across $i=1,\ldots,N$  
+        \item Temporal dependence is allowed within a \textbf{group} over $t=1,\ldots,T$ for the same $i$.  
             \begin{equation}
-                y_{it}=\beta_{1}+x_{it}\beta_{2}+u_{it},\ i=1,\ldots,n; t=1,\ldots,T \label{eq:basic_eq}
+                y_{it}=\beta_{1}+x_{it}'\beta_{2}+\varepsilon_{it} \label{eq:basic_eq}
             \end{equation}  
-            $u_{it}=\alpha_{i}+\epsilon_{it}$ : \emph{composite error}.
+            with $E(\varepsilon_{it} ) = 0$.
+        \item \textbf{Composite error}: 
+        $$\varepsilon_{it}=\alpha_{i} + u_{it}$$         with $\mathrm{cov} (u_{it}, x_{it}) = 0$
     \end{itemize}
 \end{frame}
 
-\subsection{Fixed Effect}
-\frame{\subsectionpage}
 
-\begin{frame}{Fixed Effect Model}
+
+\begin{frame}{Fixed Effects}
     \begin{itemize}
-        \item If $\mathrm{cov}(\alpha_{i},x_{it})=0$, OLS is consistent. Otherwise, consistency breaks down  
-        \item Arbitrary correlation between $\alpha_{i}$ and $x_{it}$  
-        \item Eliminate $\alpha_{i}$
-            \begin{equation}
-            \overline{y}_{i}=\beta_{1}+\overline{x}_{i}\beta_{2}+\bar{u}_{it}=\beta_{1}+\overline{x}_{i}\beta_{2}+\alpha_{i}+\bar{\epsilon}_{it}\label{eq:group_mean}
-            \end{equation}  
-            where $\overline{y}_{i}=\frac{1}{T}\sum_{t=1}^{T}y_{it}$ \\  
-            Subtracting (\ref{eq:group_mean}) from (\ref{eq:basic_eq})  
-            \begin{equation}
-            \tilde{y}_{it}=\tilde{x}_{it}\beta_{2}+\tilde{\epsilon}_{it}\label{eq:FE_demean}
-            \end{equation}  
-            where $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$
+        \item Consistency of OLS counts on 
+        $\mathrm{cov}(\varepsilon_{it}, x_{it}) = \mathrm{cov}(\alpha_{i}, x_{it}) + \mathrm{cov}(u_{it},x_{it})=0$.
+        
+        \item Example
+        \begin{itemize}
+            \item Production function (Mundlak, 1961)
+ $$y_{it}=\beta_{1}+x_{it}'\beta_{2}+ m_i \gamma + u_{it} $$
+ where $m_i$ is the ``management quality'' of a firm (usually unobservable).
+        \item $m_i\gamma$, which can be correlated with $x_{it}$, is captured by $\alpha_i$
+        \end{itemize}
+        
+        \item The \textbf{fixed effect} $\alpha_{i}$ can be potentially endogenous (correlated with $x_{it}$)
+    
     \end{itemize}
 \end{frame}
+
+
+
+
+\begin{frame}{Static Linear Model}
+    \begin{itemize}
+        \item Model 
+        \begin{align*}
+          y_{it} & =\beta_{1}+x_{it}'\beta_{2}+\varepsilon_{it}  \\  
+                 & =(\beta_{1}+ \alpha_i) +x_{it}'\beta_{2}+ u_{it}  \\
+                 & = \alpha_{1i} +x_{it}'\beta_{2}+ u_{it}  
+        \end{align*}
+    where $ \alpha_{1i} = \beta_{1}+ \alpha_i$ is the new intercept
+
+\bigskip
+
+    \item $(N+K)$ Parameters $(\alpha_{1i},\alpha_{2i}, \ldots, \alpha_{Ni}; \beta_2) $
+        
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Least Squares Dummy Variable Estimator}
+    \begin{itemize}
+        \item Direct Estimation 
+        $$y_{it} = \sum_{j=1}^N \alpha_{1j} \mathbf{I}(i=j) +x_{it}'\beta_{2}+u_{it}  $$
+    \end{itemize}
+    
+    
+    \textcolor{red}{draw a diagram}
+\end{frame}
+
+
+
+\begin{frame}{Within-Group Transformation}
+    \begin{itemize}
+        \item Inner-outer optimization: given any $\beta_2$, the OLS estimator
+        $$\hat{\alpha}_{1i} = T^{-1} \sum_{t=1}^T (y_{it} - x'_{it} \beta_2)
+          = \bar{y}_{i} - \bar{x}'_{i} \beta_2, $$
+          where $\bar{y}_i$ is the \textbf{within group average}, and so is $\bar{x}_i$.
+        \item Substitute $\hat{\alpha}_{1i}$ into $y_{it} = \alpha_{1i} +x_{it}'\beta_{2}+ u_{it}$ and rearrange:
+        $$\tilde{y}_{it}=\tilde{x}_{it}\beta_{2}+\tilde{u}_{it}$$
+         where $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$ is the \textbf{within-group transformation}, and  $\tilde{x}_{it}$ and $\tilde{u}_{it}$ are defined similarly
+         
+        \item The $N$ parameters $(\alpha_{1i})_{i=1}^N$ are eliminated
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
 
 \begin{frame}{Within Estimator}
     \begin{itemize}
@@ -132,10 +186,10 @@
         \item Consistency is achieved if strict exogeneity holds.
     \end{itemize} 
     \begin{assumption*}[FE.1]
-        $E\left[\epsilon_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ where $\mathbf{x}_{i}=\left(x_{i1},\ldots,x_{iT}\right)$. 
+        $E\left[u_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ where $\mathbf{x}_{i}=\left(x_{i1},\ldots,x_{iT}\right)$. 
     \end{assumption*} 
     \begin{assumption*}[FE.2]
-     $\mathrm{var}\left(\epsilon_{i}|\alpha_{i},\mathbf{x}_{i}\right)=\sigma_{\epsilon}^{2}I_{T}$. 
+     $\mathrm{var}\left(u_{i}|\alpha_{i},\mathbf{x}_{i}\right)=\sigma_{u}^{2}I_{T}$. 
     \end{assumption*}
 \end{frame}
 
@@ -143,14 +197,14 @@
     \begin{itemize}
         \item Under homoskedasticity:
         \[
-            \widehat{\sigma}_{\epsilon}^{2}=\frac{1}{n\left(T-1\right)}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\tilde{\epsilon}}_{it}^{2}.
+            \widehat{\sigma}_{u}^{2}=\frac{1}{n\left(T-1\right)}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\tilde{u}}_{it}^{2}.
         \]
-        where $\widehat{\tilde{\epsilon}}=\tilde{y}_{it}-\tilde{x}_{it}\widehat{\beta}_{2}^{FE}$  
+        where $\widehat{\tilde{u}}=\tilde{y}_{it}-\tilde{x}_{it}\widehat{\beta}_{2}^{FE}$  
     \end{itemize}
     \begin{theorem}[FE Asymptotic Normality]
         If FE.1 and FE.2 hold, then
         \[
-            \left(\widehat{\sigma}_{\epsilon}^{2}\left(\tilde{X}'\tilde{X}\right)^{-1}\right)^{-1/2}\left(\widehat{\beta}_{2}^{FE}-\beta_{2}^{0}\right)\Rightarrow N\left(0,I_{K}\right).
+            \left(\widehat{\sigma}_{u}^{2}\left(\tilde{X}'\tilde{X}\right)^{-1}\right)^{-1/2}\left(\widehat{\beta}_{2}^{FE}-\beta_{2}^{0}\right)\Rightarrow N\left(0,I_{K}\right).
         \]
     \end{theorem}
 \end{frame}
@@ -163,14 +217,14 @@
         \item $\mathrm{cov}(\alpha_{i},x_{it})=0$.  
     \end{itemize}
     \begin{assumption*}[RE.1]
-        $E\left[\epsilon_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ and $E\left[\alpha_{i}|\mathbf{x}_{i}\right]=0$.  
+        $E\left[u_{it}|\alpha_{i},\mathbf{x}_{i}\right]=0$ and $E\left[\alpha_{i}|\mathbf{x}_{i}\right]=0$.  
     \end{assumption*}
-    \[S=\mathrm{var}\left(u_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}\mathbf{1}_{T}\mathbf{1}_{T}'+\sigma_{\epsilon}^{2}I_{T},\ \mbox{for all }i=1,\ldots,n.  
+    \[S=\mathrm{var}\left(\varepsilon_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}\mathbf{1}_{T}\mathbf{1}_{T}'+\sigma_{u}^{2}I_{T},\ \mbox{for all }i=1,\ldots,n.  
     \]
     \begin{itemize}
         \item rewrite (\ref{eq:basic_eq}) 
             \[
-            y_{it}=w_{it}\boldsymbol{\beta}+u_{it},
+            y_{it}=w_{it}\boldsymbol{\beta}+\varepsilon_{it},
             \]
             where $\boldsymbol{\beta}=\left(\beta_{1},\beta_{2}'\right)'$ and
             $w_{it}=\left(1,x_{it}\right)$ are $K+1$ vectors  
@@ -184,14 +238,14 @@
 
 \begin{frame}{Random Effect}
     \begin{assumption*}[RE.2]
-        $\mathrm{var}\left(\epsilon_{i}|\mathbf{x}_{i},\alpha_{i}\right)=\sigma_{\epsilon}^{2}I_{T}$
+        $\mathrm{var}\left(u_{i}|\mathbf{x}_{i},\alpha_{i}\right)=\sigma_{u}^{2}I_{T}$
     and $\mathrm{var}\left(\alpha_{i}|\mathbf{x}_{i}\right)=\sigma_{\alpha}^{2}.$
     \end{assumption*}  
     \begin{itemize}
         \item $\widehat{u}_{it}=y_{it}-x_{it}\widehat{\boldsymbol{\beta}}^{RE}$  
         \item \begin{eqnarray*}
             \widehat{\sigma}_{u}^{2} &=& \frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{u}_{it}^{2},   \\
-            \widehat{\sigma}_{\epsilon}^{2} &=& \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T(T-1)}\sum_{t=1}^{T}\sum_{r=1}^{T}\sum_{r\neq t}\widehat{u}_{it}\widehat{u}_{ir}.
+            \widehat{\sigma}_{u}^{2} &=& \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T(T-1)}\sum_{t=1}^{T}\sum_{r=1}^{T}\sum_{r\neq t}\widehat{u}_{it}\widehat{u}_{ir}.
         \end{eqnarray*}
     \end{itemize}
 \end{frame}
