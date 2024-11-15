@@ -211,7 +211,7 @@
     \item Observed outcome $y_i = \mathbb{I}\left\{ y_{i} ^{*} \ge 0 \right\}$
     \item If $\varepsilon _{i} \mid X_i \sim \text{Logistic}$, then
     \begin{align*}
-        \Pr\left(y_i \mid X_i \right) &= \Pr \left(X'_i \beta + \varepsilon _{i} \ge 0 \mid X_i\right)\\
+        \Pr\left(y_i = 1 \mid X_i \right) &= \Pr \left(X'_i \beta + \varepsilon _{i} \ge 0 \mid X_i\right)\\
         & = \Pr \left( - \varepsilon _{i} \le X'_{i} \beta \mid X_{i}\right)\\
         & = \Lambda (X'_i \beta )
     \end{align*}
@@ -376,9 +376,9 @@ Log-likelihood
 \begin{frame}{Likelihood}
     \begin{itemize}
         \item Unobservable error $\varepsilon_{i} \mid X_{i}$ is assumed to be either logistic or normal
-        \item Likelihood of individual observation \[ \Pr \left( y_i = j \right) = \sum_{j=1}^{M} P_{ij} \mathbb{I}\left\{ y_j = j \right\}\]
+        \item Likelihood of individual observation \[ \Pr \left( y_i = j \right) = \sum_{j=1}^{M} P_{ij} \mathbb{I}\left\{ y_i = j \right\}\]
         \item Likelihood of the $N$-observation sample 
-    \[ L\left( \theta \right) = \prod_{i =1} ^{N} \Pr \left( y_j = j \right)\]
+    \[ L\left( \theta \right) = \prod_{i =1} ^{N} \Pr \left( y_i = j \right)\]
     \end{itemize}
     
 \end{frame}
@@ -395,7 +395,7 @@ Log-likelihood
 \end{frame}
 
 
-\begin{frame}{Machine Learning: Handwritting}
+\begin{frame}{Machine Learning: Handwriting}
     \begin{center}
     \includegraphics[width=\textwidth]{fig/digits_hand.png}
 \end{center}
@@ -481,21 +481,32 @@ $y \sim \text{Poisson}(\lambda)$:
 $$
 \Pr(y = k) = \frac{\mathrm{e}^{-\lambda} \lambda^k}{k!}, \mathrm{ for }\, \, k=0,1,2,\ldots
 $$
-    \item Poisson regression: single index $\lambda_i = X_i'\beta$ gives log-likelihood
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Poisson Regression}
+\begin{itemize}
+
+    \item Poisson regression: Suppose $$\lambda_i = \exp( X_i'\beta). $$  
+    Model the single index $\lambda_i$ by $\exp( X_i'\beta) $ gives log-likelihood
 $$
 \log \Pr(y_i | X_i) =  -\exp(X_i'\beta) + y_i\cdot X_i'\beta - \log k!
 $$
+    \item Log-likelihood function of an $N$-observation sample:
+    \[
+    \ell_N(\beta) =   -\sum_{i=1}^N \exp(X_i'\beta) + \sum_{i=1}^N y_i X_i'\beta
+    \]
+where $ \log k!$ can be omitted.
+
 \end{itemize}
 \end{frame}
 
 
 
+
 \begin{frame}{Poisson MLE}
 \begin{itemize}
-    \item Log-likelihood function of an $N$-observation sample:
-    \[
-    \ell_N(\beta) =   -\sum_{i=1}^N \exp(X_i'\beta) + \sum_{i=1}^N y_i X_i'\beta.
-    \]
     
     \item Score:
     \[
