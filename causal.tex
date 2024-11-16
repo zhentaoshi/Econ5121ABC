@@ -84,11 +84,117 @@
 
 \makebeamertitle
 
+
+
+\begin{frame}{Western Philosophers}
+
+\begin{itemize}
+    \item Aristotle
+    \begin{itemize}
+        \item material: The mask is made of gold
+        \item formal: $E = m c^2$
+        \item effective: change the status by external force
+        \item final: I run because I want to be healthy
+    \end{itemize}
+    
+    \item Thomas Aquinas: The first cause? 
+
+\bigskip 
+    \item Hume (Skeptism): Causation as a relationship between two impressions in the mind. 
+    % Defined by experience, any cause-and-effect relationship could be incorrect because thoughts are subjective and therefore 
+    Causality cannot be proven.
+
+    \item Kant: Causality is not a feature of the external world, but rather a way of organizing our experience of the world. Causality is a necessary condition for human to understand the world. 
+    % Understanding of causality is not derived from experience, but rather from the structure of our minds.
+    
+\bigskip     
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Marxism}
+
+
+\begin{itemize}
+    \item Causality is not abstract ideas, but rather a result of interactions between material forces and \textbf{human activity}.
+    \item The economic base determines the superstructure.
+    
+    \item Human agency plays a crucial role in shaping causality.
+
+    \item Class struggle is a key driver of historical change and causality.
+\end{itemize}
+
+    
+\end{frame}
+
+
+
+\begin{frame}{Hinduism}
+\begin{center}
+    \includegraphics[width = \textwidth]{fig/karma.jpg}
+\end{center}
+    
+\end{frame}
+
+
+
+\begin{frame}{Chinese Ideas}
+    \begin{itemize}
+        \item fill it
+
+\textcolor{red}{how to make latex display Chinese?}
+
+% 反者，道之动；弱者，道之用。天下万物生于有，有生于无
+
+% 积善之家，必有余庆
+
+% 遂古之初，谁传道之? 上下未形，何由考之? ... 阴阳三合，何本何化? ...
+
+
+    \end{itemize}
+    
+\end{frame}
+
+
+
+\begin{frame}{Job Opportunities}
+    \begin{itemize}
+        
+        \item \href{https://www.zhipin.com/job_detail/e7fa10b466e0c5e41HV82ty9EFdW.html?lid=51us4b3FXFX.search.6&securityId=wnbs_9BkN5Fhf-l1orLT94YWn2kpcjBS6-5X6P4y3qOfoxGDb-LqdsKmwiPycwn1pnZbvF3A-M69do0VjdtCM5SeBd6a_1lLChm-XpGGAe7ZWlB7Hw~~&sessionId=}{Bytedance}
+
+        \item \href{https://www.zhipin.com/job_detail/750563b6c1b42dc11HJ_29y6FVJX.html?lid=51ns09pI55u.search.1&securityId=gnIJonr0XicLr-u1wfIDvyBCsowYfmBnKb7KPziKxfWxaujP30mDd7MWcogl4qQIsW0il0VtOVllz_u0bVWfEswvyt94fI3NKEObdTFdhBDTXwA~&sessionId=}{Kuaishou}
+
+        \bigskip 
+        
+        \item \href{https://www.bilibili.com/video/BV1VW4y1y7AR/?spm_id_from=333.337.search-card.all.click&vd_source=a4b181aa9857818286999eec4d9925e6}{Tech sector}
+    \end{itemize} 
+\end{frame}
+
+
+
+
+\begin{frame}{Comparison of Two means}
+\begin{itemize}
+    \item Sample 1: $(X_1,\ldots,X_{N_x}) \sim N(\mu_x, \sigma^2_x)$
+    \item Sample 2: $(Y_1,\ldots,X_{N_y}) \sim N(\mu_y, \sigma^2_y)$
+    \item Difference in means $\Delta = \bar{X} - \bar{Y}$
+    \item Hypothesis $H_0: \mu_x = \mu_y$
+    \item Test statistic 
+    $$ z = \frac{\Delta}{ \sqrt{ \frac{s_x^2}{n_x} + \frac{s_y^2}{n_y} } }$$
+    \item Without normality, asymptotic theory helps in large sample
+    \bigskip
+    \item Purely statistical exercise.
+\end{itemize}
+
+    
+\end{frame}
+
 \begin{frame}{Potential Outcome Framework}
     \begin{itemize}
+        \item Add a story to the statistical exercise.
         \item A triple $\left( y_{1i}, y_{0i}, D_{i} \right)$
         \begin{itemize}
-            \item $D_{i} \in {0,1}$ is a treatment (from biomedical)
+            \item $D_{i} \in \{0,1\}$ is a treatment (from biomedical)
             \item Two potential outcomes $(y_{1i}, y_{0i})$
         \end{itemize}
         
@@ -100,21 +206,65 @@
         \end{matrix}\right.
         \]
         Equivalently, $$y_{i} = y_{1i}D_{i} + y_{0i} \left(  1- D_{i} \right)$$
+
     \end{itemize}
 \end{frame}
+
+\begin{frame}{Examples}
+
+\begin{itemize}
+
+\item Clinical research
+    \begin{itemize}
+        \item Effects of drugs
+        \item Surgical techniques
+        \item Diets
+    \end{itemize}
+
+    \bigskip 
+    
+    \item Heraclitus: ``A man cannot step into the same river twice, because it is not the same river, and he is not same man.''
+
+\bigskip
+
+\item Economics
+
+    \begin{itemize}
+        \item Effects of monetary police
+        \item Scale of fiscal multiplier
+        \item Poverty alleviation
+    \end{itemize}
+
+    
+\end{itemize}
+    
+\end{frame}
+
 
 \begin{frame}{Treatment Effect}
     \begin{itemize}
         \item $\Delta _{i} = y_{1i} - y_{0i}$ is a random variable that varies with individuals\\
         e.g. severity of side effects after people receiving the same vaccine.
         \item $\Delta _{i}$ is unobservable because researcher only observe either $y_{1i}$ or $y_{0i}$, but not both
-        \item Heraclitus: ``A man cannot step into the same river twice, because it is not the same river, and he is not same man.''
+
+\bigskip
+
+        \item  \href{https://www.youtube.com/watch?v=zqpNT-OfD7E&ab_channel=WarnerBros.Classics}{A funny video}: 2:25--4:25, 5:55--7:10
+
+        \item Direct control experiment
     \end{itemize}
 \end{frame}
 
 
+
+
+
 \begin{frame}{ATE and ATET}
     \begin{itemize}
+
+        
+
+    
         \item Average treatment effect
         \[\text{ATE} = E\left( \Delta_{i}\right)\]
         \item Average treatment effect on the treated
@@ -124,18 +274,47 @@
 \end{frame}
 
 
-\begin{frame}{Randomized Controlled Trials (RCT)}
+
+
+\section{Randomized Controlled Trials}
+\frame{\sectionpage}
+
+\begin{frame}{RCT}
     \begin{itemize}
-        \item The golden standard for scientific discovery
+        \item History: James Lind in 1747 identified a treatment of scurvy
+        \item The ``gold standard'' for scientific discovery
         \item Given a sample independently drawn from the same population, randomly assign the treatment to a subsample.
-        \item Random assignment implies $$(y_{1i}, y_{0i} ) \bot D_i.$$ The potential outcome is independent of the assignment.
+
+        
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Diagram of RCT}
+
+
+        \begin{center}
+            \includegraphics[width = 0.7\textwidth]{fig/RCT.jpg}
+        \end{center}
+
+
+    \begin{itemize}
+       
+        \item Example: Zhongfei Xingnao Fang \href{https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(24)02261-X/abstract}{(link)}
+
+        
+    \end{itemize}
+    
     
 \end{frame}
 
 
 \begin{frame}{ATE Under RCT}
     \begin{itemize}
+
+        \item Random assignment implies $$(y_{1i}, y_{0i} ) \bot D_i.$$ The potential outcome is independent of the assignment.
+
+        \bigskip
+    
         \item \textbf{Treatment group} ``$\mathcal{T}$'' ($N_1$ observations) 
         \item \textbf{control group} ``$\mathcal{C}$'' ($N_0 = N - N_1$ observations)
         \begin{align*}
@@ -147,15 +326,37 @@
 \end{frame}
 
 
-\begin{frame}{RCT in Reality}
+\begin{frame}[plain]{RCT in Development Economics}
     \begin{itemize}
-        \item Duflo, India, development
-        \item AB test, IT
-        \item Both are costly
-        \item Not everyone can do it
+        \item Nobel prize 2019: Banerjee, Duflo, and Kremer
+        \begin{itemize}
+            \item Deworming in Kenya \href{https://dec.uchicago.edu/insights/1754/}{(link)}
+            \item Microcredit in India
+        \end{itemize}
+
+        \item  Example in Gansu, China \href{https://www.povertyactionlab.org/fr/evaluation/impact-eyeglasses-academic-performance-primary-school-students-china}{(link)}
+        \bigskip
+        
+        \item Very costly
+        \item Few researchers have the resources
     \end{itemize}
+\begin{center}
+    \includegraphics[width = 0.6\textwidth]{fig/deworm.jpg}
+\end{center}
+
+    
 \end{frame}
 
+
+\begin{frame}[plain]{RCT in Tech Industry}
+    \begin{center}
+        \includegraphics[width = 0.85\textwidth]{fig/AB-Testing.png}
+    \end{center}
+\end{frame}
+
+
+\section{Observational Studies}
+\frame{\sectionpage}
 
 
 \begin{frame}{Conditional ATE and ATET}
@@ -248,23 +449,96 @@
 
 
 
-\begin{frame}{Regression-based Model}
+
+
+\begin{frame}{Linear Regression}
     \begin{itemize}
-        \item Liner potential outcome
+        \item Linear regression
         \begin{align*}
-        y_{0i} & = \alpha_{0} + X_{i}^{'}\beta_{0} + \varepsilon_{0i}\\
-        y_{1i} & = \alpha_{1} + X_{i}^{'}\beta_{1} + \varepsilon_{1i}
+        y_i & = \alpha + X'_{i} \beta + \varepsilon_{i}
         \end{align*}
-        The linear assumption makes life easier under continuous $X_i$.
+        under the assumption $E [ \varepsilon_i | X_i ] = 0$ implies 
+        $$ \beta = \frac{E[y_i | X_i = x_1 ] - E[y_i | X_i = x_0 ]}{ x_1 - x_0}$$ for any $x_0,x_1 \in \mathcal{X}$. 
+        \item The difference between two groups. 
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Interpretation of Linear Regression: I}
+    \begin{itemize}
+        \item Linear regression is a purely statistical exercise, just like the comparison of two means.
+        \item $E[y_i | X_i]$ always exists
+        \item You can always run regressions, but it may not return what you want.
+
+\bigskip
         
-        \item The above model implies treatment effect 
-        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
-        \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
-        
-        \[ATE(X_i) =  E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{1} \right) + X_{i}^{'} \left( \beta_{1} - \beta_{0} \right)\]
+        \item Example: Wage gap in gender
         
     \end{itemize}
 \end{frame}
+
+
+
+
+\begin{frame}{Interpretation of Linear Regression: II}
+
+        
+        Example: $y$ is salary, $X$ is college entrance.
+        
+        \begin{itemize}
+            \item Linear regression is doable, but cannot be interpreted as ``causal''.
+            \item When we worry about endogeneity, we have a causal model in mind.
+            \item Causal question cannot be answered without further structures.
+
+        \bigskip
+        
+            \item Impportance of the causal model: Only the causal relationship has policy implications (under partial equilibrium)
+        \end{itemize}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{Regression-based Causal Model}
+    \begin{itemize}
+
+        \item Continue with the example: Change the year of education. 
+        
+        \item ``Keeping everything else equal, if i's $X_i$ is changed from $x_0$ to $x_1$, then $\beta$ is the average change of $y_i$.'' This is a potential outcome claim.
+    
+        \item Linear potential outcome
+        \begin{align*}
+        y_{0i} & = \alpha_{0} + X'_{i}\beta_{0} + \varepsilon_{0i}\\
+        y_{1i} & = \alpha_{1} + X'_{i}\beta_{1} + \varepsilon_{1i}
+        \end{align*}
+        The linear assumption makes life easier under continuous $X_i$.
+
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{CATE}
+    \begin{itemize}
+
+        
+        \item The above model implies treatment effect 
+        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{1} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
+        \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
+        
+        \[ATE(X_i) =  E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right)\]
+
+        \item If $\beta_1 = \beta_0$, then $ATE(X_i) = \alpha_{1} - \alpha_{0} $ is a level change.
+        
+    \end{itemize}
+\end{frame}
+
+
 
 \begin{frame}{Selection Bias}
 \begin{align*}
@@ -277,11 +551,31 @@
         \item Under unconfoundedness, $ATE(X_i) = ATET(X_i)$
         \item Otherwise, \textbf{selection bias} if $$E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i}  \right) \ne 0$$
         The individual knows $\varepsilon_{1i} - \varepsilon_{0i}$, and he elects to the treatment group because of that.
-        \item The fact that he joins the treatment group is a calculated rational decision, not an indifferent random assignment.
-        \item e.g.~Children of a civil servant are more likely to become a civil servant (but if we fail to control family background)
         
     \end{itemize}
 \end{frame}
+
+
+
+
+\begin{frame}{Self-Selection}
+
+    \begin{itemize}
+
+         \item The fact that a person joins the treatment group is a calculated rational decision, not an indifferent random assignment.
+        \item Example: College premium
+        \begin{itemize}
+            \item Treatment: college entrance $D_i$
+            \item The unconfoundedness $$(\varepsilon_{i,0}, \varepsilon_{i,1}) \bot D_i \, | \, \text{Control}_i$$ does not hold in general. \bigskip
+        \end{itemize}
+
+        \item The linear regression does not provide credible causal interpretation.
+        \item Need other techniques to estimate causality.
+        
+    \end{itemize}
+\end{frame}
+
+
 
 % I would like to talk about LATE.
 % However, LATE is not covered by the textbook
@@ -303,10 +597,10 @@
 
 \begin{frame}{Example: Air Pollution in Huai River}
 \begin{itemize}
-    \item \textcolor{red}{insert a graph}
     \item Example: Chen, Ebenstein, Greenstone, Li (2013, PNAS) 
 \end{itemize}
 
+\textcolor{red}{Put "Huai river" and "RDD Huai" side by side}
     
 \end{frame}
 
@@ -331,34 +625,46 @@
     
 \end{itemize}
 \end{frame}
+ 
 
-\begin{frame}{Difference in Difference}
+
+
+\begin{frame}{Difference-in-Difference (DID)}
     \begin{itemize}
-        \item Before and after
-        \item Treatment and control
-        
+        \item Observational study
+        \item Two groups, two periods
     \end{itemize}
+
+
+
+    
 \end{frame}
 
 
 
-\begin{frame}{Pooled Cross Sections}
-    \begin{itemize}
-        \item Cross-sectional datasets collected at different time points  
-        \item Group-specific intercept  
-        \item Analysis of time trends  
-        \item Example: Time trend of migrant workers' wages in Shenzhen
-    \end{itemize}
+\begin{frame}{Implementing DID}
+$$y_{it} = \beta_0 + \beta_1 D_i + \beta_2 D_t + \beta_3 \cdot D_i D_t + \epsilon_{it}$$
+
+
+\begin{center}
+    \includegraphics[width = 0.8\textwidth]{fig/diffindiff.png}
+\end{center}
+
+\textcolor{red}{insert table}
+    
 \end{frame}
 
-\begin{frame}{Difference-in-Difference (DID) Method}
-    \begin{itemize}
-        \item Isolate the treatment effect  
-        \item \emph{difference-in-difference} (DID)  
-        \item Example: Effect of the HKU Station opening on rental prices in the nearby area, with HKU as the treatment group and CUHK as the control group.
-    \end{itemize}
+\begin{frame}{Summary}
+\begin{itemize}
+    \item Potential outcome framework
+    \item RCT
+    \item Propensity score
+    \item Regressions for CATE
+    \item RDD
+    \item DID
+\end{itemize}
+    
 \end{frame}
-
 
 
 \end{document}
