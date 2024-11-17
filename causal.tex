@@ -91,21 +91,22 @@
 \begin{itemize}
     \item Aristotle
     \begin{itemize}
-        \item material: The mask is made of gold
-        \item formal: $E = m c^2$
-        \item effective: change the status by external force
-        \item final: I run because I want to be healthy
+        \item Material: The mask is made of gold
+        \item Formal: Mathematics
+        \item Effective: Change the status by external force
+        \item Final: I run because I want to be healthy
     \end{itemize}
     
     \item Thomas Aquinas: The first cause? 
 
 \bigskip 
-    \item Hume (Skeptism): Causation as a relationship between two impressions in the mind. 
+    \item David Hume (Skeptism): Causation as a relationship between two impressions in the mind. 
     % Defined by experience, any cause-and-effect relationship could be incorrect because thoughts are subjective and therefore 
     Causality cannot be proven.
 
-    \item Kant: Causality is not a feature of the external world, but rather a way of organizing our experience of the world. Causality is a necessary condition for human to understand the world. 
+    \item Immanuel Kant: Causality is not a feature of the external world, but rather a way of organizing our experience of the world. % Causality is a necessary condition for human to understand the world. 
     % Understanding of causality is not derived from experience, but rather from the structure of our minds.
+    \item Karl Popper: Falsification
     
 \bigskip     
 \end{itemize}
@@ -177,9 +178,8 @@
 \begin{itemize}
     \item Sample 1: $(X_1,\ldots,X_{N_x}) \sim N(\mu_x, \sigma^2_x)$
     \item Sample 2: $(Y_1,\ldots,X_{N_y}) \sim N(\mu_y, \sigma^2_y)$
-    \item Difference in means $\Delta = \bar{X} - \bar{Y}$
-    \item Hypothesis $H_0: \mu_x = \mu_y$
-    \item Test statistic 
+    \item Difference in sample means $\Delta = \bar{X} - \bar{Y}$
+    \item Hypothesis $H_0: \mu_x = \mu_y$.  Test statistic 
     $$ z = \frac{\Delta}{ \sqrt{ \frac{s_x^2}{n_x} + \frac{s_y^2}{n_y} } }$$
     \item Without normality, asymptotic theory helps in large sample
     \bigskip
@@ -232,7 +232,7 @@
     \begin{itemize}
         \item Effects of monetary police
         \item Scale of fiscal multiplier
-        \item Poverty alleviation
+        \item Effects of poverty alleviation
     \end{itemize}
 
     
@@ -243,15 +243,20 @@
 
 \begin{frame}{Treatment Effect}
     \begin{itemize}
-        \item $\Delta _{i} = y_{1i} - y_{0i}$ is a random variable that varies with individuals\\
-        e.g. severity of side effects after people receiving the same vaccine.
-        \item $\Delta _{i}$ is unobservable because researcher only observe either $y_{1i}$ or $y_{0i}$, but not both
+        \item $\Delta _{i} = y_{1i} - y_{0i}$ is a random variable that varies with individuals
+        \begin{itemize}
+            \item e.g. severity of side effects after people receiving the same vaccine.
+        \end{itemize}
+        
+        \item $\Delta _{i}$ is unobservable. Researchers only observe either $y_{1i}$ or $y_{0i}$, but not both
 
 \bigskip
 
-        \item  \href{https://www.youtube.com/watch?v=zqpNT-OfD7E&ab_channel=WarnerBros.Classics}{A funny video}: 2:25--4:25, 5:55--7:10
-
         \item Direct control experiment
+
+\bigskip
+        
+        \item \href{https://www.youtube.com/watch?v=zqpNT-OfD7E&ab_channel=WarnerBros.Classics}{A funny video}: 2:25--4:25, 5:55--7:10
     \end{itemize}
 \end{frame}
 
@@ -269,7 +274,7 @@
         \[\text{ATE} = E\left( \Delta_{i}\right)\]
         \item Average treatment effect on the treated
         \[\text{ATET} = E\left( \Delta_{i} \mid D_{i} =1 \right)\]
-        \item Control variables $X_{i}$ can be introduced into ATE and ATET
+        % \item Control variables $X_{i}$ can be introduced into ATE and ATET
     \end{itemize}
 \end{frame}
 
@@ -283,7 +288,7 @@
     \begin{itemize}
         \item History: James Lind in 1747 identified a treatment of scurvy
         \item The ``gold standard'' for scientific discovery
-        \item Given a sample independently drawn from the same population, randomly assign the treatment to a subsample.
+        \item Given a random sample from the same population. Randomly split it into a \textbf{treatment group} and a \textbf{control group}.
 
         
     \end{itemize}
@@ -374,7 +379,7 @@
 \begin{frame}{Unconfoundedness}
     \begin{itemize}
         
-        \item To mimic (unconditional) RCT, it requires \textbf{Conditional Independence}
+        \item To mimic RCT, it requires \textbf{Conditional Independence}
         \[ \left( y_{1i}, y_{2i} \right) \bot D_{i} \mid X_{i} \]
         \item The above condition is also called \textbf{Unconfoundedness}
         \item $ATET(x) = ATE(x)$ under unconfoundedness.
@@ -384,7 +389,8 @@
 
 
         \item In an \textbf{observational study}, it means ``Once $X_i$ is controlled, the potential outcome is independent of the treatment''
-        \item In principle, we should include all \textbf{confounding variables} into $X_i$
+        \item In principle, we should include all \textbf{confounding variables}
+        \item Unconfoundedness is an untestable assumption!
         
     \end{itemize}
 \end{frame}
@@ -393,10 +399,10 @@
     \begin{itemize}
        \item A necessary condition $$0 < \Pr \left( D_{i} = 1\mid X_{i} = x) <1 \right)$$ 
 
-        \item In the subsample $\{X_i = x\}$, define $\mathcal{T}_x$, $\mathcal{C}_x$, $N_x$, $N_{x,1}$, and $N_{x,0}$ are accordingly 
+        \item In the subsample $\{X_i = x\}$, define $\mathcal{T}_x$, $\mathcal{C}_x$, $N_x$, $N_{x,1}$, and $N_{x,0}$  accordingly. Then
         \begin{align*}
             ATE(x) & = E\left( y_{1i} - y_{0i} \mid X_{i} = x \right)  \\
-             &  \overset{\text{C.I.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} \right)\\
+             &  \overset{\text{C.I.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} = x \right)\\
             & = \frac{1}{N_{x,1}} \sum_{i \in \mathcal{T}_x} y_i  - \frac{1}{N_{x,0}} \sum_{i \in \mathcal{C}_x}  y_i  \\
              & = \frac{1}{N_x} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_{x,1} / N_x}  -  \frac{(1-D_i) y_i}{N_{x,0} / N_x} \right]
         \end{align*}
@@ -408,10 +414,13 @@
 \begin{frame}{Continuous $X$}
     \begin{itemize}
         
-        \item The above analysis is based on $ X \sim \text{discrete random variable}$. 
+        \item The above analysis is based on discrete $X_i$. 
         \item Assume unconfoundedness and overlapping, and then $$ATE\left(x\right) = ATET \left(x\right)$$ at each point $x$
+
+    \bigskip
+        
         \item If $X$ is continuous, one way is to nonparametrically estimate 
-        \[ m_{j} \left( x \right) = E\left( y_{ji}  \mid X_{i} = x\right),\, \text{for}\, j \in \left\{ 0,1 \right\}\]
+        \[ m_{j} \left( x \right) = E\left[ y_{ji}  \mid X_{i} = x\right],\, \mbox{for }\, j \in \left\{ 0,1 \right\}\]
     \end{itemize}    
 \end{frame}
 
@@ -424,7 +433,8 @@
         E\left( \frac{D_{i} y_{i}}{P\left( X_{i} \right)} \right) 
          & \overset{\text{LIE}}{=}  E\left( \frac{1}{P\left( X_{i} \right)} E\left( D_{i} y_{1i} \mid X_{i}\right) \right) \\
          & \overset{\text{C.I.}}{=} E \left( \frac{1}{P\left( X_{i} \right)} E \left( D_{i} \mid X_{i} \right) E\left(y_{1i} \mid X_{i} \right)\right) \\
-         & \overset{\text{LIE}}{ = } E\left( y_{1i} \right)    
+         & = E \left(  E\left(y_{1i} \mid X_{i} \right)\right) 
+         \overset{\text{LIE}}{ = } E\left( y_{1i} \right)    
         \end{align*}
         
         \item Similarly,  in the control group $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
@@ -438,6 +448,9 @@
     \begin{itemize}
         \item The (unconditional) ATE is 
         $$ ATE = E\left( \frac{D_{i}y_{i}}{P \left( X_{i} \right)} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left( X_{i} \right)} \right) $$
+        \begin{itemize}
+            \item Important to ensure $P(X_i) \in (0,1)$. Logistic.
+        \end{itemize}
         \item Average $ATE(X_i)$ over the support of $X_i$:
         \[ATE = E\left[ ATE\left(X_i\right) \right] = \int ATE \left(X_i\right) \, \mathrm{d}F\left( X_i \right)\]
         % \item Intuition: $E\left( y_{i} \mathbb{I} \left( D_{i} = 1 \right) \right) = E\left( y_{1i} \right) P \left( D_{i} = 1 \right)$ \\need to adjust for the factor $P\left( D_{i} = 1 \right)$.
@@ -459,7 +472,7 @@
         \end{align*}
         under the assumption $E [ \varepsilon_i | X_i ] = 0$ implies 
         $$ \beta = \frac{E[y_i | X_i = x_1 ] - E[y_i | X_i = x_0 ]}{ x_1 - x_0}$$ for any $x_0,x_1 \in \mathcal{X}$. 
-        \item The difference between two groups. 
+        \item The slop coefficient is the difference between two groups. 
     \end{itemize}
 \end{frame}
 
@@ -470,12 +483,14 @@
 \begin{frame}{Interpretation of Linear Regression: I}
     \begin{itemize}
         \item Linear regression is a purely statistical exercise, just like the comparison of two means.
-        \item $E[y_i | X_i]$ always exists
-        \item You can always run regressions, but it may not return what you want.
-
-\bigskip
-        
         \item Example: Wage gap in gender
+        
+\bigskip
+
+        \item $E[y_i | X_i]$ always exists, but the linear regression may not get what you want.
+
+        
+        
         
     \end{itemize}
 \end{frame}
@@ -495,7 +510,7 @@
 
         \bigskip
         
-            \item Impportance of the causal model: Only the causal relationship has policy implications (under partial equilibrium)
+            \item Importance of the causal model: Only the causal relationship has policy implications (under partial equilibrium)
         \end{itemize}
 
 \end{frame}
@@ -509,7 +524,7 @@
 
         \item Continue with the example: Change the year of education. 
         
-        \item ``Keeping everything else equal, if i's $X_i$ is changed from $x_0$ to $x_1$, then $\beta$ is the average change of $y_i$.'' This is a potential outcome claim.
+        \item ``Keeping everything else equal, if a person's $X_i$ is changed from $x_0$ to $x_1$, then $\beta$ is the average change of $y_i$.'' This is a potential outcome claim.
     
         \item Linear potential outcome
         \begin{align*}
@@ -527,13 +542,13 @@
     \begin{itemize}
 
         
-        \item The above model implies treatment effect 
-        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{1} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
+        \item The above model implies \textbf{heterogeneous treatment effect}
+        \[\Delta_{i} = \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
         \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
         
         \[ATE(X_i) =  E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right)\]
 
-        \item If $\beta_1 = \beta_0$, then $ATE(X_i) = \alpha_{1} - \alpha_{0} $ is a level change.
+        \item If $\beta_1 = \beta_0$, then $ATE(X_i) = \alpha_{1} - \alpha_{0} $ is a level change homogeneous to all people
         
     \end{itemize}
 \end{frame}
@@ -562,7 +577,7 @@
 
     \begin{itemize}
 
-         \item The fact that a person joins the treatment group is a calculated rational decision, not an indifferent random assignment.
+         % \item The fact that a person joins the treatment group is a calculated rational decision, not an indifferent random assignment.
         \item Example: College premium
         \begin{itemize}
             \item Treatment: college entrance $D_i$
@@ -580,15 +595,18 @@
 % I would like to talk about LATE.
 % However, LATE is not covered by the textbook
 
+\section{Quasi experiment}
+\frame{\sectionpage}
+
 \begin{frame}{Regression Discontinuity Design}
     \begin{itemize}
-        \item Quasi experiment: A jump point due to some ad hoc policy cutoff
+        \item A jump point due to some ad hoc policy cutoff
         \item Unconfoundedness is naturally satisfied
         \item e.g.~The value-added of college
         \item Caveat: valid only for the subpopulation around the cutoff
         \item Suppose the cutoff is $c$
-        \item $y_{0i} = \mu_0 + \beta_0 (x_i - c) + \varepsilon_{0i}$
-        \item $y_{1i} = \mu_1 + \beta_1 (x_i - c) + \varepsilon_{1i}$        
+        \item $y_{0i} = \alpha_0 + \beta_0 (x_i - c) + \varepsilon_{0i}$
+        \item $y_{1i} = \alpha_1 + \beta_1 (x_i - c) + \varepsilon_{1i}$        
     \end{itemize}
 \end{frame}
 
@@ -614,25 +632,51 @@
     \item The same individual observed over time $t = 1,2,\ldots,T$
     \item An event happens at time $t = T_1$
     \begin{itemize}
-        \item Before event (control group)
-        \item After event (treatment group)
-        \item $D_t = \mathbb{I}(t \geq T_1) $
+        \item Before event (control group);  After event (treatment group)
+        
     \end{itemize}
-    \item Regression
-    $$y_t = \alpha + \beta D_t + X_t' \gamma + \varepsilon_t$$
-    \item Key assumption
-    $$E[\varepsilon_t | X_t, D_t ] = 0 \mbox{ for all } t = 1,2\ldots,T $$
+
+    \begin{center}
+        \includegraphics[width = 0.6 \textwidth]{fig/Event-Study.png}
+    \end{center}
     
 \end{itemize}
 \end{frame}
  
 
+\begin{frame}{Implementing Event Study}
+\begin{itemize}
+    \item Let $D_t = \mathbb{I}(t \geq T_1) $
+    \item Regression
+    $$y_t = \alpha + \beta D_t+ \varepsilon_t$$
+    \item Key assumption
+    $$E[\varepsilon_t | D_t ] = 0 \mbox{ for all } t = 1,2\ldots,T $$
+    \item Other control variables can be added into the regression
+
+\bigskip
+
+    \item My 2004 undergraduate thesis
+    
+\end{itemize}
+\end{frame}
+
+
 
 
 \begin{frame}{Difference-in-Difference (DID)}
     \begin{itemize}
-        \item Observational study
-        \item Two groups, two periods
+
+        \item Two groups, two periods (simple panel data)
+        \begin{itemize}
+            \item The two groups are naturally different
+            \item \textbf{Parallel trend} over time. This is an assumption!
+        \end{itemize}
+        
+        \item One of the most popular empirical techniques
+
+        \bigskip
+
+        \item Example: North Korea and South Korea
     \end{itemize}
 
 
@@ -643,14 +687,18 @@
 
 
 \begin{frame}{Implementing DID}
-$$y_{it} = \beta_0 + \beta_1 D_i + \beta_2 D_t + \beta_3 \cdot D_i D_t + \epsilon_{it}$$
+
+\begin{itemize}
+    \item Two indicators $D_i$ and $D_t$
+    \item Regression is convenient for hypothesis testing
+    $$y_{it} = \beta_0 + \beta_1 D_i + \beta_2 D_t + \beta_3 \cdot D_i D_t + \epsilon_{it}$$
+    \item Other control variables can be added
+\end{itemize}
 
 
 \begin{center}
-    \includegraphics[width = 0.8\textwidth]{fig/diffindiff.png}
+    \includegraphics[width = \textwidth]{fig/diffindiff.png}
 \end{center}
-
-\textcolor{red}{insert table}
     
 \end{frame}
 
@@ -662,6 +710,9 @@ $$y_{it} = \beta_0 + \beta_1 D_i + \beta_2 D_t + \beta_3 \cdot D_i D_t + \epsilo
     \item Regressions for CATE
     \item RDD
     \item DID
+
+    \bigskip
+    \item Popular in academia as well as tech industry
 \end{itemize}
     
 \end{frame}

@@ -4,7 +4,7 @@
 \usepackage{mathpazo}
 \renewcommand{\familydefault}{\rmdefault}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
+% \usepackage[latin9]{inputenc}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 \usepackage[active]{srcltx}
@@ -218,7 +218,7 @@ the model has only two parameters $\mu$ and $\sigma^{2}$.
 
 \begin{frame}{Likelihood Function}
 \begin{itemize}
-\item For simplicity, let $\mathbf{Y}=(Y_{1},\ldots,Y_{N})$ be i.i.d. \pause
+\item For simplicity, let $\mathbf{Y}=(Y_{1},\ldots,Y_{N})$ be i.i.d.  
 \item The \textbf{likelihood} of the sample under a hypothesized value of
 $\theta\in\Theta$ is
 \[
@@ -300,7 +300,7 @@ by the Jensen's inequality.
 
 \item Efficient score $s_{i0}=\frac{\partial}{\partial\theta}\log f\left(Y_{i};\theta_{0}\right)$ is evaluated at the true value $\theta_0$
 
-\pause
+ 
 
 \end{itemize}
 
@@ -312,7 +312,7 @@ then $E\left[s_{i0}\right]=0$.
 
 
 MLE is equivalent to looking for roots of $s_N(\theta) = 0$.
-\pause
+ 
 
 \bigskip
 
