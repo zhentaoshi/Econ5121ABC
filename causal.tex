@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage[authoryear]{natbib}
 \usepackage{graphicx}
+\usepackage[UTF8]{ctex} % Enable Chinese support
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
@@ -104,8 +105,6 @@
     % Defined by experience, any cause-and-effect relationship could be incorrect because thoughts are subjective and therefore 
     Causality cannot be proven.
 
-    \item Immanuel Kant: Causality is not a feature of the external world, but rather a way of organizing our experience of the world. % Causality is a necessary condition for human to understand the world. 
-    % Understanding of causality is not derived from experience, but rather from the structure of our minds.
     \item Karl Popper: Falsification
     
 \bigskip     
@@ -117,12 +116,21 @@
 
 
 \begin{itemize}
-    \item Causality is not abstract ideas, but rather a result of interactions between material forces and \textbf{human activity}.
-    \item The economic base determines the superstructure.
-    
-    \item Human agency plays a crucial role in shaping causality.
+    \item Immanuel Kant: Causality is not a feature of the external world, but rather a way of organizing our experience of the world. % Causality is a necessary condition for human to understand the world. 
+    % Understanding of causality is not derived from experience, but rather from the structure of our minds.
 
-    \item Class struggle is a key driver of historical change and causality.
+\bigskip
+
+    \item Causality is not abstract ideas, but rather a result of interactions between material forces and \textbf{human activity}.
+
+    \begin{itemize}
+        \item The economic base determines the superstructure.
+        
+        \item Human agency plays a crucial role in shaping causality.
+    
+        \item Class struggle is a key driver of historical change and causality.
+    \end{itemize}
+
 \end{itemize}
 
     
@@ -140,39 +148,18 @@
 
 
 \begin{frame}{Chinese Ideas}
-    \begin{itemize}
-        \item fill it
 
-\textcolor{red}{how to make latex display Chinese?}
-
-% 反者，道之动；弱者，道之用。天下万物生于有，有生于无
-
-% 积善之家，必有余庆
-
-% 遂古之初，谁传道之? 上下未形，何由考之? ... 阴阳三合，何本何化? ...
-
-
-    \end{itemize}
-    
+\begin{itemize}
+    \item 反者，道之动；弱者，道之用。天下万物生于有，有生于无
+    \item 积善之家，必有余庆
+    \item 遂古之初，谁传道之? 上下未形，何由考之? ... 阴阳三合，何本何化? ...
+\end{itemize}  
 \end{frame}
 
 
 
-\begin{frame}{Job Opportunities}
-    \begin{itemize}
-        
-        \item \href{https://www.zhipin.com/job_detail/e7fa10b466e0c5e41HV82ty9EFdW.html?lid=51us4b3FXFX.search.6&securityId=wnbs_9BkN5Fhf-l1orLT94YWn2kpcjBS6-5X6P4y3qOfoxGDb-LqdsKmwiPycwn1pnZbvF3A-M69do0VjdtCM5SeBd6a_1lLChm-XpGGAe7ZWlB7Hw~~&sessionId=}{Bytedance}
-
-        \item \href{https://www.zhipin.com/job_detail/750563b6c1b42dc11HJ_29y6FVJX.html?lid=51ns09pI55u.search.1&securityId=gnIJonr0XicLr-u1wfIDvyBCsowYfmBnKb7KPziKxfWxaujP30mDd7MWcogl4qQIsW0il0VtOVllz_u0bVWfEswvyt94fI3NKEObdTFdhBDTXwA~&sessionId=}{Kuaishou}
-
-        \bigskip 
-        
-        \item \href{https://www.bilibili.com/video/BV1VW4y1y7AR/?spm_id_from=333.337.search-card.all.click&vd_source=a4b181aa9857818286999eec4d9925e6}{Tech sector}
-    \end{itemize} 
-\end{frame}
-
-
-
+\section{Potential Outcomes}
+\frame{\sectionpage}
 
 \begin{frame}{Comparison of Two means}
 \begin{itemize}
@@ -231,8 +218,8 @@
 
     \begin{itemize}
         \item Effects of monetary police
-        \item Scale of fiscal multiplier
         \item Effects of poverty alleviation
+        \item Effects of pension reform
     \end{itemize}
 
     
@@ -248,7 +235,7 @@
             \item e.g. severity of side effects after people receiving the same vaccine.
         \end{itemize}
         
-        \item $\Delta _{i}$ is unobservable. Researchers only observe either $y_{1i}$ or $y_{0i}$, but not both
+        \item $\Delta _{i}$ is unobservable. Researchers only observe $y_{1i}$ or $y_{0i}$, but not both
 
 \bigskip
 
@@ -321,7 +308,7 @@
         \bigskip
     
         \item \textbf{Treatment group} ``$\mathcal{T}$'' ($N_1$ observations) 
-        \item \textbf{control group} ``$\mathcal{C}$'' ($N_0 = N - N_1$ observations)
+        \item \textbf{Control group} ``$\mathcal{C}$'' ($N_0 = N - N_1$ observations)
         \begin{align*}
          ATE & = \frac{1}{N_1} \sum_{i \in \mathcal{T}} y_i  - \frac{1}{N_0} \sum_{i \in \mathcal{C}}  y_i \\
              & = \frac{1}{N} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_1 / N}  -  \frac{(1-D_i) y_i}{N_0 / N} \right]
@@ -380,24 +367,30 @@
     \begin{itemize}
         
         \item To mimic RCT, it requires \textbf{Conditional Independence}
-        \[ \left( y_{1i}, y_{2i} \right) \bot D_{i} \mid X_{i} \]
-        \item The above condition is also called \textbf{Unconfoundedness}
+        \[ \left( y_{1i}, y_{2i} \right) \bot D_{i} \mid X_{i}, \]
+        which is also called \textbf{Unconfoundedness}
+        \bigskip 
+                \item In an \textbf{observational study}, it means ``Once $X_i$ is controlled, the potential outcome is independent of the treatment''
+                
+        \item In principle, we should include all \textbf{confounding variables}
+        \item Unconfoundedness is an untestable assumption!
+
+        \bigskip
+        
         \item $ATET(x) = ATE(x)$ under unconfoundedness.
         \[
         E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = E\left( \Delta_{i} \mid X_{i} \right)
-        \] \pause
+        \]  
 
 
-        \item In an \textbf{observational study}, it means ``Once $X_i$ is controlled, the potential outcome is independent of the treatment''
-        \item In principle, we should include all \textbf{confounding variables}
-        \item Unconfoundedness is an untestable assumption!
-        
+
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Overlapping Condition}
     \begin{itemize}
-       \item A necessary condition $$0 < \Pr \left( D_{i} = 1\mid X_{i} = x) <1 \right)$$ 
+       \item A necessary condition 
+       $$ \Pr \left( D_{i} = 1\mid X_{i} = x \right) \in (0,1) $$ 
 
         \item In the subsample $\{X_i = x\}$, define $\mathcal{T}_x$, $\mathcal{C}_x$, $N_x$, $N_{x,1}$, and $N_{x,0}$  accordingly. Then
         \begin{align*}
@@ -415,12 +408,13 @@
     \begin{itemize}
         
         \item The above analysis is based on discrete $X_i$. 
-        \item Assume unconfoundedness and overlapping, and then $$ATE\left(x\right) = ATET \left(x\right)$$ at each point $x$
+        % \item Assume unconfoundedness and overlapping, and then $$ATE\left(x\right) = ATET \left(x\right)$$ at each point $x$
 
     \bigskip
         
         \item If $X$ is continuous, one way is to nonparametrically estimate 
         \[ m_{j} \left( x \right) = E\left[ y_{ji}  \mid X_{i} = x\right],\, \mbox{for }\, j \in \left\{ 0,1 \right\}\]
+        \item It involves nonparametric estimation techniques that we don't cover
     \end{itemize}    
 \end{frame}
 
@@ -487,7 +481,7 @@
         
 \bigskip
 
-        \item $E[y_i | X_i]$ always exists, but the linear regression may not get what you want.
+        \item $E[y_i | X_i]$ always exists, but the linear regression may not get the ``causal'' effect
 
         
         
@@ -504,8 +498,16 @@
         Example: $y$ is salary, $X$ is college entrance.
         
         \begin{itemize}
-            \item Linear regression is doable, but cannot be interpreted as ``causal''.
-            \item When we worry about endogeneity, we have a causal model in mind.
+            \item Linear regression is not``causal''. When worried about endogeneity, we have a causal model in mind.
+            \begin{align*}
+            y_i & = \alpha_1 + \beta D_i + \varepsilon_i     \\
+            E[y_i|D_i]  & = \alpha_1 + \beta D_i + E[\varepsilon_i |D_i] \\
+            E[y_i|D_i=1] - E[y_i|D_i=0]  & = \beta D_i \\ 
+             & +  (E[\varepsilon_i |D_i=1] -  E[\varepsilon_i |D_i=0]) 
+            \end{align*}
+            
+            
+            
             \item Causal question cannot be answered without further structures.
 
         \bigskip
@@ -615,10 +617,19 @@
 
 \begin{frame}{Example: Air Pollution in Huai River}
 \begin{itemize}
-    \item Example: Chen, Ebenstein, Greenstone, Li (2013, PNAS) 
+    \item Chen, Ebenstein, Greenstone, and Li (2013, PNAS) 
 \end{itemize}
 
-\textcolor{red}{Put "Huai river" and "RDD Huai" side by side}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{fig/Huai_river.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{fig/RDD_Huai.png}
+    \end{subfigure}
+\end{figure}
     
 \end{frame}
 
@@ -712,10 +723,28 @@
     \item DID
 
     \bigskip
-    \item Popular in academia as well as tech industry
+    \item Popular in academia as well as tech sector
+        \href{https://www.bilibili.com/video/BV1VW4y1y7AR/?spm_id_from=333.337.search-card.all.click&vd_source=a4b181aa9857818286999eec4d9925e6}{(link)}
+        
+    \begin{itemize}
+        
+        \item \href{https://www.zhipin.com/job_detail/e7fa10b466e0c5e41HV82ty9EFdW.html?lid=51us4b3FXFX.search.6&securityId=wnbs_9BkN5Fhf-l1orLT94YWn2kpcjBS6-5X6P4y3qOfoxGDb-LqdsKmwiPycwn1pnZbvF3A-M69do0VjdtCM5SeBd6a_1lLChm-XpGGAe7ZWlB7Hw~~&sessionId=}{Bytedance}
+
+        \item \href{https://www.zhipin.com/job_detail/750563b6c1b42dc11HJ_29y6FVJX.html?lid=51ns09pI55u.search.1&securityId=gnIJonr0XicLr-u1wfIDvyBCsowYfmBnKb7KPziKxfWxaujP30mDd7MWcogl4qQIsW0il0VtOVllz_u0bVWfEswvyt94fI3NKEObdTFdhBDTXwA~&sessionId=}{Kuaishou}
+
+        \bigskip 
+
+        
+    \end{itemize} 
+
+    
 \end{itemize}
     
 \end{frame}
+
+
+
+
 
 
 \end{document}
