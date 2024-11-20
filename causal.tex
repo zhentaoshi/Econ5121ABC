@@ -101,7 +101,7 @@
     \item Thomas Aquinas: The first cause? 
 
 \bigskip 
-    \item David Hume (Skeptism): Causation as a relationship between two impressions in the mind. 
+    \item David Hume (Skepticism): Causation as a relationship between two impressions in the mind. 
     % Defined by experience, any cause-and-effect relationship could be incorrect because thoughts are subjective and therefore 
     Causality cannot be proven.
 
@@ -164,7 +164,7 @@
 \begin{frame}{Comparison of Two means}
 \begin{itemize}
     \item Sample 1: $(X_1,\ldots,X_{N_x}) \sim N(\mu_x, \sigma^2_x)$
-    \item Sample 2: $(Y_1,\ldots,X_{N_y}) \sim N(\mu_y, \sigma^2_y)$
+    \item Sample 2: $(Y_1,\ldots,Y_{N_y}) \sim N(\mu_y, \sigma^2_y)$
     \item Difference in sample means $\Delta = \bar{X} - \bar{Y}$
     \item Hypothesis $H_0: \mu_x = \mu_y$.  Test statistic 
     $$ z = \frac{\Delta}{ \sqrt{ \frac{s_x^2}{n_x} + \frac{s_y^2}{n_y} } }$$
@@ -310,7 +310,7 @@
         \item \textbf{Treatment group} ``$\mathcal{T}$'' ($N_1$ observations) 
         \item \textbf{Control group} ``$\mathcal{C}$'' ($N_0 = N - N_1$ observations)
         \begin{align*}
-         ATE & = \frac{1}{N_1} \sum_{i \in \mathcal{T}} y_i  - \frac{1}{N_0} \sum_{i \in \mathcal{C}}  y_i \\
+         \widehat{ATE} & = \frac{1}{N_1} \sum_{i \in \mathcal{T}} y_i  - \frac{1}{N_0} \sum_{i \in \mathcal{C}}  y_i \\
              & = \frac{1}{N} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_1 / N}  -  \frac{(1-D_i) y_i}{N_0 / N} \right]
         \end{align*}
     \end{itemize}
@@ -367,7 +367,7 @@
     \begin{itemize}
         
         \item To mimic RCT, it requires \textbf{Conditional Independence}
-        \[ \left( y_{1i}, y_{2i} \right) \bot D_{i} \mid X_{i}, \]
+        \[ \left( y_{1i}, y_{0i} \right) \bot D_{i} \mid X_{i} \]
         which is also called \textbf{Unconfoundedness}
         \bigskip 
                 \item In an \textbf{observational study}, it means ``Once $X_i$ is controlled, the potential outcome is independent of the treatment''
@@ -396,7 +396,7 @@
         \begin{align*}
             ATE(x) & = E\left( y_{1i} - y_{0i} \mid X_{i} = x \right)  \\
              &  \overset{\text{C.I.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} = x \right)\\
-            & = \frac{1}{N_{x,1}} \sum_{i \in \mathcal{T}_x} y_i  - \frac{1}{N_{x,0}} \sum_{i \in \mathcal{C}_x}  y_i  \\
+             \widehat{ATE}(x)  & = \frac{1}{N_{x,1}} \sum_{i \in \mathcal{T}_x} y_i  - \frac{1}{N_{x,0}} \sum_{i \in \mathcal{C}_x}  y_i  \\
              & = \frac{1}{N_x} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_{x,1} / N_x}  -  \frac{(1-D_i) y_i}{N_{x,0} / N_x} \right]
         \end{align*}
         
@@ -413,8 +413,16 @@
     \bigskip
         
         \item If $X$ is continuous, one way is to nonparametrically estimate 
-        \[ m_{j} \left( x \right) = E\left[ y_{ji}  \mid X_{i} = x\right],\, \mbox{for }\, j \in \left\{ 0,1 \right\}\]
+        \[m_{j} \left( x \right) = E\left[ y_{ji}  \mid X_{i} = x\right],\, \mbox{for }\, j \in \left\{ 0,1 \right\}\]
+
+        $$ATE(x) = m_1(x) - m_0(x)$$
+        
         \item It involves nonparametric estimation techniques that we don't cover
+
+        \item Average $ATE(X_i)$ over the support of $X_i$:
+        \[ATE = E\left[ ATE\left(X_i\right) \right] = \int ATE \left(X_i\right) \, \mathrm{d}F\left( X_i \right)\]
+        % \item Intuition: $E\left( y_{i} \mathbb{I} \left( D_{i} = 1 \right) \right) = E\left( y_{1i} \right) P \left( D_{i} = 1 \right)$ \\need to adjust for the factor $P\left( D_{i} = 1 \right)$.
+        
     \end{itemize}    
 \end{frame}
 
@@ -431,8 +439,6 @@
          \overset{\text{LIE}}{ = } E\left( y_{1i} \right)    
         \end{align*}
         
-        \item Similarly,  in the control group $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
-        
     \end{itemize}
 \end{frame}
 
@@ -440,14 +446,16 @@
 
 \begin{frame}{ATE Under Continuous $X$}
     \begin{itemize}
+
+        \item Similarly,  in the control group $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
+        
+    
         \item The (unconditional) ATE is 
         $$ ATE = E\left( \frac{D_{i}y_{i}}{P \left( X_{i} \right)} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left( X_{i} \right)} \right) $$
         \begin{itemize}
             \item Important to ensure $P(X_i) \in (0,1)$. Logistic.
         \end{itemize}
-        \item Average $ATE(X_i)$ over the support of $X_i$:
-        \[ATE = E\left[ ATE\left(X_i\right) \right] = \int ATE \left(X_i\right) \, \mathrm{d}F\left( X_i \right)\]
-        % \item Intuition: $E\left( y_{i} \mathbb{I} \left( D_{i} = 1 \right) \right) = E\left( y_{1i} \right) P \left( D_{i} = 1 \right)$ \\need to adjust for the factor $P\left( D_{i} = 1 \right)$.
+        
     \end{itemize}
 \end{frame}
 
@@ -464,7 +472,7 @@
         \begin{align*}
         y_i & = \alpha + X'_{i} \beta + \varepsilon_{i}
         \end{align*}
-        under the assumption $E [ \varepsilon_i | X_i ] = 0$ implies 
+        under the assumption $E [ \varepsilon_i | X_i ] = 0$ implies that if $X_i$ is a scalar (the simplest case), then
         $$ \beta = \frac{E[y_i | X_i = x_1 ] - E[y_i | X_i = x_0 ]}{ x_1 - x_0}$$ for any $x_0,x_1 \in \mathcal{X}$. 
         \item The slop coefficient is the difference between two groups. 
     \end{itemize}
@@ -489,30 +497,47 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Example: Omitted Variable Bias}
+    \begin{itemize}
+        \item The causal model
+            \[y_i = \alpha + \beta X_i + \gamma Z_i + \varepsilon_i, \quad \text{with}\, E\left[\varepsilon_i \mid X_i, Z_i \right] = 0\]
+            but $Z_i$ is omitted from regression
+        \item Linear regression of $y_i$ on $X_i$ can still be implemented:
+            \[E\left[ y_i\mid X_i\right] = \alpha + \beta X_i + \gamma E\left[Z_i\mid X_i \right] = \alpha + \theta X_i\]
+            where $$\theta = \beta + \gamma \frac{\mathrm{Cov}\left( X_i, Z_i \right)}{\mathrm{Var}\left( X_i \right)}$$
+    \end{itemize}
+\end{frame}
 
 
 
-\begin{frame}{Interpretation of Linear Regression: II}
+
+\begin{frame}{Omitted Variable Bias (Cont.)}
 
         
-        Example: $y$ is salary, $X$ is college entrance.
+       %  Example: $y$ is salary, $X$ is college entrance.
         
         \begin{itemize}
-            \item Linear regression is not``causal''. When worried about endogeneity, we have a causal model in mind.
-            \begin{align*}
-            y_i & = \alpha_1 + \beta D_i + \varepsilon_i     \\
-            E[y_i|D_i]  & = \alpha_1 + \beta D_i + E[\varepsilon_i |D_i] \\
-            E[y_i|D_i=1] - E[y_i|D_i=0]  & = \beta D_i \\ 
-             & +  (E[\varepsilon_i |D_i=1] -  E[\varepsilon_i |D_i=0]) 
-            \end{align*}
-            
+           %  \item Linear regression is not``causal''. When worried about endogeneity, we have a causal model in mind.
+
+
+        \item The reduced form $$y_i = \alpha + \theta X_i + u_i$$ ensures $E\left[ u_i \mid X_i \right] = 0$ (under joint normality), but this is not a causal model.  
+        \item From the observational data, we cannot shift  $X_i$ without shifting $u_i$ simultaneously.
+
+
+           % \begin{align*}
+           % y_i & = \alpha_1 + \beta D_i + \varepsilon_i     \\
+           % E[y_i|D_i]  & = \alpha_1 + \beta D_i + E[\varepsilon_i |D_i] \\
+           % E[y_i|D_i=1] - E[y_i|D_i=0]  & = \beta D_i \\ 
+           %  & +  (E[\varepsilon_i |D_i=1] -  E[\varepsilon_i |D_i=0]) 
+           % \end{align*}
+
             
             
             \item Causal question cannot be answered without further structures.
 
         \bigskip
         
-            \item Importance of the causal model: Only the causal relationship has policy implications (under partial equilibrium)
+            \item Importance of the causal model: Only the causal relationship has policy implications.
         \end{itemize}
 
 \end{frame}
@@ -528,7 +553,7 @@
         
         \item ``Keeping everything else equal, if a person's $X_i$ is changed from $x_0$ to $x_1$, then $\beta$ is the average change of $y_i$.'' This is a potential outcome claim.
     
-        \item Linear potential outcome
+        \item Given $D_i\in \{0,1\}$ there are two potential outcomes
         \begin{align*}
         y_{0i} & = \alpha_{0} + X'_{i}\beta_{0} + \varepsilon_{0i}\\
         y_{1i} & = \alpha_{1} + X'_{i}\beta_{1} + \varepsilon_{1i}
@@ -546,7 +571,7 @@
         
         \item The above model implies \textbf{heterogeneous treatment effect}
         \[\Delta_{i} = \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
-        \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) = \left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
+        \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) =  E\left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
         
         \[ATE(X_i) =  E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right)\]
 
@@ -583,7 +608,7 @@
         \item Example: College premium
         \begin{itemize}
             \item Treatment: college entrance $D_i$
-            \item The unconfoundedness $$(\varepsilon_{i,0}, \varepsilon_{i,1}) \bot D_i \, | \, \text{Control}_i$$ does not hold in general. \bigskip
+            \item The unconfoundedness $$(\varepsilon_{i,0}, \varepsilon_{i,1}) \bot D_i \, | \, \text{X}_i$$ does not hold in general. \bigskip
         \end{itemize}
 
         \item The linear regression does not provide credible causal interpretation.
@@ -724,7 +749,8 @@
 
     \bigskip
     \item Popular in academia as well as tech sector
-        \href{https://www.bilibili.com/video/BV1VW4y1y7AR/?spm_id_from=333.337.search-card.all.click&vd_source=a4b181aa9857818286999eec4d9925e6}{(link)}
+        \href{https://arxiv.org/abs/2007.05188}{(link1)},
+        \href{https://www.bilibili.com/video/BV1VW4y1y7AR/?spm_id_from=333.337.search-card.all.click&vd_source=a4b181aa9857818286999eec4d9925e6}{(link2)}
         
     \begin{itemize}
         
@@ -736,13 +762,20 @@
 
         
     \end{itemize} 
-
-    
 \end{itemize}
-    
 \end{frame}
 
+\begin{frame}[plain]{Related Work of Mine}
 
+    \begin{itemize}
+        \item  Zhentao Shi and Jingyi Huang (2023): “Forward-Selected Panel Data Approach for Program Evaluation,” Journal of Econometrics, 234(2), 512-535.
+    \end{itemize}
+
+    \begin{center}
+        \includegraphics[width = 0.63\textwidth]{fig/amazon.PNG}
+    \end{center}
+    
+\end{frame}
 
 
 
