@@ -260,7 +260,7 @@
         \item Average treatment effect
         \[\text{ATE} = E\left[ \Delta_{i}\right]\]
         \item Average treatment effect on the treated
-        \[\text{ATET} = E\left( \Delta_{i} \mid D_{i} =1 \right)\]
+        \[\text{ATET} = E\left[ \Delta_{i} \mid D_{i} =1 \right]\]
         % \item Control variables $X_{i}$ can be introduced into ATE and ATET
     \end{itemize}
 \end{frame}
@@ -356,7 +356,7 @@
         \item With control variables $X_i = x$, \textbf{conditional ATE} (CATE)
         $$ATE(x) = E[ \Delta_i | X_i = x ]$$
         \item Similar, \textbf{conditional ATET} is defined as 
-        $$ATE(x) = E[ \Delta_i | D_i = 1 X_i = x ]$$
+        $$ATE(x) = E[ \Delta_i | D_i = 1, X_i = x ]$$
         \item Straightforward if $X_i$ is a discrete random variable
     \end{itemize}
 \end{frame}
@@ -379,7 +379,7 @@
         
         \item $ATET(x) = ATE(x)$ under unconfoundedness.
         \[
-        E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) = E\left( \Delta_{i} \mid X_{i} \right)
+        E\left[ \Delta_{i} \mid D_{i} =1, X_{i} \right] = E\left[ \Delta_{i} \mid X_{i} \right]
         \]  
 
 
@@ -390,12 +390,12 @@
 \begin{frame}{Overlapping Condition}
     \begin{itemize}
        \item A necessary condition 
-       $$ \Pr \left( D_{i} = 1\mid X_{i} = x \right) \in (0,1) $$ 
+       $$ \Pr \left[ D_{i} = 1\mid X_{i} = x \right] \in (0,1) $$ 
 
         \item In the subsample $\{X_i = x\}$, define $\mathcal{T}_x$, $\mathcal{C}_x$, $N_x$, $N_{x,1}$, and $N_{x,0}$  accordingly. Then
         \begin{align*}
-            ATE(x) & = E\left( y_{1i} - y_{0i} \mid X_{i} = x \right)  \\
-             &  \overset{\text{C.I.}}{=} E\left( y_{1i} - y_{0i} \mid D_{i}, X_{i} = x \right)\\
+            ATE(x) & = E\left[ y_{1i} - y_{0i} \mid X_{i} = x \right]  \\
+             &  \overset{\text{C.I.}}{=} E\left[ y_{1i} - y_{0i} \mid D_{i}, X_{i} = x \right]\\
              \widehat{ATE}(x)  & = \frac{1}{N_{x,1}} \sum_{i \in \mathcal{T}_x} y_i  - \frac{1}{N_{x,0}} \sum_{i \in \mathcal{C}_x}  y_i  \\
              & = \frac{1}{N_x} \sum_{i=1}^N \left[  \frac{ D_i y_i}{N_{x,1} / N_x}  -  \frac{(1-D_i) y_i}{N_{x,0} / N_x} \right]
         \end{align*}
@@ -429,14 +429,14 @@
 \begin{frame}{Propensity Score}
     \begin{itemize}
         
-        \item \textbf{Propensity score}: $$P\left(x \right) = \Pr \left( D_{i} = 1 \mid X_{i} = x \right) = E \left( D_{i}  \mid X_{i} = x \right) $$
+        \item \textbf{Propensity score}: $$P\left[x \right] = \Pr \left[ D_{i} = 1 \mid X_{i} = x \right] = E \left[ D_{i}  \mid X_{i} = x \right] $$
         \item In the treatment group
         \begin{align*}
-        E\left( \frac{D_{i} y_{i}}{P\left( X_{i} \right)} \right) 
-         & \overset{\text{LIE}}{=}  E\left( \frac{1}{P\left( X_{i} \right)} E\left( D_{i} y_{1i} \mid X_{i}\right) \right) \\
-         & \overset{\text{C.I.}}{=} E \left( \frac{1}{P\left( X_{i} \right)} E \left( D_{i} \mid X_{i} \right) E\left(y_{1i} \mid X_{i} \right)\right) \\
-         & = E \left(  E\left(y_{1i} \mid X_{i} \right)\right) 
-         \overset{\text{LIE}}{ = } E\left( y_{1i} \right)    
+        E\left[ \frac{D_{i} y_{i}}{P\left[ X_{i} \right]} \right] 
+         & \overset{\text{LIE}}{=}  E\left[ \frac{1}{P\left[ X_{i} \right]} E\left[ D_{i} y_{1i} \mid X_{i}\right] \right] \\
+         & \overset{\text{C.I.}}{=} E \left[ \frac{1}{P\left[ X_{i} \right]} E \left[ D_{i} \mid X_{i} \right] E\left[y_{1i} \mid X_{i} \right]\right] \\
+         & = E \left[  E\left[y_{1i} \mid X_{i} \right]\right] 
+         \overset{\text{LIE}}{ = } E\left[ y_{1i} \right]    
         \end{align*}
         
     \end{itemize}
@@ -447,13 +447,13 @@
 \begin{frame}{ATE Under Continuous $X$}
     \begin{itemize}
 
-        \item Similarly,  in the control group $E\left( \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left( X_{i} \right)} \right) = E\left( y_{0i} \right)$
+        \item Similarly,  in the control group $E\left[ \frac{\left( 1 - D_{i} \right)y_{i}}{1 - P \left[ X_{i} \right]} \right] = E\left[ y_{0i} \right]$
         
     
         \item The (unconditional) ATE is 
-        $$ ATE = E\left( \frac{D_{i}y_{i}}{P \left( X_{i} \right)} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left( X_{i} \right)} \right) $$
+        $$ ATE = E\left[ \frac{D_{i}y_{i}}{P \left[ X_{i} \right]} - \frac{\left( 1 - D_{i} \right) y_{i}}{1 - P\left[ X_{i} \right]} \right] $$
         \begin{itemize}
-            \item Important to ensure $P(X_i) \in (0,1)$. Logistic.
+            \item Important to ensure $P[X_i] \in (0,1)$. Logistic.
         \end{itemize}
         
     \end{itemize}
@@ -474,7 +474,7 @@
         \end{align*}
         under the assumption $E [ \varepsilon_i | X_i ] = 0$ implies that if $X_i$ is a scalar (the simplest case), then
         $$ \beta = \frac{E[y_i | X_i = x_1 ] - E[y_i | X_i = x_0 ]}{ x_1 - x_0}$$ for any $x_0,x_1 \in \mathcal{X}$. 
-        \item The slop coefficient is the difference between two groups. 
+        \item The slope coefficient is the difference between two groups. 
     \end{itemize}
 \end{frame}
 
@@ -571,9 +571,9 @@
         
         \item The above model implies \textbf{heterogeneous treatment effect}
         \[\Delta_{i} = \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right) + \left( \varepsilon_{1i} - \varepsilon_{0i}\right)\]
-        \item By construction $E\left( \varepsilon_{1i} \mid X_{i} \right) =  E\left( \varepsilon_{0i} \mid X_{i} \right) = 0$, and thus
+        \item By construction $E\left[ \varepsilon_{1i} \mid X_{i} \right] =  E\left[\varepsilon_{0i} \mid X_{i} \right] = 0$, and thus
         
-        \[ATE(X_i) =  E\left( \Delta_{i} \mid X_{i} \right) =  \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right)\]
+        \[ATE(X_i) =  E\left[ \Delta_{i} \mid X_{i} \right] =  \left( \alpha_{1} - \alpha_{0} \right) + X'_{i} \left( \beta_{1} - \beta_{0} \right)\]
 
         \item If $\beta_1 = \beta_0$, then $ATE(X_i) = \alpha_{1} - \alpha_{0} $ is a level change homogeneous to all people
         
@@ -584,14 +584,14 @@
 
 \begin{frame}{Selection Bias}
 \begin{align*}
-   ATET(X_i) & = E\left( \Delta_{i} \mid D_{i} =1, X_{i} \right) \\
-    & = ATE(X_i) + E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \right) 
+   ATET(X_i) & = E\left[ \Delta_{i} \mid D_{i} =1, X_{i} \right] \\
+    & = ATE(X_i) + E\left[ \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i} \right] 
 \end{align*}
 
     \begin{itemize}
          
         \item Under unconfoundedness, $ATE(X_i) = ATET(X_i)$
-        \item Otherwise, \textbf{selection bias} if $$E\left( \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i}  \right) \ne 0$$
+        \item Otherwise, \textbf{selection bias} if $$E\left[ \varepsilon_{1i} - \varepsilon_{0i} \mid D_{i} =1, X_{i}  \right] \ne 0$$
         The individual knows $\varepsilon_{1i} - \varepsilon_{0i}$, and he elects to the treatment group because of that.
         
     \end{itemize}
