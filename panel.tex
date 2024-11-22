@@ -98,8 +98,7 @@
 
     \begin{itemize}
         \item Cross-sectional datasets collected at different time points  
-        \item Group-specific intercept  
-        \item Analysis of time trends  
+        \item Group-specific intercept  (one way to handle endogeneity)
         \item Real data: \url{https://www.kaggle.com/code/frankshi0/penn-world-table}
     \end{itemize}
 \end{frame}
@@ -132,6 +131,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
                 y_{it}=c +X_{it}'\beta +\varepsilon_{it} 
             \end{equation*}  
             with $E(\varepsilon_{it} ) = 0$.
+        \item $\varepsilon_{it}$ may be correlated with $X_it$.
         \item \textbf{Composite error}: 
         $$\varepsilon_{it}=\alpha^*_{i} + u_{it}$$         with $\mathrm{cov} (u_{it}, X_{it}) = 0$
     \end{itemize}
@@ -152,7 +152,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
             \item Production function (Mundlak, 1961)
  $$y_{it}= c +X_{it}'\beta + m_i \gamma + u_{it} $$
  where $m_i$ is the ``management quality'' of a firm (usually unobservable).
-        \item $m_i\gamma$, which can be correlated with $X_{it}$, is captured by $\alpha_i$
+        \item $m_i\gamma$, which can be correlated with $X_{it}$, is captured by $\alpha^*_i$
         \end{itemize}
         
         \item  $\alpha^*_{i}$ can be potentially endogenous (correlated with $X_{it}$)
@@ -171,7 +171,9 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
                  & =(c + \alpha^*_i) +X_{it}'\beta + u_{it}  \\
                  & = \alpha_{i} +X_{it}'\beta + u_{it}  
         \end{align*}
-    where $ \alpha_{i} = c + \alpha^*_i$ is the new intercept
+    where $ \alpha_{i} = c + \alpha^*_i$ is the new \textbf{individual-specific}
+    intercept. Also called the \textbf{fixed effect}.
+    \item $\beta$ is a $p$-dimensional \textbf{homogenous} slope coefficient 
 
 \bigskip
 
@@ -201,12 +203,12 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         \item Inner-outer optimization: given any $\beta$, the OLS estimator
         $$\hat{\alpha}_{i} = T^{-1} \sum_{t=1}^T (y_{it} - X'_{it} \beta)
           = \bar{y}_{i} - \bar{X}'_{i} \beta, $$
-          where $\bar{y}_i$ is the \textbf{within group average}, and so is $\bar{X}_i$.
+          where $\bar{y}_i = T^{-1} \sum_{t=1}^T y_{it}$ is the \textbf{within group average}, and so is $\bar{X}_i$.
         \item Substitute $\hat{\alpha}_{i}$ into $y_{it} = \alpha_{i} +X_{it}'\beta + u_{it}$ and rearrange:
         $$\tilde{y}_{it}=\tilde{X}'_{it}\beta +\tilde{u}_{it}$$
-         where $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$ is the \textbf{within-group transformation}, and  $\tilde{X}_{it}$ and $\tilde{u}_{it}$ are defined similarly
+         where $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$ is the \textbf{within-group transformation}, and  $\tilde{X}_{it}$ and $\tilde{u}_{it}$ are defined similarly.
          
-        \item The $N$ parameters $(\alpha_{i})_{i=1}^N$ are eliminated
+        \item This transformation eliminates the $N$ parameters $(\alpha_{i})_{i=1}^N$.
     \end{itemize}
 \end{frame}
 
@@ -217,9 +219,9 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
 
 
-\begin{frame}{Alternative Way}
+\begin{frame}{Alternative Interpretation of Within-Group Transformation}
     \begin{itemize}
-        \item  lead to the same within-Group transformation
+        
         \item Recall the model $$y_{it} = \alpha_i + X_{it}^{\prime}\beta + u_{it}.$$
         \item For each $i$, average over $t = 1, \ldots, T$:
         \[
@@ -229,7 +231,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         \[
         \tilde{y}_{it} = \tilde{X}_{it}^{\prime}\beta + \tilde{u}_{it}.
         \]
-         also eliminates the fixed effects.
+         eliminates the fixed effects.
         \item No intercept, by construction.
     \end{itemize}
 \end{frame}
@@ -278,7 +280,7 @@ The simplified expression of data:
             \widehat{\beta} _{FE}=\left(\tilde{X}'\tilde{X}\right)^{-1}\tilde{X}'\tilde{Y}  
         \]
 
-        \item The fixed effects (individual-specific intercept):
+        \item The fixed effects are estimated as
         $$\hat{\alpha}_{i} =  \bar{y}_{i} - \bar{X}'_{i} \hat {\beta}_{FE} $$
         
         \item Consistency is achieved if strict exogeneity holds.
@@ -301,7 +303,7 @@ The simplified expression of data:
         E\left[ \left(X_{it} - \bar{X}_i\right)\left(u_{it} - \bar{u}_i\right) \right] = 0.
         \]
 
-        \item A sufficient condition: strict exogeneity:
+        \item A sufficient condition is \textbf{strict exogeneity}:
         \[
         E\left[ X_{it} u_{is} \right] = 0 \quad \text{for all } s, t \in \{1, \ldots, T\}.
         \]
@@ -324,53 +326,13 @@ The simplified expression of data:
         $E\left(X_{it} u_{it}\right) = 0 \quad \text{for all } t \in \{1, \ldots, T\}.$
 
         \item \textbf{Sequential exogeneity}:
-        $E\left(X_{it} u_{is}\right) = 0 \quad \text{for all } s \leq t \in \{1, \ldots, T\}.$
+        $E\left(u_{it} X_{is} \right) = 0 \quad \text{for all } s \leq t \in \{1, \ldots, T\}.$ The error term is uncorrelated with the last and present regressor.
 
         \item Neither of the above two kinds of exogeneity produces consistent \(\widehat{\beta}_{FE}\).
     \end{itemize}
 \end{frame}
 
-\begin{frame}{First Difference (FD)}
-    \begin{itemize}
-        \item Recall 
-        \[
-        y_{it} = \alpha_i + X_{it}^{\prime}\beta + u_{it},
-        \]
-        \[
-        y_{it-1} = \alpha_i + X_{i,t-1}^{\prime}\beta + u_{i,t-1}.
-        \]
 
-        \item Subtraction:
-        \[
-        \Delta y_{it} = \Delta X_{it}^{\prime}\beta + \Delta u_{it},
-        \]
-        where \(\Delta y_{it} = y_{it} - y_{i,t-1}\), and \(\Delta X_{it}\) and \(\Delta u_{it}\) are defined similarly.
-
-        \item Collect the first-differenced variables into \(\Delta Y\) and \(\Delta X\):
-        \[
-        \Delta Y \quad \text{is of size } N(T-1) \times 1,
-        \]
-        \[
-        \Delta X \quad \text{is of size } N(T-1) \times p.
-        \]
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}{FD Estimator}
-    \begin{itemize}
-        \item The first-difference estimator is:
-        \[
-        \widehat{\beta}_{FD} = \left(\Delta X^{\prime} \Delta X\right)^{-1} \Delta X^{\prime} \Delta Y.
-        \]
-
-        \item A necessary condition for consistency is
-        \[
-        E\left[\Delta X_{it} \Delta u_{it}\right] = 0,
-        \]
-        which is slightly weaker than strict exogeneity.
-    \end{itemize}
-\end{frame}
 
 
 
@@ -395,50 +357,93 @@ The simplified expression of data:
 
 
 
+\begin{frame}{First Difference (FD)}
+    \begin{itemize}
+    \item Alternative way to eliminate FE
+        \item Recall 
+        \[
+        y_{it} = \alpha_i + X_{it}^{\prime}\beta + u_{it},
+        \]
+        \[
+        y_{i,t-1} = \alpha_i + X_{i,t-1}^{\prime}\beta + u_{i,t-1}.
+        \]
+
+        \item Subtraction:
+        \[
+        \Delta y_{it} = \Delta X_{it}^{\prime}\beta + \Delta u_{it},
+        \]
+        where \(\Delta y_{it} = y_{it} - y_{i,t-1}\) is the first-differenced variable, and \(\Delta X_{it}\) and \(\Delta u_{it}\) are defined similarly.
+
+        \item Collect the FD variables into \(\Delta Y\) and \(\Delta X\):
+        \[
+        \Delta Y \quad \text{is of size } N(T-1) \times 1,
+        \]
+        \[
+        \Delta X \quad \text{is of size } N(T-1) \times p.
+        \]
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{FD Estimator}
+    \begin{itemize}
+        \item The FD estimator is:
+        \[
+        \widehat{\beta}_{FD} = \left(\Delta X^{\prime} \Delta X\right)^{-1} \Delta X^{\prime} \Delta Y.
+        \]
+
+        \item A necessary condition for consistency is
+        \[
+        E\left[\Delta X_{it} \Delta u_{it}\right] = 0,
+        \]
+        which is slightly weaker than strict exogeneity.
+    \end{itemize}
+\end{frame}
+
+
+
 
 \section{Random Effect Models}
 \frame{\sectionpage}
 
 
 
-\begin{frame}{Random Effect Model}
+\begin{frame}{Random Effects}
     \begin{itemize}
         \item Recall the model
         \begin{align*}            
-        y_{it} & = c + X_{it}^{\prime} \beta + u_{it}  \\
-               & =  c + X_{it}^{\prime} \beta + \alpha_i^{\ast} + \varepsilon_{it},
+        y_{it} & = c + X_{it}^{\prime} \beta + \varepsilon_{it}  \\
+               & =  c + X_{it}^{\prime} \beta + \alpha_i^{\ast} +  u_{it},
         \end{align*}
-        where the composite error \(u_{it} = \alpha_i^{\ast} + \varepsilon_{it}\), with 
-        \(\varepsilon_{it} \sim \text{iid } (0, \sigma_{\varepsilon}^2)\),
+        where the composite error \(\varepsilon_{it} = \alpha_i^{\ast} + u_{it}\), with 
+        \(u_{it} \sim \text{iid } (0, \sigma_{u}^2)\),
             \(\alpha_i^{\ast} \sim \text{iid } (0, \sigma_{\alpha}^2)\),
-            and uncorrelated with \(X_{it}\).
-        \begin{itemize}
-            
-        \item \(E\left[X_{it}^{\prime} u_{it}\right] = 0\).
+            and they are uncorrelated with \(X_{it}\).
 
-        \item OLS is consistent but inefficient.
-        
-        \end{itemize}
     \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Efficient Estimation of RE Model}
     \begin{itemize}
-        
 
-        \item Generalized Least Squares is the efficient estimator.
+            
+        \item \(E\left[X_{it}^{\prime} \varepsilon_{it}\right] = 0\).
 
-        \item Let 
+
+        \item OLS is consistent, but inefficient due to violation of homoskedasticity:
         \[
-        S:= E\left[u_i u_i^{\prime}\right] =
+        S:= E\left[\varepsilon_i \varepsilon_i^{\prime}\right] =
         \begin{bmatrix}
-            \sigma_{\alpha}^2 + \sigma_{\varepsilon}^2 & \sigma_{\varepsilon}^2 & \cdots & \sigma_{\varepsilon}^2 \\
-            \sigma_{\varepsilon}^2 & \sigma_{\alpha}^2 + \sigma_{\varepsilon}^2 & \cdots & \sigma_{\varepsilon}^2 \\
+            \sigma_{\alpha}^2 + \sigma_{u}^2 & \sigma_{u}^2 & \cdots & \sigma_{u}^2 \\
+            \sigma_{u}^2 & \sigma_{\alpha}^2 + \sigma_{u}^2 & \cdots & \sigma_{u}^2 \\
             \vdots & \vdots & \ddots & \vdots \\
-            \sigma_{\varepsilon}^2 & \sigma_{\varepsilon}^2 & \cdots & \sigma_{\alpha}^2 + \sigma_{\varepsilon}^2
+            \sigma_{u}^2 & \sigma_{u}^2 & \cdots & \sigma_{\alpha}^2 + \sigma_{u}^2
         \end{bmatrix}.
         \]
+
+        \item Generalized Least Squares (GLS) is the efficient estimator.
+        
     \end{itemize}
 \end{frame}
 
@@ -446,7 +451,7 @@ The simplified expression of data:
 \begin{frame}{Generalized Least Squares}
     \begin{itemize}
         \item Rewrite 
-        $$y_{it}  = c + X_{it}^{\prime} \beta + u_{it} = W_{it}^{\prime} \theta + u_{it}  $$
+        $$y_{it}  = c + X_{it}^{\prime} \beta + \varepsilon_{it} = W_{it}^{\prime} \theta + \varepsilon_{it}  $$
         where $W_{it} := (1,X_{it}')'$ and $ \theta = (c, \beta')'$
     \end{itemize}
     % \begin{assumption*}[RE.1]
@@ -456,9 +461,9 @@ The simplified expression of data:
     % \]
     \begin{itemize}
          
-        \item the (infeasible) GLS estimator is:
+        \item The (infeasible) GLS estimator is:
         \begin{align*}
-       \widehat{\theta}^{infeasible}_{RE} & =            \left(\sum_{i=1}^{n} W_{i}'S^{-1} W_{i}\right)^{-1} \sum_{i=1}^{n}W_{i}'S^{-1}y_{i} \\ & =\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1} y            
+       \widehat{\theta}^{infeasible}_{RE} & =            \left(\sum_{i=1}^{n} W_{i}'S^{-1} W_{i}\right)^{-1} \sum_{i=1}^{n}W_{i}'S^{-1}y_{i} \\ & =\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1} Y           
         \end{align*}
             
                  
@@ -474,12 +479,12 @@ The simplified expression of data:
 
     
     \begin{itemize}
-        \item Step 1: use OLS and obtain $\widehat{u}_{it}=y_{it}-W_{it} \widehat{\theta}_{OLS}$ 
+        \item Step 1: use OLS and obtain $\widehat{\varepsilon}_{it}=y_{it}-W_{it} \widehat{\theta}_{OLS}$ 
         \begin{itemize}
         \item Estimate the diagonal term and the off-diagonal term in $S$ as
         \begin{eqnarray*}
-            \widehat{\sigma}_{u,diag}^{2} &=& \frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{u}_{it}^{2}  \\
-            \widehat{\sigma}_{u, off}^{2} &=& \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T(T-1)}\sum_{t=1}^{T} \sum_{s\neq t}\widehat{u}_{it}\widehat{u}_{is}
+            \widehat{\sigma}_{\varepsilon,diag}^{2} &=& \frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\varepsilon}_{it}^{2}  \\
+            \widehat{\sigma}_{\varepsilon, off}^{2} &=& \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T(T-1)}\sum_{t=1}^{T} \sum_{s\neq t}\widehat{\varepsilon}_{it}\widehat{u}_{is}
         \end{eqnarray*}
         repsectily, to obtain $\hat{S}.$
         \end{itemize}
@@ -495,18 +500,18 @@ The simplified expression of data:
 
 
 
-\begin{frame}{Fixed Effects vs. Random Effects}
+\begin{frame}{Fixed Effects vs.~Random Effects}
     \begin{itemize}
         \item FE is more general:
         \begin{itemize}
             \item But does not allow time-invariant \(X_i\).
         \end{itemize}
 
-        \item RE doesn't allow endogenous \(\alpha_i\).
+        \item RE doesn't allow endogenous \(\alpha^*_i\).
 
-        \item Hausman test.
+        \item Hausman test is traditionally used to distinguish the two models.
 
-        \item Data demo: \url{https://www.kaggle.com/code/jipann/panel-data-estimation}
+        \item Data demo: \url{https://www.kaggle.com/code/jipann/panel-data-estimation-in-python}
     \end{itemize}
 \end{frame}
 
@@ -530,10 +535,9 @@ The simplified expression of data:
 
 \begin{frame}{Dynamic Panel Data}
     \begin{itemize}
-        \item The simplest model
+        \item The simplest dynamic panel model is
         $$y_{it} = \alpha_i + \beta y_{i,t-1} + u_{it},$$
-        assume \(u_{it} \sim \text{iid } (0, \sigma^2)\) over \(i\) and \(t\),
-           and \(|\beta| < 1\).
+        where \(|\beta| < 1\),   \(u_{it} \sim \text{iid } (0, \sigma^2)\) over \(i\) and \(t\), and $\mathrm{Cov}(u_{it}, y_{i,t-1}) = 0$.
 
         \item Replace \(X_{it}\) in the static model by the lagged dependent variable \(y_{i,t-1}\) to model the dynamic feedback.
         \item Other regressors can be added on the right-hand side.
@@ -542,11 +546,12 @@ The simplified expression of data:
 
 \begin{frame}{FE Estimator}
     \begin{itemize}
-        \item How about estimate $\beta$ by the FE estimator?
+        \item How about estimate $\beta$ by the FE estimator? \\
+        Let $\tilde{Y}_{-1}$ be the demeaned variable of the lagged dependent variable, and then
+        
         \[
-        \widehat{\beta}_{FE} = \frac{\tilde{Y}_{-1}^{\prime} \tilde{Y}}{\tilde{Y}_{-1}^{\prime} \tilde{Y}_{-1}},
+        \widehat{\beta}_{FE} = \frac{\tilde{Y}_{-1}^{\prime} \tilde{Y}}{\tilde{Y}_{-1}^{\prime} \tilde{Y}_{-1}}
         \]
-        where $\tilde{Y}_{-1}$ is the demeaned variable of the lagged dependent variable.
         
         \item It is easy to see  
         \[
@@ -583,9 +588,18 @@ The simplified expression of data:
         \]
 
         \item It follows 
-        \[
-        \widehat{\beta}_{FD} - \beta_0 = \frac{\sum_{it} \Delta y_{i,t-1} \Delta u_{it}}{\sum_{it} \Delta y_{i,t-1}^2}
-        = \frac{\sum_{it} \left(y_{i,t-1} - y_{i,t-2}\right)\left(u_{it} - u_{i,t-1}\right)}{\sum_{it} \left(y_{i,t-1} - y_{i,t-2}\right)^2}        \]
+        \begin{align*}
+        \widehat{\beta}_{FD} - \beta_0 & = \frac{\sum_{i,t} \Delta y_{i,t-1} \Delta u_{it}}{\sum_{i,t} \Delta y_{i,t-1}^2} \\
+   &     = \frac{\sum_{i,t} \left(y_{i,t-1} - y_{i,t-2}\right)\left(u_{it} - u_{i,t-1}\right)}{\sum_{i,t} \left(y_{i,t-1} - y_{i,t-2}\right)^2} 
+        \end{align*}
+        
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Inherent Endogeneity in FD}
+
+    \begin{itemize}
 
         \item The expected value of the numerator is
         \begin{align*}
@@ -594,8 +608,8 @@ The simplified expression of data:
             = &0 - \sigma_u^2 - 0 + 0 = -\sigma_u^2 \neq 0
         \end{align*}
         
-        \item $\widehat{\beta}_{FD}$ is inconsistent.
-    \end{itemize}
+        \item $\widehat{\beta}_{FD}$ is inconsistent under finite $T$.
+        \end{itemize}
 \end{frame}
 
 
@@ -619,16 +633,16 @@ The simplified expression of data:
         \widehat{\beta}_{IV} = \frac{\sum_{it} \Delta y_{i,t-2} \Delta y_{it}}{\sum_{it} \Delta y_{i,t-2} \Delta y_{i,t-1}}.
         \]
 
-        \item Consistent and asymptotic normal
+        \item Consistent and asymptotic normal.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{More Lags as IV}
     \begin{itemize}
     
-        \item Arellano and Bond (1991): \((y_{i,t-2}, y_{i,t-3}, y_{i,t-4}, \ldots, y_{i,0})\) are all valid IV.
+        \item Arellano and Bond (1991):\\ \((y_{i,t-2}, y_{i,t-3}, y_{i,t-4}, \ldots, y_{i,0})\) are all valid IV.
         
-        \item Use GMM for estimations.
+        \item Use GMM for estimation.
         
         \item The more IVs, the more efficient (in theory).
 
@@ -649,7 +663,7 @@ The simplified expression of data:
 
     \bigskip
 
-    \item Rick information
+    \item Rich information
     \item Big data
     
 \end{itemize}
@@ -666,7 +680,7 @@ The simplified expression of data:
 
         \item Cheng Hsiao, Zhentao Shi and Qiankun Zhou (2022): “Transformed Estimation for Panel Interactive Effects Models,” \emph{Journal of Business \& Economic Statistics}, 40(4), 1831-1848.
 
-        \item And many more
+        \item And many more...
     \end{itemize}
 \end{frame}
 
