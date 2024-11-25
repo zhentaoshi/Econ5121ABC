@@ -608,7 +608,7 @@
         \item Example: College premium
         \begin{itemize}
             \item Treatment: college entrance $D_i$
-            \item The unconfoundedness $$(\varepsilon_{i,0}, \varepsilon_{i,1}) \bot D_i \, | \, \text{X}_i$$ does not hold in general. \bigskip
+            \item Unconfoundedness $$(\varepsilon_{i,0}, \varepsilon_{i,1}) \bot D_i \, | \, X_i $$ does not hold in general. \bigskip
         \end{itemize}
 
         \item The linear regression does not provide credible causal interpretation.
@@ -628,12 +628,15 @@
 \begin{frame}{Regression Discontinuity Design}
     \begin{itemize}
         \item A jump point due to some ad hoc policy cutoff
-        \item Unconfoundedness is naturally satisfied
-        \item e.g.~The value-added of college
+        \item Unconfoundedness is naturally satisfied: as if randomized.
+        \item e.g.~College premium
         \item Caveat: valid only for the subpopulation around the cutoff
         \item Suppose the cutoff is $c$
+            \begin{itemize}
         \item $y_{0i} = \alpha_0 + \beta_0 (x_i - c) + \varepsilon_{0i}$
         \item $y_{1i} = \alpha_1 + \beta_1 (x_i - c) + \varepsilon_{1i}$        
+            \end{itemize}
+        
     \end{itemize}
 \end{frame}
 
@@ -665,10 +668,11 @@
 \begin{frame}{Event Study}
 \begin{itemize}
     \item A time series topic, but very similar to treatment
-    \item The same individual observed over time $t = 1,2,\ldots,T$
+    \item The same individual is observed over time $t = 1,2,\ldots,T$
     \item An event happens at time $t = T_1$
     \begin{itemize}
-        \item Before event (control group);  After event (treatment group)
+        \item Before event (control group)
+        \item After event (treatment group)
         
     \end{itemize}
 
@@ -691,7 +695,7 @@
 
 \bigskip
 
-    \item My 2004 undergraduate thesis
+    \item My 2005 undergraduate thesis
     
 \end{itemize}
 \end{frame}

@@ -90,7 +90,7 @@
 % \end{frame}
 
 
-\begin{frame}{Pooled Cross Sections}
+\begin{frame}{Data}
 
 \begin{center}
     \includegraphics[width = 0.5 \textwidth]{fig/solar-panels.jpg}
@@ -238,35 +238,42 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
 
 \begin{frame}{ Data in Blocks}
-% please put the dimension to the end of the block
+
+\begin{itemize}
+    \item Stack into long vector/matrix of all data
+    
     \[
+    \underset{NT \times 1}{
     \begin{bmatrix}
         \tilde{y}_1 \\
         \tilde{y}_2 \\
         \vdots \\
         \tilde{y}_N
-    \end{bmatrix}_{NT \times 1}
+    \end{bmatrix}}
     =
+    \underset{NT \times p}{
     \begin{bmatrix}
         \tilde{X}_1 \\
         \tilde{X}_2 \\
         \vdots \\
         \tilde{X}_N
-    \end{bmatrix}_{NT \times p}
-    \beta_{p \times 1}
+    \end{bmatrix}}
+    \underset{p \times 1}{\beta}
     +
+    \underset{NT \times 1}{
     \begin{bmatrix}
         \tilde{u}_1 \\
         \tilde{u}_2 \\
         \vdots \\
         \tilde{u}_N
-    \end{bmatrix}_{NT \times 1}.
+    \end{bmatrix}}.
     \]
-
-The simplified expression of data:
+\item Compact expression of data:
     \[
     \tilde{Y} = \tilde{X}\beta + \tilde{u}.
     \]
+\end{itemize}
+
 \end{frame}
 
 
@@ -555,7 +562,7 @@ The simplified expression of data:
         
         \item It is easy to see  
         \[
-        \widehat{\beta}_{FE} - \beta_0 = \frac{\tilde{Y}_{-1}^{\prime} \tilde{U}_t}{\tilde{Y}_{-1}^{\prime} \tilde{Y}_{-1}},
+        \widehat{\beta}_{FE} - \beta_0 = \frac{\tilde{Y}_{-1}^{\prime} \tilde{U}}{\tilde{Y}_{-1}^{\prime} \tilde{Y}_{-1}},
         \]
     where strict exogeneity is violated.
     \end{itemize}
