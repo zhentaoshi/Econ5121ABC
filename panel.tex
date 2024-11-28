@@ -126,13 +126,14 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 \begin{frame}{Panel Data Regression}
     \begin{itemize}
     
-        \item Temporal dependence is allowed within a \textbf{group} over $t=1,\ldots,T$ for the same $i$.  
+        \item Temporal observations over $t=1,\ldots,T$ for the same $i$ is viewed as a \textbf{group}. 
+        Temporal dependence is allowed within the group. 
             \begin{equation*}
                 y_{it}=c +X_{it}'\beta +\varepsilon_{it} 
             \end{equation*}  
             with $E(\varepsilon_{it} ) = 0$.
-        \item $\varepsilon_{it}$ may be correlated with $X_it$.
-        \item \textbf{Composite error}: 
+        \item $\varepsilon_{it}$ may be correlated with $X_{it}$.
+        \item \textbf{Composite error}
         $$\varepsilon_{it}=\alpha^*_{i} + u_{it}$$         with $\mathrm{cov} (u_{it}, X_{it}) = 0$
     \end{itemize}
 \end{frame}
@@ -177,7 +178,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
 \bigskip
 
-    \item $(N+p)$ Parameters $(\alpha_{1 },\alpha_{2 }, \ldots, \alpha_{N }; \beta) $
+    \item $(N+p)$ parameters $(\alpha_{1 },\alpha_{2 }, \ldots, \alpha_{N }; \beta) $
         
     \end{itemize}
 \end{frame}
@@ -186,7 +187,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
 \begin{frame}{Least Squares Dummy Variable Estimator}
     \begin{itemize}
-        \item Direct Estimation 
+        \item Direct Estimation with $N$ dummy variables
         $$y_{it} = \sum_{j=1}^N \alpha_{j} \mathbf{I}(i=j) +X_{it}'\beta +u_{it}  $$
     \end{itemize}
 
@@ -290,14 +291,8 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         \item The fixed effects are estimated as
         $$\hat{\alpha}_{i} =  \bar{y}_{i} - \bar{X}'_{i} \hat {\beta}_{FE} $$
         
-        \item Consistency is achieved if strict exogeneity holds.
+        \item Consistency ($T$ fixed, $N\to \infty$) is achieved if strict exogeneity holds.
     \end{itemize} 
-    % \begin{assumption*}[FE.1]
-        % $E\left[u_{it}|\alpha_{i},\mathbf{X}_{i}\right]=0$ where $\mathbf{X}_{i}=\left(X_{i1},\ldots,X_{iT}\right)$. 
-    %\end{assumption*} 
-    %\begin{assumption*}[FE.2]
-     % $\mathrm{var}\left(u_{i}|\alpha_{i},\mathbf{X}_{i}\right)=\sigma_{u}^{2}I_{T}$. 
-    %\end{assumption*}
 \end{frame}
 
 
@@ -315,7 +310,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         E\left[ X_{it} u_{is} \right] = 0 \quad \text{for all } s, t \in \{1, \ldots, T\}.
         \]
 
-        \item Interpretation: no correlation of the error term $u_{is}$ with the regressor $X_{it}$ in the past, present, and future.
+        \item Interpretation: no correlation of the error term $u_{is}$ with the regressor $X_{it}$ in the past, the present, and the future.
     \end{itemize}
 \end{frame}
 
@@ -324,7 +319,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
     \begin{itemize}
         \item Notice that 
         \[
-        \tilde{X}_{it} = X_{it} - \frac{1}{T} \sum_{t=1}^T X_{it}
+        \tilde{X}_{it} = X_{it} - \frac{1}{T} \sum_{s=1}^T X_{iS}
         = \left(1 - \frac{1}{T}\right) X_{it} - \frac{1}{T} \sum_{s \neq t} X_{is},
         \]
         is a linear combination of \(\{X_{i1}, \ldots, X_{iT}\}\).
@@ -333,7 +328,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         $E\left(X_{it} u_{it}\right) = 0 \quad \text{for all } t \in \{1, \ldots, T\}.$
 
         \item \textbf{Sequential exogeneity}:
-        $E\left(u_{it} X_{is} \right) = 0 \quad \text{for all } s \leq t \in \{1, \ldots, T\}.$ The error term is uncorrelated with the last and present regressor.
+        $E\left(u_{it} X_{is} \right) = 0 \quad \text{for all } s \leq t \in \{1, \ldots, T\}.$ The error term is uncorrelated with the past and present regressor.
 
         \item Neither of the above two kinds of exogeneity produces consistent \(\widehat{\beta}_{FE}\).
     \end{itemize}
@@ -347,9 +342,9 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
     \begin{itemize}
         \item Under homoskedasticity:
         \[
-            \widehat{\sigma}_{u}^{2}=\frac{1}{n\left(T-1\right)}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\tilde{u}}_{it}^{2}.
+            \widehat{\sigma}_{u}^{2}=\frac{1}{N\left(T-1\right)}\sum_{i=1}^{N}\sum_{t=1}^{T}\widehat{\tilde{u}}_{it}^{2}.
         \]
-        where $\widehat{\tilde{u}}=\tilde{y}_{it}-\tilde{X}_{it}\widehat{\beta} _{FE}$  
+        where $\widehat{\tilde{u}}_{it}=\tilde{y}_{it}-\tilde{X}_{it}\widehat{\beta} _{FE}$  
         
         \item Asymptotic normality
         \[            \left(\widehat{\sigma}_{u}^{2}\left(\tilde{X}'\tilde{X}\right)^{-1}\right)^{-1/2}\left(\widehat{\beta} _{FE}-\beta ^{0}\right)\Rightarrow N\left(0,I_{K}\right).
@@ -440,12 +435,12 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
         \item OLS is consistent, but inefficient due to violation of homoskedasticity:
         \[
-        S:= E\left[\varepsilon_i \varepsilon_i^{\prime}\right] =
+        \underset{T\times T}{S}:= E\left[\varepsilon_i \varepsilon_i^{\prime}\right] =
         \begin{bmatrix}
-            \sigma_{\alpha}^2 + \sigma_{u}^2 & \sigma_{u}^2 & \cdots & \sigma_{u}^2 \\
-            \sigma_{u}^2 & \sigma_{\alpha}^2 + \sigma_{u}^2 & \cdots & \sigma_{u}^2 \\
+            \sigma_{\alpha}^2 + \sigma_{u}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2 \\
+            \sigma_{\alpha}^2 & \sigma_{\alpha}^2 + \sigma_{u}^2 & \cdots & \sigma_{\alpha}^2 \\
             \vdots & \vdots & \ddots & \vdots \\
-            \sigma_{u}^2 & \sigma_{u}^2 & \cdots & \sigma_{\alpha}^2 + \sigma_{u}^2
+            \sigma_{\alpha}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2 + \sigma_{u}^2
         \end{bmatrix}.
         \]
 
@@ -470,7 +465,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
          
         \item The (infeasible) GLS estimator is:
         \begin{align*}
-       \widehat{\theta}^{infeasible}_{RE} & =            \left(\sum_{i=1}^{n} W_{i}'S^{-1} W_{i}\right)^{-1} \sum_{i=1}^{n}W_{i}'S^{-1}y_{i} \\ & =\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1} Y           
+       \widehat{\theta}^{infeasible}_{RE} & =            \left(\sum_{i=1}^{N} W_{i}'S^{-1} W_{i}\right)^{-1} \sum_{i=1}^{N}W_{i}'S^{-1}y_{i} \\ & =\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1} Y           
         \end{align*}
             
                  
@@ -490,14 +485,14 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         \begin{itemize}
         \item Estimate the diagonal term and the off-diagonal term in $S$ as
         \begin{eqnarray*}
-            \widehat{\sigma}_{\varepsilon,diag}^{2} &=& \frac{1}{nT}\sum_{i=1}^{n}\sum_{t=1}^{T}\widehat{\varepsilon}_{it}^{2}  \\
-            \widehat{\sigma}_{\varepsilon, off}^{2} &=& \frac{1}{n}\sum_{i=1}^{n}\frac{1}{T(T-1)}\sum_{t=1}^{T} \sum_{s\neq t}\widehat{\varepsilon}_{it}\widehat{u}_{is}
+            \widehat{S}_{diag} &=& \frac{1}{NT}\sum_{i=1}^{N}\sum_{t=1}^{T}\widehat{\varepsilon}_{it}^{2}  \\
+            \widehat{S}_{off} &=& \frac{1}{N}\sum_{i=1}^{N}\frac{1}{T(T-1)}\sum_{t=1}^{T} \sum_{s\neq t}\widehat{\varepsilon}_{it}\widehat{\varepsilon}_{is}
         \end{eqnarray*}
-        repsectily, to obtain $\hat{S}.$
+        respectively, to obtain $\hat{S}.$
         \end{itemize}
     
-    \item The feasible GLS (FGLS) is 
-      $$ \widehat{\theta}_{RE} = \left(\sum_{i=1}^{n} W_{i}'\hat{S}^{-1} W_{i}\right)^{-1} \sum_{i=1}^{n}W_{i}'\hat{S}^{-1}y_{i}             
+    \item Step 2: The feasible GLS (FGLS) is 
+      $$ \widehat{\theta}_{RE} = \left(\sum_{i=1}^{N} W_{i}'\hat{S}^{-1} W_{i}\right)^{-1} \sum_{i=1}^{N}W_{i}'\hat{S}^{-1}y_{i}             
       $$
        
     \end{itemize}
@@ -514,7 +509,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
             \item But does not allow time-invariant \(X_i\).
         \end{itemize}
 
-        \item RE doesn't allow endogenous \(\alpha^*_i\).
+        \item RE does not cope with endogenous \(\alpha^*_i\).
 
         \item Hausman test is traditionally used to distinguish the two models.
 
@@ -637,7 +632,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
         \item 2SLS:
         \[
-        \widehat{\beta}_{IV} = \frac{\sum_{it} \Delta y_{i,t-2} \Delta y_{it}}{\sum_{it} \Delta y_{i,t-2} \Delta y_{i,t-1}}.
+        \widehat{\beta}_{IV} = \frac{\sum_{i,t} \Delta y_{i,t-2} \Delta y_{i,t}}{\sum_{it} \Delta y_{i,t-2} \Delta y_{i,t-1}}.
         \]
 
         \item Consistent and asymptotic normal.
@@ -679,17 +674,17 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
 
 
-\begin{frame}{Related Work of Mine}
-    \begin{itemize}
-        \item Chengwang Liao, Ziwei Mei, and Zhentao Shi, ``Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions,'' \emph{working paper}, 2024.
+% \begin{frame}{Related Work of Mine}
+%     \begin{itemize}
+%         \item Chengwang Liao, Ziwei Mei, and Zhentao Shi, ``Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions,'' \emph{working paper}, 2024.
         
-        \item Ziwei Mei, Liugang Sheng, and Zhentao Shi, ``Nickell Bias in Panel Local Projection,'' \emph{working paper}, 2024.
+%         \item Ziwei Mei, Liugang Sheng, and Zhentao Shi, ``Nickell Bias in Panel Local Projection,'' \emph{working paper}, 2024.
 
-        \item Cheng Hsiao, Zhentao Shi and Qiankun Zhou (2022): “Transformed Estimation for Panel Interactive Effects Models,” \emph{Journal of Business \& Economic Statistics}, 40(4), 1831-1848.
+%         \item Cheng Hsiao, Zhentao Shi and Qiankun Zhou (2022): “Transformed Estimation for Panel Interactive Effects Models,” \emph{Journal of Business \& Economic Statistics}, 40(4), 1831-1848.
 
-        \item And many more...
-    \end{itemize}
-\end{frame}
+%         \item And many more...
+%     \end{itemize}
+% \end{frame}
 
 
 \end{document}
