@@ -4,4 +4,4 @@
 * Lecture 9: [Maximum likelihood](https://github.com/zhentaoshi/Econ5121ABC/blob/main/MLE.pdf)
 * Lecture 10: [Limited dependent variables](https://github.com/zhentaoshi/Econ5121ABC/blob/main/limited_dep.pdf)
 * Lecture 11: [Causal inference](https://github.com/zhentaoshi/Econ5121ABC/blob/main/causal.pdf)
-* Lecture 12: [Panel data] (https://github.com/zhentaoshi/Econ5121ABC/blob/main/panel.pdf)
+* Lecture 12: [Panel data](https://github.com/zhentaoshi/Econ5121ABC/blob/main/panel.pdf)
