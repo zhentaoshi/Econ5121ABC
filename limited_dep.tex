@@ -650,8 +650,8 @@ The likelihood consists of two components:
         \item The conditional mean
         \begin{align*}
             E\left( y_{i}^{*} \mid h_{i} =1 \right) & 
-            = X'_{1i} \beta + E \left( \varepsilon_{1i} \mid h_{i} =1 \right) \\
-            & = X'_{1i} \beta + \sigma_{12} \lambda \left( X'_{2i} \beta_{2} \right)
+            = X'_{1i} \beta_1 + E \left( \varepsilon_{1i} \mid h_{i} =1 \right) \\
+            & = X'_{1i} \beta_1 + \sigma_{12} \lambda \left( X'_{2i} \beta_{2} \right)
         \end{align*}
         due to the joint normality, where $\lambda\left( x \right) = \phi \left( x \right) / \Phi \left( x \right)$ is called the \textbf{inverse Mill's ratio}. $\phi(\cdot)$ is the pdf of $N(0,1)$
         \item The regression model can be estimated by \texttt{heckit}.
