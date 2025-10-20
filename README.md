@@ -1,8 +1,8 @@
-# Econ5121 ABC 2024
+# Econ5121 ABC 2025
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
-This course will be taught by three instructors. I will cover the following topics.
+This course will be taught by two instructors. I will cover 1/3 of it, with the following topics.
 
 * Lecture 9: [Maximum likelihood](https://github.com/zhentaoshi/Econ5121ABC/blob/main/MLE.pdf)
   * Maximum likelihood estimation (MLE) is a fundamental method in econometrics for estimating the parameters of a model. This technique involves choosing the parameter values that maximize the likelihood function. This lecture will explore the theory behind MLE.
