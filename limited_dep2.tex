@@ -1,0 +1,611 @@
+%% LyX 2.4.2.1 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt,english]{beamer}
+\usepackage{mathpazo}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+% \usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage[active]{srcltx}
+\usepackage{amsthm}
+\usepackage{amsmath} 
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+\usepackage{graphicx}
+\usepackage{emoji}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+% this default might be overridden by plain title style
+\newcommand\makebeamertitle{\frame{\maketitle}}%
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+\theoremstyle{definition}
+\newtheorem*{example*}{\protect\examplename}
+\theoremstyle{definition}
+\newtheorem*{defn*}{\protect\definitionname}
+\theoremstyle{plain}
+\newtheorem*{thm*}{\protect\theoremname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\AtBeginDocument{%
+   \let\origtableofcontents=\tableofcontents
+   \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+   \def\gobbletableofcontents#1{\origtableofcontents}
+ }\usepackage[english]{babel}
+\usepackage{babel}
+
+%\usetheme{Boadilla}
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
+% \usecolortheme{orchid}
+\usecolortheme{spruce}
+% \usecolortheme{beaver}
+
+\setbeamercovered{transparent}
+
+\usepackage{colortbl}
+
+\usefonttheme[onlymath]{serif}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For tables
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+% For figures
+\usepackage{caption}
+\usepackage{subcaption}
+
+\makeatother
+
+\usepackage{babel}
+\providecommand{\definitionname}{Definition}
+\providecommand{\examplename}{Example}
+\providecommand{\theoremname}{Theorem}
+
+% 定义命令 \RomanNum 和 \romanNum
+\newcommand{\RomanNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}} % 大写罗马数字
+\newcommand{\romanNum}[1]{\romannumeral #1\relax} % 小写罗马数字
+
+\begin{document}
+\title[Limited]{Models of Limited Dependent Variables}
+\author[]{Zhentao Shi}
+\date[]{The Chinese University of Hong Kong}
+
+\makebeamertitle
+
+
+
+\begin{frame}{Fundamental Task}
+
+        \begin{itemize}
+            \item Use $X$ to predict $y$
+        \item Beyond continuous random variables
+        \begin{itemize}
+            \item Binary
+            \item Multi-responses 
+            \item Integer
+            \item Mixed type: censoring, truncation
+            \item Self-selection
+        \end{itemize}
+
+\bigskip
+            
+        \item Applied microeconomics
+        \item Biostatistics
+            
+        \end{itemize}
+\end{frame}
+
+
+
+% \begin{frame}[plain]{Unification}
+%    \begin{center}
+%        \includegraphics[width = \textwidth]{fig/terracotta_warriors.jpg}
+%    \end{center}
+%\end{frame}
+
+
+
+\begin{frame}{Panoramic View}
+    \begin{itemize}
+        \item MLE is a unifying framework
+        \item Regressors $X_i$ enter the model as a \textbf{single index} $X_i'\beta$
+        \item Distributional assumptions are chosen for convenience
+        \item Economics interprets the single index as utility 
+        \item Numerical demon: Normal MLE \url{https://www.kaggle.com/code/frankshi0/normal-mle}
+    \end{itemize}
+\end{frame}
+
+
+\section{Binary Choices}
+\frame{\sectionpage}
+
+
+
+\begin{frame}{Linear Probability Models}
+
+Outcome $y_{i} \in \{ 0, 1\}$
+
+
+\begin{itemize}
+    \item Keep using linear regression $y_i = X'_i \beta + \varepsilon_i$
+    \item Conditional mean $$\Pr \left[y_{i} = 1 \mid X_{i}\right] = E\left[y_{i}  \mid X_{i}\right] = X'_{i} \beta$$
+    \item Error term $\varepsilon _{i} \in \{  - X'_{i} \beta, \, 
+    1- X'_{i} \beta \} $ is binary.
+    \item Conditional heteroskedastic.
+    \item Predicted range: $E\left [y_{i}  \mid X_{i} \right] = X'_i \beta$ can go beyond $\left[0,1\right]$.
+    \begin{itemize}
+        \item $X'_{i}  \beta$ is a single index.
+    \end{itemize}
+    \bigskip 
+    \item Ironically, the linear model is popular (for causal inference)!
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Generalized Linear Model}
+    \begin{itemize}
+        \item To ensure predicted probability inside \( [0,1] \), pick some \( G(\cdot ) : \mathbb{R} \to \left[ 0, 1\right] \) to model 
+        \[
+        E\left( y _{i} = 1 \mid X_{i} \right) = G (X'_i \beta) 
+        \]
+        \item Popular choices
+        \begin{itemize}
+           \item \textbf{Probit}: \( G(x) \sim \text{Normal CDF} \)
+           \item \textbf{Logit}: \( G\left(x\right) \sim \text{Logistic CDF} \)
+        \end{itemize}
+        \item Facts about Logistic CDF
+        \begin{itemize}
+            \item \( \Lambda = \Lambda \left(x\right) = \frac{1}{1 + \exp \left(-x\right)} \)
+            \item \( \frac{\mathrm{d} \Lambda }{\mathrm{d} x} = \Lambda \left(1-\Lambda \right) \)
+        \end{itemize}
+    \end{itemize}
+    \begin{picture}(0,0)
+        % Adjust the position and scale of the image as needed
+        \put(185,-5){\includegraphics[width=0.45\textwidth]{fig/logistic_normal.png}}
+    \end{picture}  
+\end{frame}
+\begin{frame}{Latent Utility Model }
+
+\begin{itemize}
+    \item Latent utility $y_i^{*} = X'_i \beta + \varepsilon _{i}$ 
+    \item Observed outcome $y_i = \mathbb{I}\left\{ y_{i} ^{*} \ge 0 \right\}$
+    \item If $\varepsilon _{i} \mid X_i \sim \text{Logistic}$, then
+    \begin{align*}
+        \Pr\left(y_i = 1 \mid X_i \right) &= \Pr \left(X'_i \beta + \varepsilon _{i} \ge 0 \mid X_i\right)\\
+        & = \Pr \left( - \varepsilon _{i} \le X'_{i} \beta \mid X_{i}\right)\\
+        & = \Lambda (X'_i \beta )
+    \end{align*}
+    where the last line holds if $\varepsilon_i$ is symmetric around 0.
+    \item The scale of $\beta$ is not identifiable. Normalization is needed.
+\end{itemize}
+
+
+\end{frame}
+\begin{frame}{Log-Likelihood}
+
+Conditional likelihood of $y_i | X_i $ is
+$$\left\{ \Lambda \left(X_i' \beta \right) \right\} ^{y_i} \left\{ 1- \Lambda \left( X'_i \beta \right) \right\} ^{1-y_{i}}$$
+
+A sample of $N$ observations is
+    \begin{align*}
+        L(\beta) % &= \prod_{\{i: y_i = 1\} } \Lambda \left( X'_i \beta \right)\cdot \prod_{ \{i: y_i = 0\} } \left(1 - \Lambda \left(X'_i \beta \right)\right)\\
+        &= \prod_{i =1}^{N} \left\{ \Lambda \left(X_i' \beta \right) \right\} ^{y_i} \left\{ 1- \Lambda \left( X'_i \beta \right) \right\} ^{1-y_{i}}
+    \end{align*}
+
+Log-likelihood
+    \[\ell_N \left( \beta \right) = \sum_{i =1}^{N} \left\{ y_i \log \left( \Lambda \left( X_{i}^{'}\beta \right) \right) + \left( 1 - y_{i} \right)  \log \left( 1 - \Lambda \left( X_i' \beta \right) \right)\right\}\]
+    
+    
+\end{frame}
+
+\begin{frame}{Properties}
+
+
+    \begin{itemize}
+    \item The score ($\Lambda(X'_i\beta)$  is simplified as $\Lambda_i$)
+    \begin{align*}
+        S_N(\beta) &= \sum_{i = 1}^{N}\left\{ \frac{y_i}{\Lambda_i}\cdot \Lambda_{i}\left( 1 - \Lambda _i \right) X_{i} - \frac{\left( 1- y_{i} \right)}{1 - \Lambda_{i}} \cdot \Lambda_{i} \left( 1-\Lambda_{i} \right) X_{i}\right\}\\
+        &= \sum_{i=1}^{N}\left\{ y_{i} \left( 1- \Lambda_{i} \right) - \left( 1-y_{i} \right) \Lambda_{i}\right\} X_{i}\\
+        &= \sum_{i =1}^{N}\left( y_{i} - \Lambda _{i} \right)X_{i} 
+    \end{align*}
+    \item Negative-definite second derivative
+    \[\frac{\partial L \left( \beta \right)}{\partial \beta \partial \beta ^{'}} = - \sum_{i=1}^{N} \Lambda_{i}\left( 1 - \Lambda_{i} \right) X_{i} X'_i.\]
+
+        \item Globally concavity implies uniqueness of maximizer.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Maximum Likelihood}
+\begin{itemize}
+    \item All nice properties of ML hold
+    \begin{itemize}
+        \item Consistency
+        \item Asymptotic normality
+    \end{itemize}
+    \bigskip
+    
+    \item Misspecification?
+    \item Choices of loss functions
+    $$\min_{\theta \in \Theta} \sum_{i=1}^N Loss(\theta; data_i)$$
+\end{itemize}
+    
+\end{frame}
+
+
+
+
+\begin{frame}[plain]{Loss Functions}
+    Hastie, Tibshirani, Friedman (2008): The Elements of Statistical Learning
+    \begin{center}
+        \includegraphics[width = 0.7 \textwidth]{fig/loss_fun.PNG}
+    \end{center}
+
+    
+\end{frame}
+
+
+
+\begin{frame}{Data Example}
+    \url{https://www.kaggle.com/code/jipann/logistic-regression}
+\end{frame}
+
+
+\section{Multiple Choices}
+\frame{\sectionpage}
+
+
+\begin{frame}{Ordered Response}
+    \begin{itemize}
+        \item More than two categories
+        \item Categories are naturally ordered
+
+
+        \item Latent utility: $y_{i}^{*} = X_{i}^{\prime} \beta + \varepsilon_{i}$ while the observed outcome  $$y_{i} = j, \quad \mbox{ if }\, c_{j} < y_{i}^{*} \le c_{j+1}$$
+
+    \begin{itemize}
+        \item Normalization is needed for identification
+        \item $M$ categories
+        \item $c_{1} = - \infty,\, c_{M+1} = + \infty, \, c_{2} = 0$
+    \end{itemize}
+        
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Probability}
+    \begin{itemize}
+
+        \item Parameter: $\theta = \left( \beta, c_{3}, \dots, c_{M} \right)$
+    \end{itemize}
+    \begin{align*}
+        P_{ij} & = \Pr\left( c_{j} < y_{i}^{*} \le c_{j+1} \mid X_{i}\right)\\
+        & = \Pr\left( c_{j} < X_i'\beta + \varepsilon_i \le c_{j+1} \mid X_{i}\right)\\
+        & = \Pr\left( c_{j}  - X_i'\beta <   \varepsilon_i \le c_{j+1} - X_i'\beta \mid X_{i}\right)\\
+        & = G \left( c_{j+1} - X_{i}^{'} \beta \right) - G \left(  c_{j} - X_{i}^{'} \beta  \right)
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Likelihood}
+    \begin{itemize}
+        \item Unobservable error $\varepsilon_{i} \mid X_{i}$ is assumed to be either logistic or normal
+        \item Likelihood of individual observation \[ \Pr \left( y_i = j \right) = \sum_{j=1}^{M} P_{ij} \mathbb{I}\left\{ y_i = j \right\}\]
+        \item Likelihood of the $N$-observation sample 
+    \[ L\left( \theta \right) = \prod_{i =1} ^{N} \Pr \left( y_i = j \right)\]
+    \end{itemize}
+    
+\end{frame}
+
+
+
+\begin{frame}{Choice of Transportation}
+  
+
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{fig/Guangzhou.jpg}
+\end{center}
+    
+\end{frame}
+
+
+\begin{frame}{Machine Learning: Handwriting}
+    \begin{center}
+    \includegraphics[width=\textwidth]{fig/digits_hand.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Multinomial Choice}
+    \begin{itemize}
+        
+        \item Level of individual-choice utility
+        $$\mu_{ij} = W'_{ij} \beta + Z'_{i} \beta_{j}$$
+        \item Choice-specific regressors $W_{ij}$
+        \begin{itemize}
+            \item e.g.~Distance to stations ($\beta$ is value of time)
+        \end{itemize}
+        \item Choice-invariant regressors $Z_{i}$
+        \begin{itemize}
+            \item e.g.~Motion sickness ($\beta_j$ is the effect; bus is bad)
+        \end{itemize}
+        
+    \end{itemize}    
+\end{frame}
+
+\begin{frame}{Latent Utility}
+    \begin{itemize}
+        \item For each $j=1,2,\ldots,M$, the utility $y_{ij}^{*} = \mu_{ij} + \varepsilon _{ij}$, where $\mu_{ij}$ is the choice level index, and for $\varepsilon_{ij}$ is the error term.
+        \item The observed choice 
+        $$y_{ij} =\mathbb{I}\left\{ y_{ij}^{*} \ge \max_{k=1,\ldots,M} y^*_{ik} \right\}$$
+        \item $\Pr \left( y_i = j \mid \mu_{i1}, \dots, \mu_{iM} \right) = \Pr \left( y_{ij}^{*} \ge y_{i1}^{*}, \dots, y_{ij}^{*} \ge y_{iM}^{*} \right)$
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Distributional Assumption}
+    \begin{itemize}
+        \item The probability depends on the joint distribution of $\left( \varepsilon_{ij} \right)_{j=1}^{M}$
+        \item If $\varepsilon _{ij} \sim $ Type \RomanNum{1} extreme value distribution and $\varepsilon_{ij}$ i.i.d.~across choices, then
+        \[\Pr\left( y_{ij} = j \mid \mu_{i1}, \dots, \mu_{iM} \right)= \frac{\exp\left( \mu_{ij}\right)}{\sum_{k=1}^{M}\exp \left( \mu_{ik}\right)}\]
+        \item Full Probit specification will be a nightmare. Don't use.
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Normalization}
+    \begin{itemize}
+        \item Normalize $\mu_{i1} = 0$ for all $i$. Usually for the "other" group.
+        \item Equivalent to $\beta_{j=1} = 0$ (including intercept)
+        \item Parameters: $\left( \beta; \mbox{ and }  \beta_2, \beta_3, \dots, \beta_M\right)$
+    \[L\left( \theta \right) = \prod_{i=1}^{N} \left\{ \sum_{j=1}^{M} \mathbb{I} \left( y_{i} = j \right)\left( \frac{\exp \left( \mu_{ij} \right)}{1 +  \sum_{k=2}^{M} \exp \left( \mu_{ik} \right)} \right) \right\}\]
+    
+    
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Independence of Irrelevant Alternative}
+    \begin{itemize}
+        \item The concise form  leverages that $\varepsilon_{ij}$ is i.i.d. across choices $j=1,2,\ldots,M$
+        \item Dilemma of ``red bus'' versus ``blue bus''
+        \item Must pay attention to the specification of choice set
+        \item There are methods to fix it; still depending on specification. \bigskip
+        \item Daniel McFadden (Nobel Prize 2000)
+    \end{itemize}
+\end{frame}
+
+
+\section{Integer Outcomes}
+\frame{\sectionpage}
+
+
+\begin{frame}{Counting Model}
+\begin{itemize}
+    \item Outcomes take non-negative integers
+    \begin{itemize}
+        \item Number of children
+        \item Number of hospital visits
+        \item Number of patents
+    \end{itemize}
+    \item Poisson model: 
+$y \sim \text{Poisson}(\lambda)$:
+$$
+\Pr(y = k) = \frac{\mathrm{e}^{-\lambda} \lambda^k}{k!}, \mathrm{ for }\, \, k=0,1,2,\ldots
+$$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Poisson Regression}
+\begin{itemize}
+
+    \item Poisson regression: Suppose $$\lambda_i = \exp( X_i'\beta). $$  
+    Model the single index $\lambda_i$ by $\exp( X_i'\beta) $ gives log-likelihood
+$$
+\log \Pr(y_i | X_i) =  -\exp(X_i'\beta) + y_i\cdot X_i'\beta - \log k!
+$$
+    \item Log-likelihood function of an $N$-observation sample:
+    \[
+    \ell_N(\beta) =   -\sum_{i=1}^N \exp(X_i'\beta) + \sum_{i=1}^N y_i X_i'\beta
+    \]
+where $ \log k!$ can be omitted.
+
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Poisson MLE}
+\begin{itemize}
+    
+    \item Score:
+    \[
+    s_N(\beta) = \frac{\partial \ell_N (\beta)}{\partial \beta} = -\sum_{i=1}^N \exp(X_i'\beta)X_i + \sum_{i=1}^N y_i X_i.
+    \]
+
+    \item Second derivative is negative definite:
+    \[
+    \frac{\partial^2 \ell_N (\beta)}{\partial \beta \partial \beta'} = -\sum_{i=1}^N \exp(X_i'\beta) X_i X_i'
+    \]
+
+    \item \( \ell_N(\beta) \) is strictly concave in \( \beta \).
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Pseudo Poisson MLE}
+
+\begin{itemize}
+    \item Conditional mean model $E[y|X] = \exp (X'\beta)$
+    \item If $y$ is continuously distributed, the Poisson model must be misspecified
+    \item e.g., Bilateral international trade between pairs of countries.
+\end{itemize}
+
+\bigskip
+
+Data example: \url{https://www.kaggle.com/code/jipann/poisson-regression}
+
+\end{frame}
+
+
+\section{Incomplete Data}
+\frame{\sectionpage}
+
+
+
+\begin{frame}[plain]{Censored or Truncated Data}
+
+\begin{center}
+   \includegraphics[width=0.4\textwidth]{fig/censor_vs_truncate.png}
+\end{center}
+
+    \begin{itemize}
+        \item Latent utility: $y_{i}^{*} = X_{i}^{'} \beta + \varepsilon_{i}$
+        \item Observed outcome: 
+        $\left\{\begin{matrix}
+          y_{i} = y_{i}^{*},& \text{if} \, y^*_{i} >c\\
+          y_{i} = c,&\text{if} \, y^*_{i} \le c
+        \end{matrix}\right.$
+        \item Real example \url{https://www.kaggle.com/datasets/lightonkalumba/us-womens-labor-force-participation}
+    \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+\begin{frame}{Probabilities}
+    \begin{itemize}
+        \item Assume $\varepsilon _{i} \mid X_{i} \sim N\left( 0, \sigma ^{2} \right)$
+        \item The probability mass \begin{align*}
+            \Pr \left( y_{i} = c \right)& = \Pr \left( y_{i}^{*} \le c \right) = \Pr \left( X_{i}^{'} \beta + \varepsilon _{i} \le c \right)\\
+            & = \Pr \left( \frac{\varepsilon_{i}}{\sigma} \le \frac{c-X_{i}^{'} \beta}{\sigma} \right)  = \Phi \left( \frac{c - X_{i}^{'} \beta}{\sigma}\right)
+        \end{align*}
+        where $\Phi(\cdot)$ is the CDF of $N(0,1)$.
+        \item The density of the continuous region remains the same.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Likelihood}
+
+The likelihood consists of two components:
+    \begin{align*}
+        f\left( y_{i} \mid X_{i} \right) &= \Phi \left( \frac{c- X_{i}^{'} \beta}{\sigma} \right) \times \mathbb{I} \left( y_{i} = c \right) \\
+        &+ \frac{1}{\sqrt{2 \pi}\sigma} \exp \left( -\frac{1}{2\sigma^{2} } \left( y_{i} - X_{i}^{'} \beta \right)^{2}\right) \times \mathbb{I} \left(y_{i} > c \right)
+    \end{align*}
+    \begin{itemize}
+        \item Mixed type of discrete and continuous random variable
+        \item Mixed of probability mass function and density
+        \[ \int_{-\infty}^{\infty} f\left( y \mid X \right)\mathrm{d} y =1\]
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Truncation}
+    \begin{itemize}
+        \item If data of those with $y_i = c$ are completely unobservable
+        \item We have data $\left( Y_{i}, X_{i} \right)$ for those $y_{i} > c$ only.
+        \item The likelihood with a condition on the outcome:
+        \[f\left( y_{i} \mid y_{i} \ge c, X_{i} \right) = \frac{\frac{1}{\sqrt{2 \pi}\sigma} \exp \left( -\frac{1}{2\sigma^{2} } \left( y_{i} - X_{i}^{'} \beta \right)^{2}\right)}{1- \Phi \left( \frac{c-X_{i}^{'} \beta }{\sigma} \right)}\]
+        \item Due to truncation, OLS cannot consistently estimate $\beta$
+        \item Must use MLE
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Tobit \RomanNum{2} Models}
+    \begin{itemize}
+        \item Wage (continuous): $y_{i}^{*} = X'_{1i} \beta_{1} + \varepsilon  _{1i}$
+        \item Choice (binary) : $h_{i}^{*} = X'_{2i} \beta_{2} + \varepsilon _{2i}$ and the observed outcome 
+        \[
+         h_i = \left\{\begin{matrix}
+          1,& \text{if } \, h_{i}^{*} \ge 0\\
+          0,&\text{otherwise} 
+        \end{matrix}\right.
+        \]
+        \item Observe $y_i = y_i^*$ if $h_i = 1$
+        \item The two equations have different regressors, coefficients and and errors terms.
+        \item More flexible than the Tobit I model
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Joint Normal}
+    \begin{itemize}
+        \item Assume $\begin{pmatrix}
+            \varepsilon_{1i}\\
+            \varepsilon_{2i}
+        \end{pmatrix} \sim N\left( \begin{pmatrix}
+            0\\
+            0
+        \end{pmatrix}, \begin{pmatrix}
+            \sigma_{11}^{2} & \sigma_{12} \\
+            \sigma_{12} & 1
+        \end{pmatrix} \right)$ \\
+        where $\sigma_{22} = 1$ is a normalization
+        \item Parameter $\theta = (\beta_1, \beta_2, \sigma_{11}^2, \sigma_{12})$ can be estimated by MLE 
+        \item The conditional likelihood involves the bivariate normal distribution and its integrals
+        \item No existing routine in \texttt{py::statmodels}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Conditional Expectation}
+    \begin{itemize}
+        \item The conditional mean
+        \begin{align*}
+            E\left( y_{i}^{*} \mid h_{i} =1 \right) & 
+            = X'_{1i} \beta_1 + E \left( \varepsilon_{1i} \mid h_{i} =1 \right) \\
+            & = X'_{1i} \beta_1 + \sigma_{12} \lambda \left( X'_{2i} \beta_{2} \right)
+        \end{align*}
+        due to the joint normality, where $\lambda\left( x \right) = \phi \left( x \right) / \Phi \left( x \right)$ is called the \textbf{inverse Mill's ratio}. $\phi(\cdot)$ is the pdf of $N(0,1)$
+        \item The regression model can be estimated by \texttt{heckit}.
+        \item In theory, \texttt{heckit} is inefficient...
+        \item Real example: \url{https://www.kaggle.com/code/jipann/censored-regression}
+        \bigskip
+        \item James Heckman (Nobel Prize 2000)
+        
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Summary}
+\begin{itemize}
+    \item Binary choice
+    \item Multiple choices: ordered or unordered
+    \item Poission regression
+    \item Censored data and truncated data
+    \item Selection model
+
+    \bigskip
+    \item All are applications of MLE
+\end{itemize}
+    
+\end{frame}
+
+
+\end{document}
