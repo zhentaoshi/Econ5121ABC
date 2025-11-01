@@ -186,8 +186,8 @@
 
 \begin{frame}{Model Specification}
 \begin{itemize}
-\item Nature: Data $z$ is drawn from a parameter model $f$
-\item Human: specify a family of models $g\left(z;\theta\right)$ and a parameter space $\Theta$, which span a \textbf{model space} $G\left(\Theta\right)=\left\{ g\left(z;\theta\right):\theta\in\Theta\right\} $.
+\item Nature: draws data $Y$ from a parametric model $f$
+\item Human: specifies a family of models $g\left(y;\theta\right)$ and a parameter space $\Theta$, which span a \textbf{model space} $G\left(\Theta\right)=\left\{ g\left(y;\theta\right):\theta\in\Theta\right\} $.
 \end{itemize}
 \begin{center}
     \includegraphics[width=0.8\textwidth]{fig/misspecified.png}
@@ -208,7 +208,7 @@ is known up to a finite dimensional parameter.
 
 
 \begin{itemize}
-\item  \textbf{Semiparametric model}: If we know $Y\sim i.i.d.\left(\mu,\sigma^{2}\right)$,
+\item  \textbf{Semiparametric model}: If we know $Y\sim \left(\mu,\sigma^{2}\right)$,
 we can estimate $\mu,\sigma^{2}$ by method of moments.
 \item \textbf{Parametric model}: If we assume $Y\sim N\left(\mu,\sigma^{2}\right)$,
 the model has only two parameters $\mu$ and $\sigma^{2}$. 
@@ -228,7 +228,7 @@ L\left(\theta;\mathbf{Y}\right)=f\left(\mathbf{Y};\theta\right)=\prod_{i=1}^{N}f
 \item Two perspectives:
 \begin{itemize}
     \item (Probabilist) $f(\mathbf{Y};\theta)$ is a function of $\mathbf{Y}$ given the parameter $\theta$
-    \item (Statistician) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given the data $\mathbf{Y}$
+    \item (Statistician; reverse engineering) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given the data $\mathbf{Y}$
 
 
 \end{itemize}
@@ -286,10 +286,20 @@ by the Jensen's inequality.
 \end{itemize}
 
 \end{frame}
+
+
 \begin{frame}{KLIC}
+
     \begin{center}
         \includegraphics[width=\textwidth]{fig/KLIC.png}
     \end{center}
+
+\begin{itemize}
+        \item Numerical demon: Normal MLE \url{https://www.kaggle.com/code/frankshi0/normal-mle}
+\end{itemize}
+
+
+
 \end{frame}
 
 
@@ -365,7 +375,7 @@ If $\widetilde{\theta}$ is unbiased estimator, then $$var(\widetilde{\theta})\ge
 \bigskip
 
 \begin{itemize}
-\item More general than ``BLUE''
+\item More general than OLS's ``BLUE''
 \item A lower bound for variance of unbiased estimator
 \item When reached, an estimator is called \textbf{Cram\'{e}r-Rao efficient}.
 \end{itemize}
@@ -540,8 +550,8 @@ or equivalently
 \begin{itemize}
 \item If $f\notin G\left(\Theta\right)$, the model is  misspecified. 
 \begin{align*}
-KLIC\left(f,g\left(z;\theta\right)\right) & =\int f\left(z\right)\log f\left(z\right)dz-\int f\left(z\right)\log g\left(z;\theta\right)dz\\
- & =E\left[\log f\left(z\right)\right]-E\left[\log g\left(z;\theta\right)\right] > 0
+KLIC\left(f,g\left(y;\theta\right)\right) & =\int f\left(y\right)\log f\left(y\right)dy-\int f\left(y\right)\log g\left(y;\theta\right)dy\\
+ & =E\left[\log f\left(y\right)\right]-E\left[\log g\left(y;\theta\right)\right] > 0
 \end{align*}
 
 \end{itemize}
@@ -553,14 +563,14 @@ KLIC\left(f,g\left(z;\theta\right)\right) & =\int f\left(z\right)\log f\left(z\r
 \begin{frame}{Misspecified Model}
 \begin{itemize}
 
-\item Misspecified: $\min_{\theta\in\Theta}KLIC\left(f,g\left(z;\theta\right)\right)>0$
+\item Misspecified: $\min_{\theta\in\Theta}KLIC\left(f,g\left(y;\theta\right)\right)>0$
 \item MLE is still meaningful
 
 \item Pseudo-true parameter:
 \[
 \theta^{*}=\arg\max_{\theta\in\Theta} E [\ell\left(\theta\right)]
 \]
-the minimizer of $KLIC\left(f,g\left(z;\theta\right)\right)$ in the
+the minimizer of $KLIC\left(f,g\left(y;\theta\right)\right)$ in the
 parameter space $\Theta$
 \item Under standard assumption, the MLE estimator $\widehat{\theta}\stackrel{p}{\to}\theta^{*}$ and 
 \[
