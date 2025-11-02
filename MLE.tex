@@ -609,24 +609,207 @@ parameter space $\Theta$
 
 \begin{frame}{Three Tests}
 
-A linear hypothesis: $R \theta_0 = q$.
+Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
     \bigskip
     
     \begin{itemize}
         \item Wald test: unconstrained estimation, $\ell_N (\hat{\theta}) $ 
-        \item Lagrange multiplier test: constrained estimation under the null, $\ell_N (\tilde{\theta})$
-        \item Likelihood ratio test: $ \ell_N (\hat{\theta}) - \ell_N (\tilde{\theta})$
+        \item Lagrange multiplier (LM) test: constrained estimation under the null, $\ell_N (\tilde{\theta})$
+        \item Likelihood ratio (LR) test: $ \ell_N (\hat{\theta}) - \ell_N (\tilde{\theta})$
     \end{itemize}
 
 \bigskip
 
-Also works for nonlinear hypothesis.
+\begin{itemize}
+    \item All three are asymptotically equivalent
+    \item Also work for nonlinear hypothesis
+    \item Trade-off: computational convenience vs. finite sample performance
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Wald Test}
+
+\begin{itemize}
+    \item Null hypothesis: $H_0: R \theta_0 = q$, where $R$ is $r \times k$ with rank $r$
+    
+    \item Uses the \textbf{unconstrained MLE} $\hat{\theta}$
+    
+    \item Test statistic:
+    \[
+    W = N (R\hat{\theta} - q)' \left[ R \hat{I}_0^{-1} R' \right]^{-1} (R\hat{\theta} - q)
+    \]
+    where $\hat{I}_0 = \frac{1}{N} \sum_{i=1}^N \hat{s}_i \hat{s}_i'$ is the estimated information matrix
+    
+    \item Under $H_0$:
+    \[
+    W \stackrel{d}{\to} \chi^2(r)
+    \]
+    
+    \item Reject $H_0$ if $W > \chi^2_r(\alpha)$, the $(1-\alpha)$ quantile
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Wald Test: Intuition}
+
+\begin{itemize}
+    \item Measures how far the unrestricted estimate $\hat{\theta}$ is from satisfying the constraint
+    
+    \item If $H_0$ is true, $R\hat{\theta}$ should be close to $q$
+    
+    \item The distance $(R\hat{\theta} - q)$ is standardized by its asymptotic variance
+    
+    \bigskip
+    
+    \item \textbf{Advantages}:
+    \begin{itemize}
+        \item Only requires unconstrained estimation
+        \item Easy to compute
+        \item Most commonly used in practice
+    \end{itemize}
+    
+    \item \textbf{Disadvantages}:
+    \begin{itemize}
+        \item Not invariant to reparameterization
+        \item May have poor finite sample properties
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Lagrange Multiplier (LM) Test}
+
+\begin{itemize}
+    \item Also called the \textbf{Score test}
+    
+    \item Uses the \textbf{constrained MLE} $\tilde{\theta}$ under $H_0: R\theta = q$
+    
+    \item Test statistic:
+    \[
+    LM = \frac{1}{N} s_N(\tilde{\theta})' \tilde{I}_0^{-1} s_N(\tilde{\theta})
+    \]
+    where $s_N(\tilde{\theta}) = \sum_{i=1}^N \frac{\partial}{\partial\theta} \log f(Y_i; \tilde{\theta})$ is the score at $\tilde{\theta}$
+    
+    \item Under $H_0$:
+    \[
+    LM \stackrel{d}{\to} \chi^2(r)
+    \]
+    
+    \item Reject $H_0$ if $LM > \chi^2_r(\alpha)$
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{LM Test: Intuition}
+
+\begin{itemize}
+    \item If $H_0$ is true, the score at $\tilde{\theta}$ should be close to zero
+    
+    \item If the constraint is violated, imposing it will push us away from the true maximum, making $s_N(\tilde{\theta})$ large
+    
+    \bigskip
+    
+    \item \textbf{Advantages}:
+    \begin{itemize}
+        \item Only requires constrained estimation
+        \item Useful when unconstrained estimation is difficult
+        \item Common in misspecification tests
+    \end{itemize}
+    
+    \item \textbf{Disadvantages}:
+    \begin{itemize}
+        \item Need to solve constrained optimization
+        \item Less commonly used than Wald test
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Likelihood Ratio (LR) Test}
+
+\begin{itemize}
+    \item Uses both $\hat{\theta}$ (unconstrained) and $\tilde{\theta}$ (constrained)
+    
+    \item Test statistic:
+    \[
+    LR = 2[\ell_N(\hat{\theta}) - \ell_N(\tilde{\theta})]
+    \]
+    
+    \item Under $H_0$:
+    \[
+    LR \stackrel{d}{\to} \chi^2(r)
+    \]
+    
+    \item Reject $H_0$ if $LR > \chi^2_r(\alpha)$
+    
+    \bigskip
+    
+    \item Measures the improvement in log-likelihood from relaxing the constraint
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{LR Test: Intuition}
+
+\begin{itemize}
+    \item If $H_0$ is true, imposing the constraint should not significantly reduce the likelihood
+    
+    \item If $H_0$ is false, the constrained model fits much worse
+    
+    \bigskip
+    
+    \item \textbf{Advantages}:
+    \begin{itemize}
+        \item Invariant to reparameterization
+        \item Often has better finite sample properties
+        \item Natural interpretation as likelihood comparison
+    \end{itemize}
+    
+    \item \textbf{Disadvantages}:
+    \begin{itemize}
+        \item Requires both constrained and unconstrained estimation
+        \item More computationally demanding
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Comparison of Three Tests}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+& Wald & LM & LR \\
+\midrule
+Unconstrained $\hat{\theta}$ & \checkmark & & \checkmark \\
+Constrained $\tilde{\theta}$ & & \checkmark & \checkmark \\
+Computational cost & Low & Low & High \\
+Invariance & No & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \bigskip
 
-Are specification tests important?
+\begin{itemize}
+    \item Asymptotically equivalent: $W \approx LM \approx LR$ under $H_0$
+    
+    \item In finite samples: typically $W \geq LR \geq LM$
+    
+    \item Choice depends on computational convenience and context
+\end{itemize}
 
 \end{frame}
+
+
 
 \begin{frame}{Summary}
 
