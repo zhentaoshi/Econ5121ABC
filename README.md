@@ -2,6 +2,7 @@
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
+<<<<<<< HEAD
 Econometrics applies statistical and probabilistic methods to economic data to quantify relationships, test hypotheses, and inform decision-making. This course emphasizes identification, estimation, and inference under realistic data challenges, covering cross-sectional, panel, and limited dependent variable models, as well as modern tools for causal analysis.
 
 
@@ -10,6 +11,11 @@ Econometrics applies statistical and probabilistic methods to economic data to q
 Source: [Wikimedia Commons — Linear regression](https://commons.wikimedia.org/wiki/File:Linear_regression.svg) (CC BY-SA)
 
 ---------
+=======
+* Tue 18:30, LSK LT1 (LG)
+* Thur: 18:30, ELB LT3
+* Fri: 18:30, LSK T1 (LG)
+>>>>>>> 302b9bb68fc5ab5c1cf3dbc5d7c89587e0526445
 
 This course will be taught by two instructors. I will cover 1/3 of it, with the following topics.
 
@@ -23,7 +29,7 @@ This course will be taught by two instructors. I will cover 1/3 of it, with the 
   * Causal inference is a central goal in econometric analysis, aiming to determine the effect of one variable on another. This lecture will dive into the methods used to infer causality, such as randomized experiments, natural experiments, and regression discontinuity designs. We will discuss the assumptions under which these methods yield causal conclusions.
 
 * Lecture 12: [Panel data](https://github.com/zhentaoshi/Econ5121ABC/blob/main/panel.pdf)
-  * Panel data, or longitudinal data, involves observations of multiple time periods for the same firms, individuals, or countries. This lecture will introduce the basics of panel data analysis, including fixed effects and random effects models, which help to control for unobserved heterogeneity. We will discuss how these models are estimated, their advantages and limitations.
+  * Panel data, or longitudinal data, involves observations over multiple time periods for the same firms, individuals, or countries. This lecture will introduce the basics of panel data analysis, including fixed effects and random effects models, which help to control for unobserved heterogeneity. We will discuss how these models are estimated, and their advantages and limitations.
 
 
 ## License
