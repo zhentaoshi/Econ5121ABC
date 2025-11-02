@@ -2,6 +2,10 @@
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
+* Tue 18:30, LSK LT1 (LG)
+* Thur: 18:30, ELB LT3
+* Fri: 18:30, LSK T1 (LG)
+
 This course will be taught by two instructors. I will cover 1/3 of it, with the following topics.
 
 * Lecture 9: [Maximum likelihood](https://github.com/zhentaoshi/Econ5121ABC/blob/main/MLE.pdf)
@@ -14,7 +18,7 @@ This course will be taught by two instructors. I will cover 1/3 of it, with the 
   * Causal inference is a central goal in econometric analysis, aiming to determine the effect of one variable on another. This lecture will dive into the methods used to infer causality, such as randomized experiments, natural experiments, and regression discontinuity designs. We will discuss the assumptions under which these methods yield causal conclusions.
 
 * Lecture 12: [Panel data](https://github.com/zhentaoshi/Econ5121ABC/blob/main/panel.pdf)
-  * Panel data, or longitudinal data, involves observations of multiple time periods for the same firms, individuals, or countries. This lecture will introduce the basics of panel data analysis, including fixed effects and random effects models, which help to control for unobserved heterogeneity. We will discuss how these models are estimated, their advantages and limitations.
+  * Panel data, or longitudinal data, involves observations over multiple time periods for the same firms, individuals, or countries. This lecture will introduce the basics of panel data analysis, including fixed effects and random effects models, which help to control for unobserved heterogeneity. We will discuss how these models are estimated, and their advantages and limitations.
 
 
 ## License
