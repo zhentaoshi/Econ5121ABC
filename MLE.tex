@@ -74,7 +74,9 @@
 
 \begin{document}
 \title[MLE]{Maximum Likelihood}
-\author[]{Zhentao Shi\\ \url{https://zhentaoshi.github.io/} }
+\author[]{Zhentao Shi\\ \url{https://zhentaoshi.github.io/} \\ 
+\bigskip
+Course website: \url{https://zhentaoshi.github.io/Econ5121ABC/}}
 \date[]{The Chinese University of Hong Kong}
 \makebeamertitle
 
@@ -114,7 +116,8 @@
             \item Endogeneity
             \item 2SLS, GMM
         \end{itemize}
-        
+        \bigskip
+
         We will continue...
     \end{minipage}%
     \hfill
@@ -145,7 +148,7 @@
         \item Understanding the big picture
         \item What if AI suggests something completely new to you?
         \pause \bigskip
-        \item Welcome to the beautiful new era
+        \item Welcome to the beautiful new world of AI.
     \end{itemize}
 \end{frame}
 
@@ -164,6 +167,8 @@
         \item Mixed type: censoring, truncation
         \item Self-selection
     \end{itemize}
+
+\item Common in big data
 \end{itemize}
 \end{frame}
 
@@ -174,7 +179,7 @@
 \begin{itemize}
 
     \item Philosophy: The most likely outcome (Abductive reasoning).
-    \item Distributional assumption 
+    \item Distributional assumption (instead of moment conditions)
     \item Information theory
 \end{itemize}
 \begin{center}
@@ -235,7 +240,7 @@ is known up to a finite dimensional parameter.
 
 \begin{itemize}
 \item  \textbf{Semiparametric model}: If we know $Y\sim \left(\mu,\sigma^{2}\right)$,
-we can estimate $\mu,\sigma^{2}$ by method of moments.
+we can estimate $(\mu,\sigma^{2})$ by method of moments.
 \item \textbf{Parametric model}: If we assume $Y\sim N\left(\mu,\sigma^{2}\right)$,
 the model has only two parameters $\mu$ and $\sigma^{2}$. 
 \end{itemize}
@@ -253,7 +258,7 @@ L\left(\theta;\mathbf{Y}\right)=f\left(\mathbf{Y};\theta\right)=\prod_{i=1}^{N}f
 
 \item Two perspectives:
 \begin{itemize}
-    \item (Probabilist) $f(\mathbf{Y};\theta)$ is a function of $\mathbf{Y}$ given the parameter $\theta$
+    \item (Probabilist; generative) $f(\mathbf{Y};\theta)$ is a function of $\mathbf{Y}$ given the parameter $\theta$
     \item (Statistician; reverse engineering) $L(\theta;\mathbf{Y})$ is a function of $\theta$ given the data $\mathbf{Y}$
 
 
@@ -282,7 +287,7 @@ is easier to compute.
 
 \item $\log(\cdot)$ is a monotonically increasing function
 
-\item The MLE estimator
+\item The MLE
 \[
 \hat{\theta}=\arg\max_{\theta\in\varTheta}\ell_{N}\left(\theta\right)
 \]
@@ -291,7 +296,8 @@ is easier to compute.
 %
 \begin{frame}{Why Maximization: Deep Justification}
 \begin{thm*}
-If the model is correctly specified, then $\theta_{0}$ is the maximizer.
+If the model is correctly specified, then $\theta_{0}$ is the maximizer
+of the likelihood function in expectation.
 \end{thm*}
 
 \begin{itemize}
@@ -407,11 +413,14 @@ If $\widetilde{\theta}$ is unbiased estimator, then $$var(\widetilde{\theta})\ge
 \end{itemize}
 \end{frame}
 %
+
+
+
 \begin{frame}{Example: Normal MLE}
 \begin{itemize}
 \item Normal distribution $Y_i \sim N(\mu, \sigma^2)$ gives density
 $$
-f(Y_i | \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \gamma}}
+f(Y_i ; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \gamma}}
 \exp\left(- \frac{(Y_i - \mu)^2 }{2\gamma} \right)
 $$
 where $\gamma=\sigma^{2}$ to simplify notations and derivatives.
@@ -425,7 +434,7 @@ where $\theta = (\mu, \gamma)$.
 \end{frame}
 
 % need to compute Fisher info from as the var of score
-\begin{frame}{MLE Estimator}
+\begin{frame}{MLE}
 
 Set the score equal to zero
 \[
@@ -434,7 +443,7 @@ s_{N}\left(\theta\right)=\left[\begin{array}{c}
 -\frac{N}{2\gamma}+\frac{1}{2\gamma^{2}}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
 \end{array}\right]= 0
 \]
-and we solve the MLE estimator
+and we solve the MLE 
 \[
 \hat{\mu} = \frac{1}{N}\sum^{N}_{i=1}Y_{i} = \bar{Y}
 \]
@@ -492,7 +501,7 @@ reaches the  Cram\'{e}r-Rao lower bound
 %
 \begin{frame}{MLE for the Variance}
 \begin{itemize}
-\item $E\left(S_{N}^{2}\right)=\sigma^{2}$ is unbiased, where
+\item $E\left(s_{N}^{2}\right)=\sigma^{2}$ is unbiased, where
 \[
 s_{N}^{2}=\frac{1}{N-1}\sum_{i=1}^{N}\left(Y_{i}-\bar{Y}\right)^{2}=\frac{1}{N-1}Y'\left(I-\frac{1}{N}1_{N}1_{N}'\right)Y
 \]
@@ -506,37 +515,11 @@ $s_{N}^{2}=\frac{\sigma^{2} }{N-1} \cdot \chi^{2}\left(N-1\right)$ because
 \[
 var\left(s_{N}^{2}\right)=\frac{\sigma^{4}}{\left(N-1\right)^{2}} \cdot 2\left(N-1\right)=\frac{2\sigma^{4}}{N-1}>\frac{2\sigma^{4}}{N}
 \]
-Is not Cram\'{e}r-Rao efficient
+is not Cram\'{e}r-Rao efficient
 \end{itemize}
 \end{frame}
 %
 
-\begin{frame}{Return to Normal Regression}
-
-\begin{itemize}
-    \item The normal regression models is 
-$$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
-     \item Under the assumption $\varepsilon_{i} \mid X_{i}\sim N \left(0,\gamma \right),$ the conditional distribution is 
-     $$Y_{i} \mid X_{i} \sim N \left( X_{i}'\beta,\gamma\right).$$
-
-    \item Parameter $\theta = (\beta, \gamma)$
-    \item The joint likelihood $$f(Y_i , X_i) = f(Y_i | X_i) f(X_i),$$ where the specification of $f(X_i)$ is irrelevant to $\theta$.
-\end{itemize}
-\end{frame}
-
-
-     
-\begin{frame}{Conditional Log-Likelihood}
-\begin{itemize}
-     \item  The \textbf{conditional log-likelihood} of the sample is $$\ell_N (\theta) 
-     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log 2\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
-     $$ where the distribution of $X_i$ is unspecified.
-
-     \item The MLE estimator $$\hat{\beta} = (X'X)^{-1} X'Y$$
-     $$\hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^N \hat{\varepsilon}_i^2 $$
-     where $\hat{\varepsilon}_i = Y_i - X_i' \hat{\beta}$.
-\end{itemize}
-\end{frame}
 
 \begin{frame}{Asymptotic Normality}
 \begin{itemize}
@@ -560,6 +543,34 @@ or equivalently
 
 \end{frame}
 
+     
+\begin{frame}{Conditional Log-Likelihood}
+\begin{itemize}
+     \item  The \textbf{conditional log-likelihood} of the sample is $$\ell_N (\theta) 
+     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log 2\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
+     $$ where the distribution of $X_i$ is unspecified.
+
+     \item The MLE $$\hat{\beta} = (X'X)^{-1} X'Y$$
+     $$\hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^N \hat{\varepsilon}_i^2 $$
+     where $\hat{\varepsilon}_i = Y_i - X_i' \hat{\beta}$.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Return to Normal Regression}
+
+\begin{itemize}
+    \item Supervised learning vs unsupervised learning
+    \item The normal regression models is 
+$$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
+     \item Under the assumption $\varepsilon_{i} \mid X_{i}\sim N \left(0,\gamma \right),$ the conditional distribution is 
+     $$Y_{i} \mid X_{i} \sim N \left( X_{i}'\beta,\gamma\right).$$
+
+    \item Parameter $\theta = (\beta, \gamma)$
+    \item The joint likelihood $$f(Y_i , X_i) = f(Y_i | X_i) f(X_i),$$ where the specification of $f(X_i)$ is irrelevant to $\theta$.
+\end{itemize}
+\end{frame}
 
 
 
@@ -724,7 +735,6 @@ Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
     \item \textbf{Disadvantages}:
     \begin{itemize}
         \item Need to solve constrained optimization
-        \item Less commonly used than Wald test
     \end{itemize}
 \end{itemize}
 
@@ -775,36 +785,7 @@ Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
     \item \textbf{Disadvantages}:
     \begin{itemize}
         \item Requires both constrained and unconstrained estimation
-        \item More computationally demanding
     \end{itemize}
-\end{itemize}
-
-\end{frame}
-
-
-\begin{frame}{Comparison of Three Tests}
-
-\begin{center}
-\begin{tabular}{lccc}
-\toprule
-& Wald & LM & LR \\
-\midrule
-Unconstrained $\hat{\theta}$ & \checkmark & & \checkmark \\
-Constrained $\tilde{\theta}$ & & \checkmark & \checkmark \\
-Computational cost & Low & Low & High \\
-Invariance & No & Yes & Yes \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\bigskip
-
-\begin{itemize}
-    \item Asymptotically equivalent: $W \approx LM \approx LR$ under $H_0$
-    
-    \item In finite samples: typically $W \geq LR \geq LM$
-    
-    \item Choice depends on computational convenience and context
 \end{itemize}
 
 \end{frame}
