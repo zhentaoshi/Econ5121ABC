@@ -2,20 +2,17 @@
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
-<<<<<<< HEAD
+
 Econometrics applies statistical and probabilistic methods to economic data to quantify relationships, test hypotheses, and inform decision-making. This course emphasizes identification, estimation, and inference under realistic data challenges, covering cross-sectional, panel, and limited dependent variable models, as well as modern tools for causal analysis.
 
 
 ![Econometrics: linear regression with best-fit line](https://upload.wikimedia.org/wikipedia/commons/3/3a/Linear_regression.svg)
 
-Source: [Wikimedia Commons — Linear regression](https://commons.wikimedia.org/wiki/File:Linear_regression.svg) (CC BY-SA)
-
 ---------
-=======
+
 * Tue 18:30, LSK LT1 (LG)
 * Thur: 18:30, ELB LT3
 * Fri: 18:30, LSK T1 (LG)
->>>>>>> 302b9bb68fc5ab5c1cf3dbc5d7c89587e0526445
 
 This course will be taught by two instructors. I will cover 1/3 of it, with the following topics.
 
