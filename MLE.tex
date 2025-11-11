@@ -543,19 +543,6 @@ or equivalently
 
 \end{frame}
 
-     
-\begin{frame}{Conditional Log-Likelihood}
-\begin{itemize}
-     \item  The \textbf{conditional log-likelihood} of the sample is $$\ell_N (\theta) 
-     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log 2\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
-     $$ where the distribution of $X_i$ is unspecified.
-
-     \item The MLE $$\hat{\beta} = (X'X)^{-1} X'Y$$
-     $$\hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^N \hat{\varepsilon}_i^2 $$
-     where $\hat{\varepsilon}_i = Y_i - X_i' \hat{\beta}$.
-\end{itemize}
-\end{frame}
-
 
 
 \begin{frame}{Return to Normal Regression}
@@ -569,6 +556,21 @@ $$Y_{i}=X_{i}'\beta+\varepsilon_{i}$$
 
     \item Parameter $\theta = (\beta, \gamma)$
     \item The joint likelihood $$f(Y_i , X_i) = f(Y_i | X_i) f(X_i),$$ where the specification of $f(X_i)$ is irrelevant to $\theta$.
+\end{itemize}
+\end{frame}
+
+
+
+     
+\begin{frame}{Conditional Log-Likelihood}
+\begin{itemize}
+     \item  The \textbf{conditional log-likelihood} of the sample is $$\ell_N (\theta) 
+     = -\frac{N}{2}\log\gamma -\frac{N}{2}\log 2\pi - \frac{1}{2\gamma} \sum_{i=1}^{N} \left(Y_{i}-X_{i}^{\prime}\beta\right)^{2},
+     $$ where the distribution of $X_i$ is unspecified.
+
+     \item The MLE $$\hat{\beta} = (X'X)^{-1} X'Y$$
+     $$\hat{\sigma}^2 = \frac{1}{N} \sum_{i=1}^N \hat{\varepsilon}_i^2 $$
+     where $\hat{\varepsilon}_i = Y_i - X_i' \hat{\beta}$.
 \end{itemize}
 \end{frame}
 
@@ -634,7 +636,6 @@ Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
 \begin{itemize}
     \item All three are asymptotically equivalent
     \item Also work for nonlinear hypothesis
-    \item Trade-off: computational convenience vs. finite sample performance
 \end{itemize}
 
 \end{frame}
@@ -678,7 +679,6 @@ Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
     \item \textbf{Advantages}:
     \begin{itemize}
         \item Only requires unconstrained estimation
-        \item Easy to compute
         \item Most commonly used in practice
     \end{itemize}
     
@@ -800,6 +800,7 @@ Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
     \item MLE
     \item Score, Hessian, information matrix
     \item Misspecification
+    \item Trinity of tests: Wald, LM, LR
 \end{itemize}
     
 \end{frame}

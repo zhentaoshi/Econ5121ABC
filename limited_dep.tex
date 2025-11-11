@@ -110,21 +110,12 @@
 
 
 
-% \begin{frame}[plain]{Unification}
-%    \begin{center}
-%        \includegraphics[width = \textwidth]{fig/terracotta_warriors.jpg}
-%    \end{center}
-%\end{frame}
-
-
-
 \begin{frame}{Panoramic View}
     \begin{itemize}
         \item MLE is a unifying framework
         \item Regressors $X_i$ enter the model as a \textbf{single index} $X_i'\beta$
         \item Distributional assumptions are chosen for convenience
-        \item Economics interprets the single index as utility 
-%        \item Numerical demon: Normal MLE \url{https://www.kaggle.com/code/frankshi0/normal-mle}
+        \item Economists interpret the single index as a utility 
     \end{itemize}
 \end{frame}
 
@@ -139,10 +130,7 @@
     \begin{minipage}{0.6\textwidth} % Left side for text
         \begin{itemize}
             \item Outcome $y_{i} \in \{ 0, 1\}$
-            \item Classification
-                \begin{itemize}
-                    \item Unsupervised learning: k-means algorithms
-                \end{itemize}
+
             \item Binary regression (Supervised learning)
             \begin{itemize}
                 \item College entrance
@@ -169,9 +157,8 @@
     \item Keep using linear regression $y_i = X'_i \beta + \varepsilon_i$
     \item Conditional mean $$\Pr \left[y_{i} = 1 \mid X_{i}\right] = E\left[y_{i}  \mid X_{i}\right] = X'_{i} \beta$$
     \item Error term $\varepsilon _{i} \in \{  - X'_{i} \beta, \, 
-    1- X'_{i} \beta \} $ is binary.
-    \item Conditional heteroskedastic.
-    \item Predicted range: $E\left [y_{i}  \mid X_{i} \right] = X'_i \beta$ can go beyond $\left[0,1\right]$.
+    1- X'_{i} \beta \} $ is binary. Conditional heteroskedastic.
+    \item Predicted range: $E\left [y_{i}  \mid X_{i} \right] = X'_i \beta$ can go out of $\left[0,1\right]$.
     \begin{itemize}
         \item $X'_{i}  \beta$ is a single index.
     \end{itemize}
@@ -228,7 +215,7 @@ $$\left\{ \Lambda \left(X_i' \beta \right) \right\} ^{y_i} \left\{ 1- \Lambda \l
 
 A sample of $N$ observations is
     \begin{align*}
-        L(\beta) % &= \prod_{\{i: y_i = 1\} } \Lambda \left( X'_i \beta \right)\cdot \prod_{ \{i: y_i = 0\} } \left(1 - \Lambda \left(X'_i \beta \right)\right)\\
+        L_N(\beta) % &= \prod_{\{i: y_i = 1\} } \Lambda \left( X'_i \beta \right)\cdot \prod_{ \{i: y_i = 0\} } \left(1 - \Lambda \left(X'_i \beta \right)\right)\\
         &= \prod_{i =1}^{N} \left\{ \Lambda \left(X_i' \beta \right) \right\} ^{y_i} \left\{ 1- \Lambda \left( X'_i \beta \right) \right\} ^{1-y_{i}}
     \end{align*}
 
@@ -249,7 +236,7 @@ Log-likelihood
         &= \sum_{i =1}^{N}\left( y_{i} - \Lambda _{i} \right)X_{i} 
     \end{align*}
     \item Negative-definite second derivative
-    \[\frac{\partial L \left( \beta \right)}{\partial \beta \partial \beta ^{'}} = - \sum_{i=1}^{N} \Lambda_{i}\left( 1 - \Lambda_{i} \right) X_{i} X'_i.\]
+    \[\frac{\partial \ell_N \left( \beta \right)}{\partial \beta \partial \beta ^{'}} = - \sum_{i=1}^{N} \Lambda_{i}\left( 1 - \Lambda_{i} \right) X_{i} X'_i.\]
 
         \item Globally concavity implies uniqueness of maximizer.
     \end{itemize}
@@ -348,7 +335,7 @@ Log-likelihood
 
     \begin{itemize}
         \item Normalization is needed for identification
-        \item $M$ categories
+        \item $M$ categories ($M \geq 3$)
         \item $c_{1} = - \infty,\, c_{M+1} = + \infty, \, c_{2} = 0$
     \end{itemize}
         
@@ -444,7 +431,7 @@ Log-likelihood
 \begin{frame}{Normalization}
     \begin{itemize}
         \item Normalize $\mu_{i1} = 0$ for all $i$. Usually for the "other" group.
-        \item Equivalent to $\beta_{j=1} = 0$ (including intercept)
+        \item Equivalent to $\beta_{j=1} = 0$ (including the intercept)
         \item Parameters: $\left( \beta; \mbox{ and }  \beta_2, \beta_3, \dots, \beta_M\right)$
     \[L\left( \theta \right) = \prod_{i=1}^{N} \left\{ \sum_{j=1}^{M} \mathbb{I} \left( y_{i} = j \right)\left( \frac{\exp \left( \mu_{ij} \right)}{1 +  \sum_{k=2}^{M} \exp \left( \mu_{ik} \right)} \right) \right\}\]
     
@@ -495,7 +482,7 @@ $$
 $$
     \item Log-likelihood function of an $N$-observation sample:
     \[
-    \ell_N(\beta) =   -\sum_{i=1}^N \exp(X_i'\beta) + \sum_{i=1}^N y_i X_i'\beta
+    \ell_N(\beta) =   -\sum_{i=1}^N \exp(X_i'\beta) + \sum_{i=1}^N y_i X_i'\beta,
     \]
 where $ \log k!$ can be omitted.
 
