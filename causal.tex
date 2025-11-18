@@ -94,8 +94,8 @@
     \begin{itemize}
         \item Material: The mask is made of gold
         \item Formal: Mathematics
-        \item Effective: Change the status by external force
-        \item Final: I run because I want to be healthy
+        \item \textbf{Effective}: Change the status by external force
+        \item Final: I run because I want health
     \end{itemize}
     
     \item Thomas Aquinas: The first cause? 
@@ -181,7 +181,7 @@
         \item Add a story to the statistical exercise.
         \item A triple $\left( y_{1i}, y_{0i}, D_{i} \right)$
         \begin{itemize}
-            \item $D_{i} \in \{0,1\}$ is a treatment (from biomedical)
+            \item $D_{i} \in \{0,1\}$ is a \textbf{treatment} (from biomedical)
             \item Two potential outcomes $(y_{1i}, y_{0i})$
         \end{itemize}
         
@@ -239,7 +239,7 @@
 
 \bigskip
 
-        \item Direct control experiment
+        \item Controlled experiment
 
 \bigskip
         
@@ -356,7 +356,7 @@
         \item With control variables $X_i = x$, \textbf{conditional ATE} (CATE)
         $$ATE(x) = E[ \Delta_i | X_i = x ]$$
         \item Similar, \textbf{conditional ATET} is defined as 
-        $$ATE(x) = E[ \Delta_i | D_i = 1, X_i = x ]$$
+        $$ATET(x) = E[ \Delta_i | D_i = 1, X_i = x ]$$
         \item Straightforward if $X_i$ is a discrete random variable
     \end{itemize}
 \end{frame}
@@ -429,11 +429,11 @@
 \begin{frame}{Propensity Score}
     \begin{itemize}
         
-        \item \textbf{Propensity score}: $$P\left[x \right] = \Pr \left[ D_{i} = 1 \mid X_{i} = x \right] = E \left[ D_{i}  \mid X_{i} = x \right] $$
+        \item \textbf{Propensity score}: $$P\left[x \right] := \Pr \left[ D_{i} = 1 \mid X_{i} = x \right] = E \left[ D_{i}  \mid X_{i} = x \right] $$
         \item In the treatment group
         \begin{align*}
         E\left[ \frac{D_{i} y_{i}}{P\left[ X_{i} \right]} \right] 
-         & \overset{\text{LIE}}{=}  E\left[ \frac{1}{P\left[ X_{i} \right]} E\left[ D_{i} y_{1i} \mid X_{i}\right] \right] \\
+         & \overset{\text{LIE}}{=}  E\left[ \frac{1}{P\left[ X_{i} \right]} E\left[ D_{i} \textcolor{red}{y_{1i}} \mid X_{i}\right] \right] \\
          & \overset{\text{C.I.}}{=} E \left[ \frac{1}{P\left[ X_{i} \right]} E \left[ D_{i} \mid X_{i} \right] E\left[y_{1i} \mid X_{i} \right]\right] \\
          & = E \left[  E\left[y_{1i} \mid X_{i} \right]\right] 
          \overset{\text{LIE}}{ = } E\left[ y_{1i} \right]    
@@ -474,7 +474,7 @@
         \end{align*}
         under the assumption $E [ \varepsilon_i | X_i ] = 0$ implies that if $X_i$ is a scalar (the simplest case), then
         $$ \beta = \frac{E[y_i | X_i = x_1 ] - E[y_i | X_i = x_0 ]}{ x_1 - x_0}$$ for any $x_0,x_1 \in \mathcal{X}$. 
-        \item The slope coefficient is the difference between two groups. 
+        \item The slope coefficient is the difference between the two groups. 
     \end{itemize}
 \end{frame}
 
@@ -553,10 +553,10 @@
         
         \item ``Keeping everything else equal, if a person's $X_i$ is changed from $x_0$ to $x_1$, then $\beta$ is the average change of $y_i$.'' This is a potential outcome claim.
     
-        \item Given $D_i\in \{0,1\}$ there are two potential outcomes
+        \item Given $D_i\in \{0,1\}$, there are two potential outcomes
         \begin{align*}
-        y_{0i} & = \alpha_{0} + X'_{i}\beta_{0} + \varepsilon_{0i}\\
-        y_{1i} & = \alpha_{1} + X'_{i}\beta_{1} + \varepsilon_{1i}
+        y_{0i} & = \alpha_{0} + X'_{i}\beta_{0} + \varepsilon_{0i},\\
+        y_{1i} & = \alpha_{1} + X'_{i}\beta_{1} + \varepsilon_{1i}.
         \end{align*}
         The linear assumption makes life easier under continuous $X_i$.
 
@@ -627,7 +627,7 @@
 
 \begin{frame}{Regression Discontinuity Design}
     \begin{itemize}
-        \item A jump point due to some ad hoc policy cutoff
+        \item A jump point due to some \emph{ad hoc} policy cutoff
         \item Unconfoundedness is naturally satisfied: as if randomized.
         \item e.g.~College premium
         \item Caveat: valid only for the subpopulation around the cutoff
@@ -638,6 +638,8 @@
             \end{itemize}
         
     \end{itemize}
+
+
 \end{frame}
 
 
@@ -658,7 +660,9 @@
 %         \includegraphics[width=\textwidth]{fig/RDD_Huai.png}
 %     \end{subfigure}
 % \end{figure}
-    
+
+% \footnotesize{Disclaimer: Screenshots from the original paper}
+
 % \end{frame}
 
     
@@ -756,20 +760,11 @@
         \href{https://arxiv.org/abs/2007.05188}{(link1)},
         \href{https://www.bilibili.com/video/BV1VW4y1y7AR/?spm_id_from=333.337.search-card.all.click&vd_source=a4b181aa9857818286999eec4d9925e6}{(link2)}
         
-    \begin{itemize}
-        
-        \item \href{https://www.zhipin.com/job_detail/e7fa10b466e0c5e41HV82ty9EFdW.html?lid=51us4b3FXFX.search.6&securityId=wnbs_9BkN5Fhf-l1orLT94YWn2kpcjBS6-5X6P4y3qOfoxGDb-LqdsKmwiPycwn1pnZbvF3A-M69do0VjdtCM5SeBd6a_1lLChm-XpGGAe7ZWlB7Hw~~&sessionId=}{Bytedance}
 
-        \item \href{https://www.zhipin.com/job_detail/750563b6c1b42dc11HJ_29y6FVJX.html?lid=51ns09pI55u.search.1&securityId=gnIJonr0XicLr-u1wfIDvyBCsowYfmBnKb7KPziKxfWxaujP30mDd7MWcogl4qQIsW0il0VtOVllz_u0bVWfEswvyt94fI3NKEObdTFdhBDTXwA~&sessionId=}{Kuaishou}
-
-        \bigskip 
-
-        
-    \end{itemize} 
 \end{itemize}
 \end{frame}
     
-\end{frame}
+
 
 
 
