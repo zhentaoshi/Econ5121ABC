@@ -121,13 +121,13 @@
 % y_{it} = \alpha_i + X_{it}'\beta + u_{it}, \quad i=1,\ldots,N,\; t=1,\ldots,T
 % \]
 \[
-Y =
+\underset{NT\times 1}{Y} =
 \begin{bmatrix}
 y_{11}\\ y_{12}\\ \vdots \\ y_{1T}\\
 y_{21}\\ \vdots \\ y_{NT}
 \end{bmatrix},
 \quad
-X =
+\underset{NT\times p}{X}
 \begin{bmatrix}
 X_{11}'\\ X_{12}'\\ \vdots \\ X_{1T}'\\
 X_{21}'\\ \vdots \\ X_{NT}'
@@ -213,9 +213,7 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
         $$y_{it} = \sum_{j=1}^N \alpha_{j} \mathbf{I}(i=j) +X_{it}'\beta +u_{it}  $$
     \end{itemize}
 
-% \begin{center}
-%         \includegraphics[width=0.8\linewidth]{fig/panel_data_reg.png}
-% \end{center}
+
 \[
 Y = D\,\alpha + X\,\beta + u, \qquad
 D := I_{N} \otimes \mathbf{1}_{T},
@@ -223,6 +221,16 @@ D := I_{N} \otimes \mathbf{1}_{T},
 where \(Y \in \mathbb{R}^{NT}\), \(D \in \mathbb{R}^{NT \times N}\), \(X \in \mathbb{R}^{NT \times p}\),
 \(\alpha \in \mathbb{R}^{N}\), \(\beta \in \mathbb{R}^{p}\), and \(u \in \mathbb{R}^{NT}\).
 
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{LSDV}
+
+The LSDV estimator can be written in closed-form:
 \[
 \begin{bmatrix}\widehat{\alpha} \\ \widehat{\beta}\end{bmatrix}
 =
@@ -230,20 +238,22 @@ where \(Y \in \mathbb{R}^{NT}\), \(D \in \mathbb{R}^{NT \times N}\), \(X \in \ma
 \begin{bmatrix} D & X \end{bmatrix}' \begin{bmatrix} D & X \end{bmatrix}
 \right)^{-1}
 \begin{bmatrix} D & X \end{bmatrix}' Y
-\quad\text{(LSDV OLS)}.
 \]
 
+\begin{itemize}
+    \item The slope coefficient
 \[
 \widehat{\beta}
 =
-\left(X' M_{D} X\right)^{-1} X' M_{D} Y,
-\qquad
-M_{D} := I_{NT} - D\left(D'D\right)^{-1}D',
-\qquad
-\\
+\left(X' M_{D} X\right)^{-1} X' M_{D} Y,\]
+where $M_{D} := I_{NT} - D\left(D'D\right)^{-1}D'$.
+
+\item 
+The fixed effects
+\[
 \widehat{\alpha} = (D'D)^{-1} D'\!\left(Y - X\widehat{\beta}\right).
 \]
-
+\end{itemize}
 
 \end{frame}
 

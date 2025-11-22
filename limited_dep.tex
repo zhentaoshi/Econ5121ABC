@@ -421,8 +421,8 @@ Log-likelihood
     \begin{itemize}
         \item The probability depends on the joint distribution of $\left( \varepsilon_{ij} \right)_{j=1}^{M}$
         \item If $\varepsilon _{ij} \sim $ Type \RomanNum{1} extreme value distribution and $\varepsilon_{ij}$ i.i.d.~across choices, then
-        \[\Pr\left( y_{ij} = j \mid \mu_{i1}, \dots, \mu_{iM} \right)= \frac{\exp\left( \mu_{ij}\right)}{\sum_{k=1}^{M}\exp \left( \mu_{ik}\right)}\]
-        \item Full Probit specification will be a nightmare. Don't use.
+        \[\Pr\left( y_{i} = j \mid \mu_{i1}, \dots, \mu_{iM} \right)= \frac{\exp\left( \mu_{ij}\right)}{\sum_{k=1}^{M}\exp \left( \mu_{ik}\right)}\]
+        % \item Full Probit specification will be a nightmare. Don't use.
     \end{itemize}
 \end{frame}
 
@@ -434,6 +434,7 @@ Log-likelihood
         \item Equivalent to $\beta_{j=1} = 0$ (including the intercept)
         \item Parameters: $\left( \beta; \mbox{ and }  \beta_2, \beta_3, \dots, \beta_M\right)$
     \[L\left( \theta \right) = \prod_{i=1}^{N} \left\{ \sum_{j=1}^{M} \mathbb{I} \left( y_{i} = j \right)\left( \frac{\exp \left( \mu_{ij} \right)}{1 +  \sum_{k=2}^{M} \exp \left( \mu_{ik} \right)} \right) \right\}\]
+    where $\mu_{i1} = 0$ by standardization.
     
     
     \end{itemize}
