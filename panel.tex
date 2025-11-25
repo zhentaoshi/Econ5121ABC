@@ -216,10 +216,9 @@ Real data: \url{https://www.kaggle.com/datasets/frankshi0/nber-ces-manufacturing
 
 \[
 Y = D\,\alpha + X\,\beta + u, \qquad
-D := I_{N} \otimes \mathbf{1}_{T},
+D := I_{N} \otimes \mathbf{1}_{T}.
 \]
-where \(Y \in \mathbb{R}^{NT}\), \(D \in \mathbb{R}^{NT \times N}\), \(X \in \mathbb{R}^{NT \times p}\),
-\(\alpha \in \mathbb{R}^{N}\), \(\beta \in \mathbb{R}^{p}\), and \(u \in \mathbb{R}^{NT}\).
+% where \(Y \in \mathbb{R}^{NT}\), \(D \in \mathbb{R}^{NT \times N}\), \(X \in \mathbb{R}^{NT \times p}\), \(\alpha \in \mathbb{R}^{N}\), \(\beta \in \mathbb{R}^{p}\), and \(u \in \mathbb{R}^{NT}\).
 
 
 \end{frame}
@@ -465,117 +464,117 @@ The fixed effects
 
 
 
-\section{Random Effect Models}
-\frame{\sectionpage}
+% \section{Random Effect Models}
+% \frame{\sectionpage}
 
 
 
-\begin{frame}{Random Effects}
-    \begin{itemize}
-        \item Recall the model
-        \begin{align*}            
-        y_{it} & = c + X_{it}^{\prime} \beta + \varepsilon_{it}  \\
-               & =  c + X_{it}^{\prime} \beta + \alpha_i^{\ast} +  u_{it},
-        \end{align*}
-        where the composite error \(\varepsilon_{it} = \alpha_i^{\ast} + u_{it}\), with 
-        \(u_{it} \sim \text{iid } (0, \sigma_{u}^2)\),
-            \(\alpha_i^{\ast} \sim \text{iid } (0, \sigma_{\alpha}^2)\),
-            and they are uncorrelated with \(X_{it}\).
+% \begin{frame}{Random Effects}
+%     \begin{itemize}
+%         \item Recall the model
+%         \begin{align*}            
+%         y_{it} & = c + X_{it}^{\prime} \beta + \varepsilon_{it}  \\
+%                & =  c + X_{it}^{\prime} \beta + \alpha_i^{\ast} +  u_{it},
+%         \end{align*}
+%         where the composite error \(\varepsilon_{it} = \alpha_i^{\ast} + u_{it}\), with 
+%         \(u_{it} \sim \text{iid } (0, \sigma_{u}^2)\),
+%             \(\alpha_i^{\ast} \sim \text{iid } (0, \sigma_{\alpha}^2)\),
+%             and they are uncorrelated with \(X_{it}\).
 
-    \end{itemize}
-\end{frame}
+%     \end{itemize}
+% \end{frame}
 
 
-\begin{frame}{Efficient Estimation of RE Model}
-    \begin{itemize}
+% \begin{frame}{Efficient Estimation of RE Model}
+%     \begin{itemize}
 
             
-        \item \(E\left[X_{it}^{\prime} \varepsilon_{it}\right] = 0\).
+%         \item \(E\left[X_{it}^{\prime} \varepsilon_{it}\right] = 0\).
 
 
-        \item OLS is consistent, but inefficient due to violation of homoskedasticity:
-        \[
-        \underset{T\times T}{S}:= E\left[\varepsilon_i \varepsilon_i^{\prime}\right] =
-        \begin{bmatrix}
-            \sigma_{\alpha}^2 + \sigma_{u}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2 \\
-            \sigma_{\alpha}^2 & \sigma_{\alpha}^2 + \sigma_{u}^2 & \cdots & \sigma_{\alpha}^2 \\
-            \vdots & \vdots & \ddots & \vdots \\
-            \sigma_{\alpha}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2 + \sigma_{u}^2
-        \end{bmatrix}.
-        \]
+%         \item OLS is consistent, but inefficient due to violation of homoskedasticity:
+%         \[
+%         \underset{T\times T}{S}:= E\left[\varepsilon_i \varepsilon_i^{\prime}\right] =
+%         \begin{bmatrix}
+%             \sigma_{\alpha}^2 + \sigma_{u}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2 \\
+%             \sigma_{\alpha}^2 & \sigma_{\alpha}^2 + \sigma_{u}^2 & \cdots & \sigma_{\alpha}^2 \\
+%             \vdots & \vdots & \ddots & \vdots \\
+%             \sigma_{\alpha}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2 + \sigma_{u}^2
+%         \end{bmatrix}.
+%         \]
 
-        \item Generalized Least Squares (GLS) is the efficient estimator.
+%         \item Generalized Least Squares (GLS) is the efficient estimator.
         
-    \end{itemize}
-\end{frame}
+%     \end{itemize}
+% \end{frame}
 
 
-\begin{frame}{Generalized Least Squares}
-    \begin{itemize}
-        \item Rewrite 
-        $$y_{it}  = c + X_{it}^{\prime} \beta + \varepsilon_{it} = W_{it}^{\prime} \theta + \varepsilon_{it}  $$
-        where $W_{it} := (1,X_{it}')'$ and $ \theta = (c, \beta')'$
-    \end{itemize}
-    % \begin{assumption*}[RE.1]
-    %     $E\left[u_{it}|\alpha_{i},\mathbf{X}_{i}\right]=0$ and $E\left[\alpha_{i}|\mathbf{X}_{i}\right]=0$.  
-    % \end{assumption*}
-% \[S=\mathrm{var}\left(\varepsilon_{i}|\mathbf{X}_{i}\right)=\sigma_{\alpha}^{2}\mathbf{1}_{T}\mathbf{1}_{T}'+\sigma_{u}^{2}I_{T},\ \mbox{for all }i=1,\ldots,n.  
-    % \]
-    \begin{itemize}
+% \begin{frame}{Generalized Least Squares}
+%     \begin{itemize}
+%         \item Rewrite 
+%         $$y_{it}  = c + X_{it}^{\prime} \beta + \varepsilon_{it} = W_{it}^{\prime} \theta + \varepsilon_{it}  $$
+%         where $W_{it} := (1,X_{it}')'$ and $ \theta = (c, \beta')'$
+%     \end{itemize}
+%     % \begin{assumption*}[RE.1]
+%     %     $E\left[u_{it}|\alpha_{i},\mathbf{X}_{i}\right]=0$ and $E\left[\alpha_{i}|\mathbf{X}_{i}\right]=0$.  
+%     % \end{assumption*}
+% % \[S=\mathrm{var}\left(\varepsilon_{i}|\mathbf{X}_{i}\right)=\sigma_{\alpha}^{2}\mathbf{1}_{T}\mathbf{1}_{T}'+\sigma_{u}^{2}I_{T},\ \mbox{for all }i=1,\ldots,n.  
+%     % \]
+%     \begin{itemize}
          
-        \item The (infeasible) GLS estimator is:
-        \begin{align*}
-       \widehat{\theta}^{infeasible}_{RE} & =            \left(\sum_{i=1}^{N} W_{i}'S^{-1} W_{i}\right)^{-1} \sum_{i=1}^{N}W_{i}'S^{-1}y_{i} \\ & =\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1} Y           
-        \end{align*}
+%         \item The (infeasible) GLS estimator is:
+%         \begin{align*}
+%        \widehat{\theta}^{infeasible}_{RE} & =            \left(\sum_{i=1}^{N} W_{i}'S^{-1} W_{i}\right)^{-1} \sum_{i=1}^{N}W_{i}'S^{-1}y_{i} \\ & =\left(W'\mathbf{S}^{-1}W\right)^{-1}W'\mathbf{S}^{-1} Y           
+%         \end{align*}
             
                  
-            where $\mathbf{S}=I_{T}\otimes S$
-    \end{itemize} 
-\end{frame}
+%             where $\mathbf{S}=I_{T}\otimes S$
+%     \end{itemize} 
+% \end{frame}
 
-\begin{frame}{Feasible GLS}
-%     \begin{assumption*}[RE.2]
-%         $\mathrm{var}\left(u_{i}|\mathbf{X}_{i},\alpha_{i}\right)=\sigma_{u}^{2}I_{T}$
-%     and $\mathrm{var}\left(\alpha_{i}|\mathbf{X}_{i}\right)=\sigma_{\alpha}^{2}.$
-%     \end{assumption*}  
+% \begin{frame}{Feasible GLS}
+% %     \begin{assumption*}[RE.2]
+% %         $\mathrm{var}\left(u_{i}|\mathbf{X}_{i},\alpha_{i}\right)=\sigma_{u}^{2}I_{T}$
+% %     and $\mathrm{var}\left(\alpha_{i}|\mathbf{X}_{i}\right)=\sigma_{\alpha}^{2}.$
+% %     \end{assumption*}  
 
     
-    \begin{itemize}
-        \item Step 1: use OLS and obtain $\widehat{\varepsilon}_{it}=y_{it}-W_{it} \widehat{\theta}_{OLS}$ 
-        \begin{itemize}
-        \item Estimate the diagonal term and the off-diagonal term in $S$ as
-        \begin{eqnarray*}
-            \widehat{S}_{diag} &=& \frac{1}{NT}\sum_{i=1}^{N}\sum_{t=1}^{T}\widehat{\varepsilon}_{it}^{2}  \\
-            \widehat{S}_{off} &=& \frac{1}{N}\sum_{i=1}^{N}\frac{1}{T(T-1)}\sum_{t=1}^{T} \sum_{s\neq t}\widehat{\varepsilon}_{it}\widehat{\varepsilon}_{is}
-        \end{eqnarray*}
-        respectively, to obtain $\hat{S}.$
-        \end{itemize}
+%     \begin{itemize}
+%         \item Step 1: use OLS and obtain $\widehat{\varepsilon}_{it}=y_{it}-W_{it} \widehat{\theta}_{OLS}$ 
+%         \begin{itemize}
+%         \item Estimate the diagonal term and the off-diagonal term in $S$ as
+%         \begin{eqnarray*}
+%             \widehat{S}_{diag} &=& \frac{1}{NT}\sum_{i=1}^{N}\sum_{t=1}^{T}\widehat{\varepsilon}_{it}^{2}  \\
+%             \widehat{S}_{off} &=& \frac{1}{N}\sum_{i=1}^{N}\frac{1}{T(T-1)}\sum_{t=1}^{T} \sum_{s\neq t}\widehat{\varepsilon}_{it}\widehat{\varepsilon}_{is}
+%         \end{eqnarray*}
+%         respectively, to obtain $\hat{S}.$
+%         \end{itemize}
     
-    \item Step 2: The feasible GLS (FGLS) is 
-      $$ \widehat{\theta}_{RE} = \left(\sum_{i=1}^{N} W_{i}'\hat{S}^{-1} W_{i}\right)^{-1} \sum_{i=1}^{N}W_{i}'\hat{S}^{-1}y_{i}             
-      $$
+%     \item Step 2: The feasible GLS (FGLS) is 
+%       $$ \widehat{\theta}_{RE} = \left(\sum_{i=1}^{N} W_{i}'\hat{S}^{-1} W_{i}\right)^{-1} \sum_{i=1}^{N}W_{i}'\hat{S}^{-1}y_{i}             
+%       $$
        
-    \end{itemize}
-\end{frame}
+%     \end{itemize}
+% \end{frame}
 
 
 
 
 
-\begin{frame}{Fixed Effects vs.~Random Effects}
-    \begin{itemize}
-        \item FE is more general:
-        \begin{itemize}
-            \item But does not allow time-invariant \(X_i\).
-        \end{itemize}
+% \begin{frame}{Fixed Effects vs.~Random Effects}
+%     \begin{itemize}
+%         \item FE is more general:
+%         \begin{itemize}
+%             \item But does not allow time-invariant \(X_i\).
+%         \end{itemize}
 
-        \item RE does not cope with endogenous \(\alpha^*_i\).
+%         \item RE does not cope with endogenous \(\alpha^*_i\).
 
-        \item Hausman test is traditionally used to distinguish the two models.
+%         \item Hausman test is traditionally used to distinguish the two models.
 
-        \item Data demo: \url{https://www.kaggle.com/code/jipann/panel-data-estimation-in-python}
-    \end{itemize}
-\end{frame}
+%         \item Data demo: \url{https://www.kaggle.com/code/jipann/panel-data-estimation-in-python}
+%     \end{itemize}
+% \end{frame}
 
 % \begin{frame}{Hausman Test}
 

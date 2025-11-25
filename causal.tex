@@ -491,11 +491,23 @@
 
         \item $E[y_i | X_i]$ always exists, but the linear regression may not get the ``causal'' effect
 
-        
-        
-        
     \end{itemize}
 \end{frame}
+
+
+\begin{frame}{Estimating ATE via Regression}
+    \begin{itemize}
+        \item Parametric specification with controls
+        \[ y_i = \alpha + \tau D_i + X'_i \beta + \varepsilon_i \]
+        \item Interpretation: Under unconfoundedness $\left( y_{1i}, y_{0i} \right) \perp D_i \mid X_i$ and overlap, $\tau$ identifies ATE.
+        \item OLS on $y_i$ with regressors $(D_i, X_i)$: $\hat{\tau}$ equals the mean difference conditional on $X_i$ (Frisch–Waugh–Lovell).
+        \bigskip
+        \item Under randomization and overlap, $\hat{\tau}$ is unbiased and consistent for ATE
+        \item Difference-in-means is less efficient. 
+    \end{itemize}
+\end{frame}
+
+
 
 \begin{frame}{Example: Omitted Variable Bias}
     \begin{itemize}
@@ -507,8 +519,6 @@
             where $$\theta = \beta + \gamma \frac{\mathrm{Cov}\left( X_i, Z_i \right)}{\mathrm{Var}\left( X_i \right)}$$
     \end{itemize}
 \end{frame}
-
-
 
 
 \begin{frame}{Omitted Variable Bias (Cont.)}
@@ -625,22 +635,20 @@
 \section{Quasi experiment}
 \frame{\sectionpage}
 
-\begin{frame}{Regression Discontinuity Design}
-    \begin{itemize}
-        \item A jump point due to some \emph{ad hoc} policy cutoff
-        \item Unconfoundedness is naturally satisfied: as if randomized.
-        \item e.g.~College premium
-        \item Caveat: valid only for the subpopulation around the cutoff
-        \item Suppose the cutoff is $c$
-            \begin{itemize}
-        \item $y_{0i} = \alpha_0 + \beta_0 (x_i - c) + \varepsilon_{0i}$
-        \item $y_{1i} = \alpha_1 + \beta_1 (x_i - c) + \varepsilon_{1i}$        
-            \end{itemize}
+% \begin{frame}{Regression Discontinuity Design}
+%     \begin{itemize}
+%         \item A jump point due to some \emph{ad hoc} policy cutoff
+%         \item Unconfoundedness is naturally satisfied: as if randomized.
+%         \item e.g.~College premium
+%         \item Caveat: valid only for the subpopulation around the cutoff
+%         \item Suppose the cutoff is $c$
+%             \begin{itemize}
+%         \item $y_{0i} = \alpha_0 + \beta_0 (x_i - c) + \varepsilon_{0i}$
+%         \item $y_{1i} = \alpha_1 + \beta_1 (x_i - c) + \varepsilon_{1i}$        
+%             \end{itemize}
         
-    \end{itemize}
-
-
-\end{frame}
+%     \end{itemize}
+% \end{frame}
 
 
 
@@ -752,7 +760,7 @@
     \item RCT
     \item Propensity score
     \item Regressions for CATE
-    \item RDD
+%     \item RDD
     \item DID
 
     \bigskip
