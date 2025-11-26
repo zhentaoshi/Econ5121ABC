@@ -227,34 +227,34 @@ D := I_{N} \otimes \mathbf{1}_{T}.
 
 
 
-\begin{frame}{LSDV}
+% \begin{frame}{LSDV}
 
-The LSDV estimator can be written in closed-form:
-\[
-\begin{bmatrix}\widehat{\alpha} \\ \widehat{\beta}\end{bmatrix}
-=
-\left(
-\begin{bmatrix} D & X \end{bmatrix}' \begin{bmatrix} D & X \end{bmatrix}
-\right)^{-1}
-\begin{bmatrix} D & X \end{bmatrix}' Y
-\]
+% The LSDV estimator can be written in closed-form:
+% \[
+% \begin{bmatrix}\widehat{\alpha} \\ \widehat{\beta}\end{bmatrix}
+% =
+% \left(
+% \begin{bmatrix} D & X \end{bmatrix}' \begin{bmatrix} D & X \end{bmatrix}
+% \right)^{-1}
+% \begin{bmatrix} D & X \end{bmatrix}' Y
+% \]
 
-\begin{itemize}
-    \item The slope coefficient
-\[
-\widehat{\beta}
-=
-\left(X' M_{D} X\right)^{-1} X' M_{D} Y,\]
-where $M_{D} := I_{NT} - D\left(D'D\right)^{-1}D'$.
+% \begin{itemize}
+%     \item The slope coefficient
+% \[
+% \widehat{\beta}
+% =
+% \left(X' M_{D} X\right)^{-1} X' M_{D} Y,\]
+% where $M_{D} := I_{NT} - D\left(D'D\right)^{-1}D'$.
 
-\item 
-The fixed effects
-\[
-\widehat{\alpha} = (D'D)^{-1} D'\!\left(Y - X\widehat{\beta}\right).
-\]
-\end{itemize}
+% \item 
+% The fixed effects
+% \[
+% \widehat{\alpha} = (D'D)^{-1} D'\!\left(Y - X\widehat{\beta}\right).
+% \]
+% \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 
 
@@ -279,7 +279,7 @@ The fixed effects
 
 
 
-\begin{frame}{Alternative Interpretation of Within-Group Transformation}
+\begin{frame}{Within-Group Transformation}
     \begin{itemize}
         
         \item Recall the model $$y_{it} = \alpha_i + X_{it}^{\prime}\beta + u_{it}.$$
@@ -287,7 +287,7 @@ The fixed effects
         \[
         \bar{y}_i = \alpha_i + \bar{X}_i^{\prime}\beta + \bar{u}_i.
         \]
-        \item Subtraction:
+        \item Subtraction. Let  $\tilde{y}_{it}=y_{it}-\overline{y}_{i}$ be the \textbf{within-group transformation}. Define $\tilde{X}_{it}$ and $\tilde{u}_{it}$ similarly.
         \[
         \tilde{y}_{it} = \tilde{X}_{it}^{\prime}\beta + \tilde{u}_{it}.
         \]
