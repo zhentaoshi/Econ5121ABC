@@ -115,6 +115,7 @@ Course website: \url{https://zhentaoshi.github.io/Econ5121ABC/}}
             \item OLS
             \item Endogeneity
             \item 2SLS, GMM
+            \item Causal inference
         \end{itemize}
         \bigskip
 
@@ -146,9 +147,6 @@ Course website: \url{https://zhentaoshi.github.io/Econ5121ABC/}}
         \bigskip
         \item Domain knowledge: Interpretation
         \item Understanding the big picture
-        \item What if AI suggests something completely new to you?
-        \pause \bigskip
-        \item Welcome to the beautiful new world of AI.
     \end{itemize}
 \end{frame}
 
@@ -392,7 +390,9 @@ then $$I_{0}=H_{0}.$$
 \end{thm*}
 \begin{itemize}
 
-\item Information equality fails when the model is misspecified
+\item A (surprising) fundamental property: 
+the variance of the score equals the negative expected Hessian.
+\item Information equality fails when the model is misspecified.
 \end{itemize}
 \end{frame}
 
@@ -496,29 +496,32 @@ $
 var\left(\frac{1}{N}\sum_{i=1}^{N}Y_{i}\right)=\frac{\sigma^{2}}{N}
 \]
 reaches the  Cram\'{e}r-Rao lower bound
-\end{itemize}
-\end{frame}
-%
-\begin{frame}{Unbiased Estimator of Variance}
-\begin{itemize}
-\item $E\left(s_{N}^{2}\right)=\sigma^{2}$ is unbiased (not MLE), where
-\[
-s_{N}^{2}=\frac{1}{N-1}\sum_{i=1}^{N}\left(Y_{i}-\bar{Y}\right)^{2}=\frac{1}{N-1}Y'\left(I-\frac{1}{N}1_{N}1_{N}'\right)Y
-\]
-\item It follows
-$s_{N}^{2}=\frac{\sigma^{2} }{N-1} \cdot \chi^{2}\left(N-1\right)$ because
 
-\[
-\left(N-1\right)\frac{s_{N}^{2}}{\sigma^{2}}=\left(\frac{Y}{\sigma}\right)'\left(I-\frac{1}{N}1_{N}1_{N}'\right)\left(\frac{Y}{\sigma}\right)\sim\chi^{2}\left(N-1\right).
-\]
-\item As a result, 
-\[
-var\left(s_{N}^{2}\right)=\frac{\sigma^{4}}{\left(N-1\right)^{2}} \cdot 2\left(N-1\right)=\frac{2\sigma^{4}}{N-1}>\frac{2\sigma^{4}}{N}
-\]
-is not Cram\'{e}r-Rao efficient
+\item On the other hand, the sample variance
+is biased.
 \end{itemize}
 \end{frame}
 %
+% \begin{frame}{Unbiased Estimator of Variance}
+% \begin{itemize}
+% \item $E\left(s_{N}^{2}\right)=\sigma^{2}$ is unbiased (not MLE), where
+% \[
+% s_{N}^{2}=\frac{1}{N-1}\sum_{i=1}^{N}\left(Y_{i}-\bar{Y}\right)^{2}=\frac{1}{N-1}Y'\left(I-\frac{1}{N}1_{N}1_{N}'\right)Y
+% \]
+% \item It follows
+% $s_{N}^{2}=\frac{\sigma^{2} }{N-1} \cdot \chi^{2}\left(N-1\right)$ because
+
+% \[
+% \left(N-1\right)\frac{s_{N}^{2}}{\sigma^{2}}=\left(\frac{Y}{\sigma}\right)'\left(I-\frac{1}{N}1_{N}1_{N}'\right)\left(\frac{Y}{\sigma}\right)\sim\chi^{2}\left(N-1\right).
+% \]
+% \item As a result, 
+% \[
+% var\left(s_{N}^{2}\right)=\frac{\sigma^{4}}{\left(N-1\right)^{2}} \cdot 2\left(N-1\right)=\frac{2\sigma^{4}}{N-1}>\frac{2\sigma^{4}}{N}
+% \]
+% is not Cram\'{e}r-Rao efficient
+% \end{itemize}
+% \end{frame}
+% %
 
 
 \begin{frame}{Asymptotic Normality}
@@ -695,7 +698,7 @@ Testing a hypothesis: $H_0: R \theta_0 = q$ vs. $H_1: R \theta_0 \neq q$.
 \begin{frame}{Lagrange Multiplier (LM) Test}
 
 \begin{itemize}
-    \item Also called the \textbf{Score test}
+    \item Also called the \textbf{score test}
     
     \item Uses the \textbf{constrained MLE} $\tilde{\theta}$ under $H_0: R\theta = q$
     
