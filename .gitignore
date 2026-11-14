@@ -141,3 +141,6 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+/.quarto/
+**/*.quarto_ipynb
