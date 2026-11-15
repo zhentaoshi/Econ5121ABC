@@ -14,9 +14,8 @@ idea sounds straightforward, its development took centuries. The history
 connects practical problems of measurement with deeper questions about what
 makes an estimate reliable.
 
-[Stigler, 2007](https://arxiv.org/pdf/0804.2996) covers the comprehensive
-history of MLE. 
-The early roots lie in the study of measurement errors. Astronomers and
+[Stigler (2007)](https://arxiv.org/pdf/0804.2996) covers the comprehensive
+history of MLE. The early roots lie in the study of measurement errors. Astronomers and
 other scientists needed to combine observations that disagreed because of
 imperfect instruments. In 1778, Daniel Bernoulli proposed multiplying the
 densities of observations and selecting the value that maximized their
@@ -56,7 +55,7 @@ large samples, supporting standard errors and confidence intervals.
 Computers greatly expanded the method's practical reach. Many likelihoods
 cannot be maximized using a simple formula, so researchers use numerical
 algorithms. An important milestone was the 1977 paper 
-[Dempster, Laird, and Rubin, 1977](https://doi.org/10.1111/j.2517-6161.1977.tb01600.x).
+[Dempster, Laird, and Rubin (1977)](https://doi.org/10.1111/j.2517-6161.1977.tb01600.x).
 It presented a general framework for the
 expectation-maximization (EM) algorithm. EM alternates between calculating
 conditional expectations involving unobserved data and updating parameter

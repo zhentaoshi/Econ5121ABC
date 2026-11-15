@@ -1,12 +1,12 @@
-# Econ5121 ABCD 2025
+# Econ5121 ABCD 2026
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
 
-Econometrics applies statistical and probabilistic methods to economic data to quantify relationships, test hypotheses, and inform decision-making. This course emphasizes identification, estimation, and inference under realistic data challenges, covering cross-sectional, panel, and limited dependent variable models, as well as modern tools for causal analysis.
+Econometrics applies statistical and probabilistic methods to economic data to quantify relationships, test hypotheses, and inform decision-making. This course emphasizes identification, estimation, and inference under realistic data challenges, covering cross-sectional, panel, and limited dependent variable models.
 
 
-![Econometrics: linear regression with best-fit line](https://upload.wikimedia.org/wikipedia/commons/3/3a/Linear_regression.svg)
+![Humanities Building](https://innoport.cuhk.edu.hk/wp-content/uploads/2024/12/Humanities_Building_CUHK-1.jpg)
 
 ---------
 
