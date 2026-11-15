@@ -6,9 +6,10 @@
 *.lyx~
 *.lyx#
 *.tmp
-
+*.xpt
 *.js
-
+*.npz
+*.json
 ## SWP
 *.bak
 *.aaa
