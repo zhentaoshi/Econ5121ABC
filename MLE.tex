@@ -418,6 +418,19 @@ If $\widetilde{\theta}$ is unbiased estimator, then $$var(\widetilde{\theta})\ge
 
 \begin{frame}{Example: Normal MLE}
 \begin{itemize}
+\item Empirical example: \texttt{analysis/height-normality}.
+\item It contains two parallel examples of mens' and womens' heights from USA and China, respectively.
+\bigskip 
+
+\item The distributional assumptions allows to reproduce the distribution without referring to the original data.
+\item Effective data compression.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Normal MLE: Log-likelihood}
+\begin{itemize}
+
 \item Normal distribution $Y_i \sim N(\mu, \sigma^2)$ gives density
 $$
 f(Y_i ; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \gamma}}
@@ -432,6 +445,8 @@ where $\gamma=\sigma^{2}$ to simplify notations and derivatives.
 where $\theta = (\mu, \gamma)$. 
 \end{itemize}
 \end{frame}
+
+
 
 % need to compute Fisher info from as the var of score
 \begin{frame}{MLE}
