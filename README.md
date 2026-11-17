@@ -10,7 +10,7 @@ Econometrics applies statistical and probabilistic methods to economic data to q
 
 ---------
 
-* Class A: Sat 2:30PM-5:15PM, ELB LT2
+* Class A: Sat 2:30PM-5:15PM, ELB LT3
 * Class B: Wed 8:30AM-11:15AM, ELB LT1
 * Class C: Sat 9:30AM-12:15PM, ELB LT3
 * Class D: Wed 12:30PM-3:15PM, Humanities Building 115
