@@ -111,6 +111,10 @@
 
 
 \begin{frame}{Panoramic View}
+
+    Textbook: Verbeek, Chapter 7
+    \bigskip
+    
     \begin{itemize}
         \item MLE is a unifying framework
         \item Regressors $X_i$ enter the model as a \textbf{single index} $X_i'\beta$
@@ -219,7 +223,7 @@ A sample of $N$ observations is
         &= \prod_{i =1}^{N} \left\{ \Lambda \left(X_i' \beta \right) \right\} ^{y_i} \left\{ 1- \Lambda \left( X'_i \beta \right) \right\} ^{1-y_{i}}
     \end{align*}
 
-Log-likelihood
+Log-likelihood (cross-entropy loss) is
     \[\ell_N \left( \beta \right) = \sum_{i =1}^{N} \left\{ y_i \log \left( \Lambda \left( X_{i}^{'}\beta \right) \right) + \left( 1 - y_{i} \right)  \log \left( 1 - \Lambda \left( X_i' \beta \right) \right)\right\}\]
     
     
@@ -408,7 +412,7 @@ Log-likelihood
 
 \begin{frame}{Latent Utility}
     \begin{itemize}
-        \item For each $j=1,2,\ldots,M$, the utility $y_{ij}^{*} = \mu_{ij} + \varepsilon _{ij}$, where $\mu_{ij}$ is the choice level index, and for $\varepsilon_{ij}$ is the error term.
+        \item For each $j=1,2,\ldots,M$, the utility $y_{ij}^{*} = \mu_{ij} + \varepsilon _{ij}$, where $\mu_{ij}$ is the \textbf{choice level index}, and for $\varepsilon_{ij}$ is the error term.
         \item The observed choice 
         $$y_{ij} =\mathbb{I}\left\{ y_{ij}^{*} \ge \max_{k=1,\ldots,M} y^*_{ik} \right\}$$
         \item $\Pr \left( y_i = j \mid \mu_{i1}, \dots, \mu_{iM} \right) = \Pr \left( y_{ij}^{*} \ge y_{i1}^{*}, \dots, y_{ij}^{*} \ge y_{iM}^{*} \right)$
@@ -557,7 +561,7 @@ Data example: \url{https://www.kaggle.com/code/jipann/poisson-regression}
 
 
 
-\begin{frame}{Probabilities}
+\begin{frame}{Tobit I Model}
     \begin{itemize}
         \item Assume $\varepsilon _{i} \mid X_{i} \sim N\left( 0, \sigma ^{2} \right)$
         \item The probability mass \begin{align*}
@@ -628,7 +632,6 @@ The likelihood consists of two components:
         where $\sigma_{22} = 1$ is a normalization
         \item Parameter $\theta = (\beta_1, \beta_2, \sigma_{11}^2, \sigma_{12})$ can be estimated by MLE 
         \item The conditional likelihood involves the bivariate normal distribution and its integrals
-        \item No existing routine in \texttt{py::statmodels}
     \end{itemize}
 \end{frame}
 
