@@ -187,7 +187,7 @@ Course website: \url{https://zhentaoshi.github.io/Econ5121ABC/}}
     \item \textbf{Textbook: Verbeek, Chapter 6}
     \item Philosophy: The most likely outcome (Abductive reasoning).
     \item Distributional assumption (instead of moment conditions)
-    \item Information theory
+    \item Information theory (\textcolor{blue}{\href{https://www.youtube.com/watch?v=l6DKRf-fAAM}{3Blue1Brown}})
 \end{itemize}
 \begin{center}
     \includegraphics[width=0.45\textwidth]{fig/L(theta).png}
@@ -303,16 +303,19 @@ is easier to compute.
 \end{frame}
 %
 \begin{frame}{Why Maximization: Deep Justification}
-\begin{thm*}
-If the model is correctly specified, then $\theta_{0}$ is the maximizer
-of the likelihood function in expectation.
-\end{thm*}
+
 
 \begin{itemize}
+
+\item    If the model is correctly specified, then $\theta_{0}$ is the maximizer
+of the likelihood function in expectation.
+
+
     \item \textbf{Kullback-Leibler information criterion }(KLIC):
 \[
 KLIC\left(f,g\right)=\int f\left(z\right)\log\frac{f\left(z\right)}{g\left(z\right)}dz
 \]
+ \textcolor{blue}{\href{https://www.youtube.com/watch?v=GlYgs6v2YfU}{3Blue1Brown: 31:17}}
 
     \item $KLIC \geq 0$ because 
 \begin{align*}
@@ -443,14 +446,14 @@ If $\widetilde{\theta}$ is unbiased estimator, then $$var(\widetilde{\theta})\ge
 
 \item Normal distribution $Y_i \sim N(\mu, \sigma^2)$ gives density
 $$
-f(Y_i ; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi \gamma}}
+f(Y_i ; \mu, \gamma) = \frac{1}{\sqrt{2\pi \gamma}}
 \exp\left(- \frac{(Y_i - \mu)^2 }{2\gamma} \right)
 $$
 where $\gamma=\sigma^{2}$ to simplify notations and derivatives.
 
 \item The log-likelihood is
 \[
-\ell_{N}\left(Y;\theta\right)=-\frac{N}{2}\log\gamma-\frac{N}{2}\log2\pi-\frac{1}{2\gamma}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
+\ell_{N}\left(\theta; Y\right)=-\frac{N}{2}\log\gamma-\frac{N}{2}\log2\pi-\frac{1}{2\gamma}\sum_{i=1}^{N}\left(Y_{i}-\mu\right)^{2}
 \]
 where $\theta = (\mu, \gamma)$. 
 \end{itemize}
